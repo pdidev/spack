@@ -26,6 +26,7 @@ class Paraconf(CMakePackage):
     variant('tests',   default=False,  description = 'Build tests')
 
     depends_on('cmake', type='build')
+    depends_on('git', type='build')
     depends_on('libyaml', type=('build', 'link', 'run'))
 
     root_cmakelists_dir = 'paraconf'
