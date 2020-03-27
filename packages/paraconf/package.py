@@ -25,7 +25,7 @@ class Paraconf(CMakePackage):
 
     variant('shared',  default=True,   description = 'Build shared libraries rather than static ones')
     variant('profile', default='User', values=('User', 'Devel'), description = 'Profile to use for PDI distribution build', multi=False)
-    variant('fortran', default=True,   description = 'Enable Fortran support')
+    variant('fortran', default=False,   description = 'Enable Fortran support')
     variant('tests',   default=False,  description = 'Build tests')
 
     depends_on('cmake@3.5:',     type='build')
@@ -36,6 +36,6 @@ class Paraconf(CMakePackage):
             '-DBUILD_SHARED_LIBS:BOOL={:s}'.format('ON' if '+shared' in self.spec else 'OFF'),
             '-DDIST_PROFILE:STRING={:s}'.format(self.spec.variants['profile'].value),
             '-DBUILD_TESTING:BOOL={:s}'.format('ON' if '+tests' in self.spec else 'OFF'),
-            '-DENABLE_FORTRAN:BOOL={:s}'.format('ON' if '+fortran' in self.spec else 'OFF')
+            '-DBUILD_FORTRAN:BOOL={:s}'.format('ON' if '+fortran' in self.spec else 'OFF')
         ]
         return args
