@@ -3,25 +3,7 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-# ----------------------------------------------------------------------------
-# If you submit this package back to Spack as a pull request,
-# please first remove this boilerplate and all FIXME comments.
-#
-# This is a template package file for Spack.  We've put "FIXME"
-# next to all the things you'll want to change. Once you've handled
-# them, you can save this file and test your package like this:
-#
-#     spack install paraconf
-#
-# You can edit this file again by typing:
-#
-#     spack edit paraconf
-#
-# See the Spack documentation for more information on packaging.
-# ----------------------------------------------------------------------------
-
 from spack import *
-
 
 class Paraconf(CMakePackage):
     """Paraconf is a library that provides a simple query language to
@@ -33,6 +15,12 @@ class Paraconf(CMakePackage):
 
 
     version('develop', branch='master')
+    version('0.4.6',   tag='0.4.6')
+    version('0.4.5',   tag='0.4.5')
+    version('0.4.4',   tag='0.4.4')
+    version('0.4.3',   tag='0.4.3')
+    version('0.4.2',   tag='0.4.2')
+    version('0.4.1',   tag='0.4.1')
     version('0.4.0',   tag='0.4.0')
 
     variant('shared',  default=True,   description = 'Build shared libraries rather than static ones')
