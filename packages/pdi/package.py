@@ -36,6 +36,7 @@ class Pdi(CMakePackage):
     depends_on('cmake@3.10:',        type='build', when='+test')
     depends_on('git',                type='build')
     depends_on('pdi.paraconf')
+    depends_on('spdlog@1.3.1:',      type='build')
     depends_on('pdi.bpp')
     depends_on('astyle@3.1:',        type='build', when='+indent')
     depends_on('doxygen@1.8.13:',    type='build', when='+docs')
