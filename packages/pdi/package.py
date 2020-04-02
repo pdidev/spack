@@ -33,7 +33,7 @@ class Pdi(CMakePackage):
 
     depends_on('cmake@3.5:',         type='build')
     depends_on('cmake@3.10:',        type='build', when='+docs')
-    depends_on('cmake@3.10:',        type='build', when='+test')
+    depends_on('cmake@3.10:',        type='build', when='+tests')
     depends_on('git',                type='build')
     depends_on('paraconf',           type=('build', 'link', 'run'))
     depends_on('paraconf +fortran',  type=('build', 'link', 'run'), when='+fortran')
@@ -43,7 +43,7 @@ class Pdi(CMakePackage):
     depends_on('doxygen@1.8.13:',    type='build', when='+docs')
     depends_on('py-pybind11@2.3.0:', type='build', when='+python')
     depends_on('python',             when='+python')
-    depends_on('googletest@1.8.0:',  when='+tests')
+    depends_on('googletest@1.8.0: +gmock', type='build', when='+tests')
 
     def cmake_args(self):
         args = [
