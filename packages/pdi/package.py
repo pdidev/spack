@@ -3,23 +3,6 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-# ----------------------------------------------------------------------------
-# If you submit this package back to Spack as a pull request,
-# please first remove this boilerplate and all FIXME comments.
-#
-# This is a template package file for Spack.  We've put "FIXME"
-# next to all the things you'll want to change. Once you've handled
-# them, you can save this file and test your package like this:
-#
-#     spack install pdi
-#
-# You can edit this file again by typing:
-#
-#     spack edit pdi
-#
-# See the Spack documentation for more information on packaging.
-# ----------------------------------------------------------------------------
-
 from spack import *
 
 
@@ -33,7 +16,6 @@ class Pdi(CMakePackage):
        FTI available to codes, potentially mixed in a single execution."""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url      = 'https://gitlab.maisondelasimulation.fr/jbigot/pdi/-/archive/master/pdi-master.tar.gz'
     git      = 'https://gitlab.maisondelasimulation.fr/jbigot/pdi.git'
     
     root_cmakelists_dir = 'pdi'
@@ -52,6 +34,7 @@ class Pdi(CMakePackage):
     depends_on('cmake@3.5:',         type='build')
     depends_on('cmake@3.10:',        type='build', when='+docs')
     depends_on('cmake@3.10:',        type='build', when='+test')
+    depends_on('git',                type='build')
     depends_on('pdi.paraconf')
     depends_on('pdi.bpp')
     depends_on('astyle@3.1.0:',      type='build', when='+indent')
