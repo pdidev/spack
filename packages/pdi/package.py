@@ -37,7 +37,7 @@ class Pdi(CMakePackage):
     depends_on('git',                type='build')
     depends_on('pdi.paraconf')
     depends_on('pdi.bpp')
-    depends_on('astyle@3.1.0:',      type='build', when='+indent')
+    depends_on('astyle@3.1:',        type='build', when='+indent')
     depends_on('doxygen@1.8.13:',    type='build', when='+docs')
     depends_on('py-pybind11@2.3.0:', type='build', when='+python')
     depends_on('python',             when='+python')
