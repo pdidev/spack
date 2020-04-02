@@ -1,4 +1,4 @@
-# Copyright 2013-2019 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -46,11 +46,11 @@ class Pdi(CMakePackage):
     def cmake_args(self):
         args = [
             '-DBUILD_SHARED_LIBS:BOOL={:s}'.format('OFF' if '-shared' in self.spec else 'ON'),
-            '-DENABLE_UNSTABLE:BOOL={:s}'.format('ON' if '+unstable' in self.spec else 'OFF'),
+            '-DBUILD_UNSTABLE:BOOL={:s}'.format('ON' if '+unstable' in self.spec else 'OFF'),
             '-DBUILD_DOCUMENTATION:BOOL={:s}'.format('ON' if '+docs' in self.spec else 'OFF'),
             '-DBUILD_TESTING:BOOL={:s}'.format('ON' if '+tests' in self.spec else 'OFF'),
-            '-DENABLE_FORTRAN:BOOL={:s}'.format('ON' if '+fortran' in self.spec else 'OFF'),
-            '-DENABLE_PYTHON:BOOL={:s}'.format('ON' if '+python' in self.spec else 'OFF'),
-            '-DENABLE_INDENT:BOOL={:s}'.format('ON' if '+indent' in self.spec else 'OFF')
+            '-DBUILD_FORTRAN:BOOL={:s}'.format('ON' if '+fortran' in self.spec else 'OFF'),
+            '-DBUILD_PYTHON:BOOL={:s}'.format('ON' if '+python' in self.spec else 'OFF'),
+            '-DBUILD_INDENT:BOOL={:s}'.format('ON' if '+indent' in self.spec else 'OFF')
         ]
         return args
