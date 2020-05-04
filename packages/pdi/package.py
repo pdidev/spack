@@ -5,7 +5,6 @@
 
 from spack import *
 
-
 class Pdi(CMakePackage):
     """PDI is a library that aims to decouple high-performance simulation codes from
        Input/Output concerns.
@@ -21,7 +20,8 @@ class Pdi(CMakePackage):
     root_cmakelists_dir = 'pdi'
 
     version('develop', branch='master')
-
+    version('0.6.1', tag='0.6.1')
+    version('0.6.0', tag='0.6.0')
 
     variant('shared',   default=True,  description = 'Build shared libraries rather than static ones')
     variant('unstable', default=False, description = 'Build all features by default including those not stable yet')
@@ -38,7 +38,7 @@ class Pdi(CMakePackage):
     depends_on('paraconf',           type=('build', 'link', 'run'))
     depends_on('paraconf +fortran',  type=('build', 'link', 'run'), when='+fortran')
     depends_on('spdlog@1.3.1:',      type='build')
-    depends_on('pdi.bpp@0.3:',       type='build', when='+fortran')
+    depends_on('zpp',                type='build', when='+fortran')
     depends_on('astyle@3.1:',        type='build', when='+indent')
     depends_on('doxygen@1.8.13:',    type='build', when='+docs')
     depends_on('py-pybind11@2.3.0:', type='build', when='+python')
