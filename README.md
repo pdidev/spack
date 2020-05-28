@@ -9,3 +9,7 @@ Clone the repository and then
 ```
 $ spack repo add <repository path>
 ```
+
+## Dependencies
+
+the Decl'SION plugin depends on SIONlib available from https://gitlab.version.fz-juelich.de/SIONlib/spack-repository/-/blob/master/README.md
