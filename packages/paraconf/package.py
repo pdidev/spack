@@ -9,31 +9,22 @@ class Paraconf(CMakePackage):
     """Paraconf is a library that provides a simple query language to
        access a Yaml tree on top of libyaml."""
 
-    homepage = "https://gitlab.maisondelasimulation.fr/jbigot/libparaconf"
-    git      = 'https://gitlab.maisondelasimulation.fr/jbigot/libparaconf.git'
+    homepage = "https://github.com/pdidev/paraconf"
+    url      = "https://github.com/pdidev/paraconf/archive/0.4.9.tar.gz"
 
-    version('develop', branch='master')
-    version('0.4.6',   tag='0.4.6')
-    version('0.4.5',   tag='0.4.5')
-    version('0.4.4',   tag='0.4.4')
-    version('0.4.3',   tag='0.4.3')
-    version('0.4.2',   tag='0.4.2')
-    version('0.4.1',   tag='0.4.1')
+    version('0.4.9', sha256='e99a01584e07e4d09b026fcd9a39500fbdbc3074a2598a4bc89f400825094c5a')
 
-    variant('shared',  default=True,   description = 'Build shared libraries rather than static ones')
-    variant('profile', default='User', values=('User', 'Devel'), description = 'Profile to use for PDI distribution build', multi=False)
-    variant('fortran', default=False,   description = 'Enable Fortran support')
-    variant('tests',   default=False,  description = 'Build tests')
+    variant('shared',  default=True,  description = 'Build shared libraries rather than static ones')
+    variant('fortran', default=False, description = 'Enable Fortran support')
+    variant('tests',   default=False, description = 'Build tests')
 
-    depends_on('cmake', type='build')
-    depends_on('git', type='build')
-    depends_on('libyaml', type=('build', 'link', 'run'))
+    depends_on('cmake@3.5:', type='build')
+    depends_on('libyaml@0.2.2:', type=('link', 'run'))
 
     root_cmakelists_dir = 'paraconf'
     def cmake_args(self):
         args = [
             '-DBUILD_SHARED_LIBS:BOOL={:s}'.format('ON' if '+shared' in self.spec else 'OFF'),
-            '-DDIST_PROFILE:STRING={:s}'.format(self.spec.variants['profile'].value),
             '-DBUILD_TESTING:BOOL={:s}'.format('ON' if '+tests' in self.spec else 'OFF'),
             '-DBUILD_FORTRAN:BOOL={:s}'.format('ON' if '+fortran' in self.spec else 'OFF')
         ]
