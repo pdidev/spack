@@ -1,37 +1,32 @@
-# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright (C) 2020 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
 
-
 class PdipluginTrace(CMakePackage):
-    """The trace plugin is intended to generate a trace of 
-    what happens in \\ref Data_store "PDI data store"."""
+    """The trace plugin is intended to generate a trace of  what happens in PDI
+    "data store"."""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    git      = 'https://gitlab.maisondelasimulation.fr/jbigot/pdi.git'
+    url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/0.6.5/pdi-0.6.5.tar.bz2"
+    git      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
-    version('develop', branch='master')
-    version('0.6.1', tag='0.6.1')
-    version('0.6.0', tag='0.6.0')
+    maintainers = ['jbigot']
+
+    version('develop', branch='master', no_cache=True)
+    version('0.6.5',   sha256='a1100effb62d43556bd5e50d82f51e51710dbafc8d85c5a2e03ba7c168460be9')
+
+    depends_on('cmake@3.5:',  type=('build'))
+    depends_on('pdi@develop', type=('link', 'run'), when='@develop')
+    depends_on('pdi@0.6.5',   type=('link', 'run'), when='@0.6.5')
 
     root_cmakelists_dir = 'plugins/trace'
-
-    variant('indent',   default=False, description = 'Enable automatic code indentation')
-
-    depends_on('cmake@3.5:',         type='build')
-    depends_on('git',                type='build')
-    depends_on('spdlog@1.3.1:',      type='build')
-    depends_on('pdi',                type=('build', 'link', 'run'))
-    depends_on('astyle@3.1:',        type='build', when='+indent')
-    depends_on('py-pybind11@2.3.0:', type='build')
-    depends_on('python@3.7:',        type=('build', 'link', 'run'))
-
     def cmake_args(self):
-        args = [
-            '-DBUILD_INDENT:BOOL={:s}'.format('ON' if '+indent' in self.spec else 'OFF')
+        return [
+            '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
         ]
-        return args
-
+    
+    def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
+        run_env.append_path('PDI_PLUGIN_PATH', self.prefix.lib)

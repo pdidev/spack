@@ -5,8 +5,9 @@
 
 from spack import *
 
-class PdipluginPycall(CMakePackage):
-    """pycall plugin for the PDI library"""
+class PdipluginSetValue(CMakePackage):
+    """The trace plugin is intended to generate a trace of  what happens in PDI
+    "data store"."""
 
     homepage = "https://pdi.julien-bigot.fr/"
     url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/0.6.5/pdi-0.6.5.tar.bz2"
@@ -15,21 +16,16 @@ class PdipluginPycall(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
-    version('0.6.5',   sha256='a1100effb62d43556bd5e50d82f51e51710dbafc8d85c5a2e03ba7c168460be9')
 
-    variant('tests', default=False, description = 'Build tests')
+    depends_on('cmake@3.5:',  type=('build'))
+    depends_on('pdi@develop', type=('link'), when='@develop')
+    depends_on('pdi@0.6.5',   type=('link'), when='@0.6.5')
 
-    depends_on('cmake@3.5:',         type=('build'))
-    depends_on('pdi+python@develop', type=('link', 'run'), when='@develop')
-    depends_on('pdi+python@0.6.5',   type=('link', 'run'), when='@0.6.5')
-
-    root_cmakelists_dir = 'plugins/pycall'
+    root_cmakelists_dir = 'plugins/set_value'
     def cmake_args(self):
-        args = [
+        return [
             '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
-            '-DBUILD_TESTING:BOOL={:s}'.format('ON' if '+tests' in self.spec else 'OFF'),
         ]
-        return args
     
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
         run_env.append_path('PDI_PLUGIN_PATH', self.prefix.lib)

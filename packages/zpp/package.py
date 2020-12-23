@@ -1,18 +1,19 @@
-# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright (C) 2020 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
 
-
 class Zpp(PythonPackage):
-    """ZPP, the Z Pre-Processor.
-       ZPP transforms bash in a pre-processor for F90 source files.
-       It offers a set of functions specifically tailored to build clean
-       Fortran90 interfaces by generating code for all types, kinds, and array ranks supported by a given compiler."""
+    """ZPP, the Z Pre-Processor. ZPP transforms bash in a pre-processor for F90
+    source files. It offers a set of functions specifically tailored to build
+    clean Fortran90 interfaces by generating code for all types, kinds, and
+    array ranks supported by a given compiler."""
 
     homepage = "https://github.com/jbigot/zpp"
+
+    maintainers = ['jbigot']
 
     version('1.0.8', sha256='dc5f423f019f1af92ff020372b458ab539890d2de2133bb9602cce419486faea')
 

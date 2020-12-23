@@ -1,5 +1,5 @@
-# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright (C) 2020 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
@@ -7,13 +7,19 @@ from spack import *
 
 
 class Fti(CMakePackage):
-    """FTI stands for Fault Tolerance Interface and is a library that aims to give computational scientists the means to perform fast and efficient multilevel checkpointing in large scale supercomputers."""
+    """FTI stands for Fault Tolerance Interface and is a library that aims to
+    give computational scientists the means to perform fast and efficient
+    multilevel checkpointing in large scale supercomputers."""
 
     homepage = "https://fault-tolerance-interface.readthedocs.io"
-    git      = 'https://github.com/leobago/fti.git'
+    git      = "https://github.com/leobago/fti.git"
+    url      = "https://github.com/leobago/fti/archive/v1.5.1.tar.gz"
 
-    version('develop', branch='master')
-    version('1.4', tag='1.4')
+    maintainers = ['jbigot']
+
+    version('1.5.1',   sha256='62fdc4c0f00c9f3cd0d44be294fa6b30495923f9fea6f4e2dbeb59670abd0d3f')
+    version('1.4.1',   sha256='fb6f7df95ae60088665555455ed54bb921f8b806a5f95624a5e2aa88a804b803')
+    version('1.4.0',   sha256='b31c35af65055c1c0d1a77d6d4c5a7458edb4466b3da97d5e0536ce6ec323480')
 
     variant('doc',      default=False, description="Enables the generation of a Doxygen documentation")
     variant('examples', default=False, description="Enables the generation of examples")

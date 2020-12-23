@@ -1,21 +1,23 @@
-# Copyright 2013-2019 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright (C) 2020 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
 
 class Paraconf(CMakePackage):
-    """Paraconf is a library that provides a simple query language to
-       access a Yaml tree on top of libyaml."""
+    """Paraconf is a library that provides a simple query language to access a
+    Yaml tree on top of libyaml."""
 
     homepage = "https://github.com/pdidev/paraconf"
     url      = "https://github.com/pdidev/paraconf/archive/0.4.9.tar.gz"
 
+    maintainers = ['jbigot']
+
     version('0.4.9', sha256='e99a01584e07e4d09b026fcd9a39500fbdbc3074a2598a4bc89f400825094c5a')
 
     variant('shared',  default=True,  description = 'Build shared libraries rather than static ones')
-    variant('fortran', default=False, description = 'Enable Fortran support')
+    variant('fortran', default=True,  description = 'Enable Fortran support')
     variant('tests',   default=False, description = 'Build tests')
 
     depends_on('cmake@3.5:', type='build')
