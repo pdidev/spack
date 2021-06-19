@@ -16,6 +16,11 @@ class PdipluginDeclNetcdf(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.2.1',   sha256='0c90294fb2bb9ca5f6b957d9d8f68f3a3039fc256ba92f7e5bbe316768b43037')
+    version('1.2.0',   sha256='8d5821d473140ea48036e8f03668bf6295d06f8b7561d464cc1b5748bf8d2aa3')
+    version('1.1.0',   sha256='8f8a33e1538afde81bb2bbbc3ba8fe3942f0824672a364d0eb2055a0255e8b0c')
+    version('1.0.1',   sha256='c35f6d19cecfc3963c08c8d516386c1cd782fcdbe4e39aa91dd01376d2346cb6')
+    version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
 
     depends_on('cmake@3.5:',       type=('build'))
     depends_on('netcdf-c@4:4.999', type=('link'))
