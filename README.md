@@ -21,6 +21,8 @@ spack install pdiplugin-decl-hdf5 pdiplugin-decl-netcdf pdiplugin-flowvr pdiplug
 
 If you only need some of the plugins, you can adapt the last line.
 
+### Decl'SION
+
 The decl-sion plugin requires to add an external repository.
 To install it, you need to run the following lines after the previous ones:
 ```
@@ -30,6 +32,8 @@ spack repo add spack/var/spack/repos/SIONlib
 # 5. Install decl-sion plugin
 spack install pdiplugin-decl-sion
 ```
+
+### FTI
 
 The FTI plugin requires to add an external repository.
 To install it, you need to run the following lines after the previous ones:
