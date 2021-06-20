@@ -14,6 +14,7 @@ if [ $# -ge 1 ]; then
     esac
     BASE_IMAGE="$1"
 fi
+SPACK_OPTS=""
 case "$BASE_IMAGE" in
 ubuntu-xenial)
     COMPILER="gcc@5.4.0"
@@ -22,6 +23,7 @@ ubuntu-bionic)
     COMPILER="gcc@7.5.0"
     ;;
 centos6)
+    SPACK_OPTS="-k"
     COMPILER="gcc@5.4.0"
     ;;
 centos7)
@@ -43,40 +45,50 @@ cat <<RUN_SH_EOF > "${RUNCMD}/docker-run.sh"
 #/bin/bash
 set -ex
 git clone https://github.com/leobago/fti-spack /opt/spack-fti
-spack repo add /opt/spack-fti
+spack ${SPACK_OPTS} repo add /opt/spack-fti
 git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git /opt/spack-SIONlib
-spack repo add /opt/spack-SIONlib
-spack repo add /opt/spack-pdi
+spack ${SPACK_OPTS} repo add /opt/spack-SIONlib
+spack ${SPACK_OPTS} repo add /opt/spack-pdi
 mkdir /opt/spack-environment
 cd /opt/spack-environment
-if ! spack compilers | grep "${COMPILER}" &>/dev/null
-then spack install "${COMPILER}"
-fi
 cat <<SPACK_YAML_EOF > spack.yaml
 spack:
+  packages:
+    all:
+      compiler: [${COMPILER}]
+      target: [ x86_64 ]
   specs:
-    - matrix:
-      - [ "%${COMPILER}" ]
-      - 
-        - pdiplugin-decl-hdf5
-        - pdiplugin-decl-netcdf
-        - pdiplugin-flowvr
-        - pdiplugin-mpi
-        - pdiplugin-pycall
-        - pdiplugin-serialize
-        - pdiplugin-set-value
-        - pdiplugin-trace
-        - pdiplugin-user-code
-        - pdiplugin-decl-sion
-        - pdiplugin-fti
+    - pdiplugin-decl-hdf5
+    - pdiplugin-decl-netcdf
+    - pdiplugin-flowvr
+    - pdiplugin-mpi
+    - pdiplugin-pycall
+    - pdiplugin-serialize
+    - pdiplugin-set-value
+    - pdiplugin-trace
+    - pdiplugin-user-code
+    - pdiplugin-decl-sion
+    - pdiplugin-fti
   concretization: together
   config:
     install_tree: /opt/software
     view: /opt/view
 SPACK_YAML_EOF
+if ! spack compilers | grep "${COMPILER}" &>/dev/null
+then
+    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}" || \
+    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}" || \
+    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}"
+    spack ${SPACK_OPTS} load "${COMPILER}"
+    spack ${SPACK_OPTS} compilers
+    spack ${SPACK_OPTS} compiler find
+    spack ${SPACK_OPTS} compilers
+fi
+spack ${SPACK_OPTS} env activate .
 cat spack.yaml
-spack env activate .
-spack install --fail-fast
+spack ${SPACK_OPTS} install --show-log-on-error --fail-fast || \
+spack ${SPACK_OPTS} install --show-log-on-error --fail-fast || \
+spack ${SPACK_OPTS} install --show-log-on-error --fail-fast
 RUN_SH_EOF
 
 docker run -v "${PWD}:/opt/spack-pdi" -v "${RUNCMD}:/opt/runcmd" "spack/${BASE_IMAGE}:latest" docker-shell bash /opt/runcmd/docker-run.sh
