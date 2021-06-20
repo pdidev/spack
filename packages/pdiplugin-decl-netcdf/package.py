@@ -10,7 +10,7 @@ class PdipluginDeclNetcdf(CMakePackage):
     "data store"."""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/0.6.5/pdi-0.6.5.tar.bz2"
+    url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.2.1/pdi-1.2.1.tar.bz2"
     git      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
     maintainers = ['jbigot']
@@ -24,8 +24,14 @@ class PdipluginDeclNetcdf(CMakePackage):
 
     depends_on('cmake@3.5:',       type=('build'))
     depends_on('netcdf-c@4:4.999', type=('link'))
-    depends_on('pdi@develop',      type=('link'), when='@develop')
-    depends_on('pdi@0.6.5',        type=('link'), when='@0.6.5')
+    depends_on('pdi@develop',      type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.2.1',        type=('link', 'run'), when='@1.2.1')
+    depends_on('pdi@1.2.0',        type=('link', 'run'), when='@1.2.0')
+    depends_on('pdi@1.1.0',        type=('link', 'run'), when='@1.1.0')
+    depends_on('pdi@1.0.1',        type=('link', 'run'), when='@1.0.1')
+    depends_on('pdi@1.0.0',        type=('link', 'run'), when='@1.0.0')
+    depends_on('pdi@0.6.5',        type=('link', 'run'), when='@0.6.5')
+    depends_on('pkgconfig',        type=('build'))
 
     root_cmakelists_dir = 'plugins/decl_netcdf'
     def cmake_args(self):

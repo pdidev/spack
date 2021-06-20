@@ -14,7 +14,7 @@ class Pdi(CMakePackage):
     available to codes, potentially mixed in a single execution."""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/0.6.5/pdi-0.6.5.tar.bz2"
+    url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.2.1/pdi-1.2.1.tar.bz2"
     git      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
     maintainers = ['jbigot']
@@ -27,23 +27,25 @@ class Pdi(CMakePackage):
     version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
     version('0.6.5',   sha256='a1100effb62d43556bd5e50d82f51e51710dbafc8d85c5a2e03ba7c168460be9')
     
-    variant('docs',     default=False, description = 'Build documentation')
-    variant('tests',    default=False, description = 'Build tests')
-    variant('fortran',  default=True,  description = 'Enable Fortran support')
-    variant('python',   default=True,  description = 'Enable Python support')
+    variant('docs',    default=False, description='Build documentation')
+    variant('tests',   default=False, description='Build tests')
+    variant('fortran', default=True,  description='Enable Fortran support')
+    variant('python',  default=True,  description='Enable Python support')
+
+    extends('python', when='+python')
     
     depends_on('cmake@3.5:',                type=('build'))
-    depends_on('paraconf +shared',          type=('link', 'run'),          when='-fortran')
-    depends_on('spdlog@1.3.1:',             type=('link', 'run'))
     depends_on('cmake@3.10:',               type=('build'),                when='+docs')
-    depends_on('doxygen@1.8.13:',           type=('build'),                when='+docs')
-    depends_on('paraconf +shared+fortran',  type=('link', 'run'),          when='+fortran')
-    depends_on('zpp@1.0.8',                 type=('build'),                when='+fortran')
-    depends_on('py-pybind11@2.3.0:',        type=('link'),                 when='+python')
-    depends_on('python@3.7:',               type=('build', 'link', 'run'), when='+python')
     depends_on('cmake@3.10:',               type=('build'),                when='+tests')
+    depends_on('doxygen@1.8.13:',           type=('build'),                when='+docs')
     depends_on('googletest@1.8.0: +gmock',  type=('link'),                 when='+tests')
-    depends_on('paraconf +shared +fortran', type=('link', 'run'),          when='+tests+fortran')
+    depends_on('paraconf +shared',          type=('link', 'run'),          when='-fortran')
+    depends_on('paraconf +shared +fortran', type=('link', 'run'),          when='+fortran')
+    depends_on('pkgconfig',                 type=('build'))
+    depends_on('python@3.7:',               type=('build', 'link', 'run'), when='+python')
+    depends_on('py-pybind11@2.3.0:',        type=('link'),                 when='+python')
+    depends_on('spdlog@1.3.1:',             type=('link', 'run'))
+    depends_on('zpp@1.0.8',                 type=('build'),                when='+fortran')
     
     root_cmakelists_dir = 'pdi'
     def cmake_args(self):

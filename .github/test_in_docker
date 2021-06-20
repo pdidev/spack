@@ -1,0 +1,82 @@
+#!/bin/bash
+
+BASE_IMAGE=ubuntu-bionic
+if [ $# -ge 1 ]; then
+    case "$1" in
+    ubuntu-xenial);;
+    ubuntu-bionic);;
+    centos6);;
+    centos7);;
+    *)
+        echo "Invalid base image name: $1" 1>&2
+        exit 1
+        ;;
+    esac
+    BASE_IMAGE="$1"
+fi
+case "$BASE_IMAGE" in
+ubuntu-xenial)
+    COMPILER="gcc@5.4.0"
+    ;;
+ubuntu-bionic)
+    COMPILER="gcc@7.5.0"
+    ;;
+centos6)
+    COMPILER="gcc@5.4.0"
+    ;;
+centos7)
+    COMPILER="gcc@5.4.0"
+    ;;
+*)
+    echo "Invalid base image name: $BASE_IMAGE" 1>&2
+    exit 1
+    ;;
+esac
+
+RUNCMD="$(mktemp --tmpdir -d spack_test_in_docker-XXXXXXXXXX)"
+function finish {
+  rm -rf "${RUNCMD}"
+}
+trap finish EXIT INT TERM
+
+cat <<RUN_SH_EOF > "${RUNCMD}/docker-run.sh"
+#/bin/bash
+set -ex
+git clone https://github.com/leobago/fti-spack /opt/spack-fti
+spack repo add /opt/spack-fti
+git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git /opt/spack-SIONlib
+spack repo add /opt/spack-SIONlib
+spack repo add /opt/spack-pdi
+mkdir /opt/spack-environment
+cd /opt/spack-environment
+if ! spack compilers | grep "${COMPILER}" &>/dev/null
+then spack install "${COMPILER}"
+fi
+cat <<SPACK_YAML_EOF > spack.yaml
+spack:
+  specs:
+    - matrix:
+      - [ "%${COMPILER}" ]
+      - 
+        - pdiplugin-decl-hdf5
+        - pdiplugin-decl-netcdf
+        - pdiplugin-flowvr
+        - pdiplugin-mpi
+        - pdiplugin-pycall
+        - pdiplugin-serialize
+        - pdiplugin-set-value
+        - pdiplugin-trace
+        - pdiplugin-user-code
+        - pdiplugin-decl-sion
+        - pdiplugin-fti
+  concretization: together
+  config:
+    install_tree: /opt/software
+    view: /opt/view
+SPACK_YAML_EOF
+cat spack.yaml
+spack env activate .
+spack install --fail-fast
+RUN_SH_EOF
+
+docker run -v "${PWD}:/opt/spack-pdi" -v "${RUNCMD}:/opt/runcmd" "spack/${BASE_IMAGE}:latest" docker-shell bash /opt/runcmd/docker-run.sh
