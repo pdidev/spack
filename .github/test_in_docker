@@ -15,6 +15,7 @@ if [ $# -ge 1 ]; then
     BASE_IMAGE="$1"
 fi
 SPACK_OPTS=""
+BUILD_CURL="false"
 case "$BASE_IMAGE" in
 ubuntu-xenial)
     COMPILER="gcc@5.4.0"
@@ -23,10 +24,12 @@ ubuntu-bionic)
     COMPILER="gcc@7.5.0"
     ;;
 centos6)
-    SPACK_OPTS="-k"
+#     SPACK_OPTS="-k"
+    BUILD_CURL="true"
     COMPILER="gcc@5.4.0"
     ;;
 centos7)
+    BUILD_CURL="true"
     COMPILER="gcc@5.4.0"
     ;;
 *)
@@ -78,19 +81,27 @@ spack:
     view: /opt/view
 SPACK_YAML_EOF
 # see https://github.com/spack/spack/issues/6708
-spack ${SPACK_OPTS} install -v --show-log-on-error --fail-fast curl
+if [ '${BUILD_CURL}' = true ]
+then
+    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast curl
+    spack location --install-dir curl > /opt/spack-environment/curl-dir
+    export PATH="\$(cat /opt/spack-environment/curl-dir)/bin:\$PATH"
+fi
 if ! spack compilers | grep "${COMPILER}" &>/dev/null
 then
-    spack ${SPACK_OPTS} install -v --show-log-on-error --fail-fast "${COMPILER}"
+    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}"
     spack ${SPACK_OPTS} load "${COMPILER}"
     spack ${SPACK_OPTS} compilers
     spack ${SPACK_OPTS} compiler find
     spack ${SPACK_OPTS} compilers
 fi
 spack ${SPACK_OPTS} env activate .
-spack ${SPACK_OPTS} load curl
-cat spack.yaml
-spack ${SPACK_OPTS} install -v --show-log-on-error --fail-fast
+if [ '${BUILD_CURL}' = true ]
+then
+    export PATH="\$(cat /opt/spack-environment/curl-dir)/bin:\$PATH"
+fi
+export PATH="\$(cat /opt/spack-environment/curl-dir)/bin:\$PATH"
+spack ${SPACK_OPTS} install --show-log-on-error --fail-fast
 RUN_SH_EOF
 
 docker run -v "${PWD}:/opt/spack-pdi" -v "${RUNCMD}:/opt/runcmd" "spack/${BASE_IMAGE}:latest" docker-shell bash /opt/runcmd/docker-run.sh
