@@ -34,6 +34,9 @@ centos7)
     exit 1
     ;;
 esac
+if [ $# -ge 2 ]; then
+    COMPILER="$2"
+fi
 
 RUNCMD="$(mktemp --tmpdir -d spack_test_in_docker-XXXXXXXXXX)"
 function finish {
@@ -74,21 +77,20 @@ spack:
     install_tree: /opt/software
     view: /opt/view
 SPACK_YAML_EOF
+# see https://github.com/spack/spack/issues/6708
+spack ${SPACK_OPTS} install -v --show-log-on-error --fail-fast curl
 if ! spack compilers | grep "${COMPILER}" &>/dev/null
 then
-    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}" || \
-    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}" || \
-    spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}"
+    spack ${SPACK_OPTS} install -v --show-log-on-error --fail-fast "${COMPILER}"
     spack ${SPACK_OPTS} load "${COMPILER}"
     spack ${SPACK_OPTS} compilers
     spack ${SPACK_OPTS} compiler find
     spack ${SPACK_OPTS} compilers
 fi
 spack ${SPACK_OPTS} env activate .
+spack ${SPACK_OPTS} load curl
 cat spack.yaml
-spack ${SPACK_OPTS} install --show-log-on-error --fail-fast || \
-spack ${SPACK_OPTS} install --show-log-on-error --fail-fast || \
-spack ${SPACK_OPTS} install --show-log-on-error --fail-fast
+spack ${SPACK_OPTS} install -v --show-log-on-error --fail-fast
 RUN_SH_EOF
 
 docker run -v "${PWD}:/opt/spack-pdi" -v "${RUNCMD}:/opt/runcmd" "spack/${BASE_IMAGE}:latest" docker-shell bash /opt/runcmd/docker-run.sh
