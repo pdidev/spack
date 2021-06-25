@@ -18,18 +18,27 @@ SPACK_OPTS=""
 BUILD_CURL="false"
 case "$BASE_IMAGE" in
 ubuntu-xenial)
+    # use the installed compiler
     COMPILER="gcc@5.4.0"
     ;;
 ubuntu-bionic)
+    # use the installed compiler
     COMPILER="gcc@7.5.0"
     ;;
 centos6)
-#     SPACK_OPTS="-k"
+    # Workaround " ==> Spack will not check SSL certificates" related errors
+    SPACK_OPTS="-k"
+    # see https://github.com/spack/spack/issues/6708
     BUILD_CURL="true"
+    # installed compiler is too old, use the minimal one
     COMPILER="gcc@5.4.0"
     ;;
 centos7)
+    # Workaround " ==> Spack will not check SSL certificates" related errors
+    SPACK_OPTS="-k"
+    # see https://github.com/spack/spack/issues/6708
     BUILD_CURL="true"
+    # installed compiler is too old, use the minimal one
     COMPILER="gcc@5.4.0"
     ;;
 *)
@@ -80,15 +89,15 @@ spack:
     install_tree: /opt/software
     view: /opt/view
 SPACK_YAML_EOF
-# see https://github.com/spack/spack/issues/6708
+touch /opt/spack-environment/env.sh
 if [ '${BUILD_CURL}' = true ]
 then
     spack ${SPACK_OPTS} install --show-log-on-error --fail-fast curl
-    spack location --install-dir curl > /opt/spack-environment/curl-dir
-    export PATH="\$(cat /opt/spack-environment/curl-dir)/bin:\$PATH"
+    echo 'export PATH="'\$(spack location --install-dir curl)/bin':\$PATH"' >> /opt/spack-environment/env.sh
 fi
 if ! spack compilers | grep "${COMPILER}" &>/dev/null
 then
+    . /opt/spack-environment/env.sh
     spack ${SPACK_OPTS} install --show-log-on-error --fail-fast "${COMPILER}"
     spack ${SPACK_OPTS} load "${COMPILER}"
     spack ${SPACK_OPTS} compilers
@@ -96,11 +105,7 @@ then
     spack ${SPACK_OPTS} compilers
 fi
 spack ${SPACK_OPTS} env activate .
-if [ '${BUILD_CURL}' = true ]
-then
-    export PATH="\$(cat /opt/spack-environment/curl-dir)/bin:\$PATH"
-fi
-export PATH="\$(cat /opt/spack-environment/curl-dir)/bin:\$PATH"
+. /opt/spack-environment/env.sh
 spack ${SPACK_OPTS} install --show-log-on-error --fail-fast
 RUN_SH_EOF
 
