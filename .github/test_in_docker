@@ -35,9 +35,9 @@ centos6)
     ;;
 centos7)
     # Workaround " ==> Spack will not check SSL certificates" related errors
-    SPACK_OPTS="-k"
+#     SPACK_OPTS="-k"
     # see https://github.com/spack/spack/issues/6708
-    BUILD_CURL="true"
+#     BUILD_CURL="true"
     # installed compiler is too old, use the minimal one
     COMPILER="gcc@5.4.0"
     ;;
@@ -84,6 +84,9 @@ spack:
     - pdiplugin-user-code
     - pdiplugin-decl-sion
     - pdiplugin-fti
+    - cmake~ncurses~openssl
+    - mesa~llvm
+    - openmpi~gpfs+internal-hwloc
   concretization: together
   config:
     install_tree: /opt/software
