@@ -5,13 +5,14 @@
 
 from spack import *
 
+
 class PdipluginFlowvr(CMakePackage):
-    """The trace plugin is intended to generate a trace of  what happens in PDI
-    "data store"."""
+    """The FlowVR plugin let one write FlowVR modules without knowing any specific FlowVR API
+    calls."""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.2.1/pdi-1.2.1.tar.bz2"
-    git      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
+    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.2.1/pdi-1.2.1.tar.bz2"
+    git = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
     maintainers = ['jbigot']
 
@@ -36,10 +37,11 @@ class PdipluginFlowvr(CMakePackage):
     depends_on('pkgconfig',          type=('build'))
 
     root_cmakelists_dir = 'plugins/flowvr'
+
     def cmake_args(self):
         return [
             '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
         ]
-    
+
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
         run_env.append_path('PDI_PLUGIN_PATH', self.prefix.lib)

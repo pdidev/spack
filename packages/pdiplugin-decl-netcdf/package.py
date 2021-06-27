@@ -5,13 +5,14 @@
 
 from spack import *
 
+
 class PdipluginDeclNetcdf(CMakePackage):
     """The trace plugin is intended to generate a trace of  what happens in PDI
     "data store"."""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.2.1/pdi-1.2.1.tar.bz2"
-    git      = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
+    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.2.1/pdi-1.2.1.tar.bz2"
+    git = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
     maintainers = ['jbigot']
 
@@ -34,10 +35,12 @@ class PdipluginDeclNetcdf(CMakePackage):
     depends_on('pkgconfig',        type=('build'))
 
     root_cmakelists_dir = 'plugins/decl_netcdf'
+
     def cmake_args(self):
         return [
             '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
+            '-DBUILD_CFG_VALIDATOR:BOOL=OFF',
         ]
-    
+
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
         run_env.append_path('PDI_PLUGIN_PATH', self.prefix.lib)
