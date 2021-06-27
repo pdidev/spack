@@ -33,29 +33,19 @@ class Pdi(CMakePackage):
     variant('fortran', default=True,  description='Enable Fortran support')
     variant('python',  default=True,  description='Enable Python support')
 
-    extends('python', when='+python')
-
-    depends_on('cmake@3.5:',                type=('build'))
-    depends_on('cmake@3.10:',
-               type=('build'),                when='+docs')
-    depends_on('cmake@3.10:',               type=('build'),
-               when='+tests')
-    depends_on('doxygen@1.8.13:',
-               type=('build'),                when='+docs')
-    depends_on('googletest@1.8.0: +gmock',
-               type=('link'),                 when='+tests')
-    depends_on('paraconf +shared',
-               type=('link', 'run'),          when='-fortran')
+    depends_on('cmake@3.5:', type=('build'))
+    depends_on('cmake@3.10:', type=('build'), when='+docs')
+    depends_on('cmake@3.10:', type=('build'), when='+tests')
+    depends_on('doxygen@1.8.13:', type=('build'), when='+docs')
+    depends_on('googletest@1.8.0: +gmock', type=('link'), when='+tests')
+    depends_on('paraconf +shared', type=('link', 'run'), when='-fortran')
     depends_on('paraconf +shared +fortran',
-               type=('link', 'run'),          when='+fortran')
-    depends_on('pkgconfig',                 type=('build'))
-    depends_on('python@3.7:',
-               type=('build', 'link', 'run'), when='+python')
-    depends_on('py-pybind11@2.3.0:',
-               type=('link'),                 when='+python')
-    depends_on('spdlog@1.3.1:',             type=('link', 'run'))
-    depends_on('zpp@1.0.8',                 type=('build'),
-               when='+fortran')
+               type=('link', 'run'), when='+fortran')
+    depends_on('pkgconfig', type=('build'))
+    depends_on('python@3.7:', type=('build', 'link', 'run'), when='+python')
+    depends_on('py-pybind11@2.3.0:', type=('link'), when='+python')
+    depends_on('spdlog@1.3.1:', type=('link', 'run'))
+    depends_on('zpp@1.0.8', type=('build'), when='+fortran')
 
     root_cmakelists_dir = 'pdi'
 

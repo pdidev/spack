@@ -24,9 +24,13 @@ class PdipluginFlowvr(CMakePackage):
     version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
     version('0.6.5',   sha256='a1100effb62d43556bd5e50d82f51e51710dbafc8d85c5a2e03ba7c168460be9')
 
+    variant('tests', default=False, description='Build tests')
+
     depends_on('cmake@3.5:',         type=('build'))
     depends_on('flowvr@2.3.2:2.999', type=('build'),       when='@0.6.6:')
     depends_on('flowvr@2.3:2.3.1',   type=('build'),       when='@:0.6.5')
+    depends_on('freeglut',           type=('link'),        when='tests')
+    depends_on('opengl',             type=('link'),        when='tests')
     depends_on('pdi@develop',        type=('link', 'run'), when='@develop')
     depends_on('pdi@1.2.1',          type=('link', 'run'), when='@1.2.1')
     depends_on('pdi@1.2.0',          type=('link', 'run'), when='@1.2.0')
@@ -42,6 +46,8 @@ class PdipluginFlowvr(CMakePackage):
     def cmake_args(self):
         return [
             '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
+            '-DBUILD_TESTING:BOOL={:s}'.format(
+                'ON' if '+tests' in self.spec else 'OFF'),
         ]
 
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
