@@ -84,9 +84,7 @@ spack:
     - pdiplugin-user-code
     - pdiplugin-decl-sion
     - pdiplugin-fti
-    - cmake~ncurses~openssl
     - mesa~llvm
-    - openmpi~gpfs+internal-hwloc
   concretization: together
   config:
     install_tree: /opt/software

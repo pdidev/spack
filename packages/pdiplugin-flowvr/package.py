@@ -35,6 +35,7 @@ class PdipluginFlowvr(CMakePackage):
     depends_on('pdi@1.0.0',          type=('link', 'run'), when='@1.0.0')
     depends_on('pdi@0.6.5',          type=('link', 'run'), when='@0.6.5')
     depends_on('pkgconfig',          type=('build'))
+    depends_on('py-pyyaml',          type=('build', 'run'))
 
     root_cmakelists_dir = 'plugins/flowvr'
 
