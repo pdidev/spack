@@ -47,7 +47,7 @@ trap finish EXIT INT TERM
 
 cat <<RUN_SH_EOF > "${RUNCMD}/docker-run.sh"
 #/bin/bash
-set -ex
+set -e
 git clone https://github.com/leobago/fti-spack /opt/spack-fti
 spack repo add /opt/spack-fti
 git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git /opt/spack-SIONlib
@@ -55,33 +55,7 @@ spack repo add /opt/spack-SIONlib
 spack repo add /opt/spack-pdi
 mkdir /opt/spack-environment
 cd /opt/spack-environment
-cat <<SPACK_YAML_EOF > spack.yaml
-spack:
-  packages:
-    all:
-      compiler: [${COMPILER}]
-      target: [ x86_64 ]
-  specs:
-    - cmake~doc~ncurses+openssl~ownlibs~qt
-    - mesa~llvm
-    - openmpi~gpfs+static~vt
-    - pdiplugin-decl-hdf5
-    - pdiplugin-decl-netcdf
-    - pdiplugin-flowvr
-    - pdiplugin-mpi
-    - pdiplugin-pycall
-    - pdiplugin-serialize
-    - pdiplugin-set-value
-    - pdiplugin-trace
-    - pdiplugin-user-code
-    - pdiplugin-decl-sion
-    - pdiplugin-fti
-  concretization: together
-  config:
-    install_tree:
-      root: /opt/software
-    view: /opt/view
-SPACK_YAML_EOF
+cp /opt/spack-pdi/tests/spack.yaml .
 if ! spack compilers | grep "${COMPILER}" &>/dev/null
 then
     for N in {2..${PARALLELISM}}
@@ -95,6 +69,10 @@ then
     spack compilers
 fi
 spack env activate .
+spack config add config:install_tree:root:/opt/software
+spack config add config:view:/opt/view
+spack config add 'packages:all:compiler:[${COMPILER}]'
+spack config add 'packages:all:target:[x86_64]'
 spack concretize
 for N in {2..${PARALLELISM}}
 do spack install ${SPACK_INSTALL_ARGS} &

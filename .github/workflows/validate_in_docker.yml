@@ -17,4 +17,4 @@ jobs:
           BASE_IMAGE: ${{ matrix.distrib }}
           PARALLELISM: 2
         run: |
-          ./.github/test_in_docker
+          ./tests/test_in_docker
