@@ -7,14 +7,23 @@ jobs:
   build_in_docker:
     runs-on: ubuntu-20.04
     strategy:
+      fail-fast: false
       matrix:
-        distrib: [ ubuntu-bionic, ubuntu-xenial, centos7 ]
+        base_image: [ ubuntu-bionic, ubuntu-xenial, centos7 ]
+        compiler: [ gcc, clang, intel, oneapi ]
+        mpiimpl: [ openmpi, mpich ]
+        exclude:
+        # clang does not compile with gcc@4.8.5
+        - base_image: centos7
+          compiler: clang
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
         env:
-          BASE_IMAGE: ${{ matrix.distrib }}
+          BASE_IMAGE: ${{ matrix.base_image }}
+          COMPILER: ${{ matrix.compiler }}
+          MPIIMPL: ${{ matrix.mpiimpl }}
           PARALLELISM: 2
         run: |
-          ./tests/test_in_docker
+          ./tests/test_install_in_docker "${BASE_IMAGE}" "${COMPILER}" "${MPIIMPL}"

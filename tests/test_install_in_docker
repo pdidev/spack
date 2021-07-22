@@ -1,0 +1,55 @@
+#!/bin/bash
+
+BASE_IMAGE="${BASE_IMAGE:-ubuntu-bionic}"
+# compiler if not specified otherwise
+COMPILER="gcc@7.3.0"
+# mpi implementation if not specified otherwise
+MPIIMPL="openmpi"
+# parallelism
+PARALLELISM="${PARALLELISM:-1}"
+# spack install arguments
+SPACK_INSTALL_ARGS="${SPACK_INSTALL_ARGS:-"--show-log-on-error --fail-fast"}"
+
+if [ $# -ge 1 ]; then
+    case "$1" in
+    ubuntu-xenial|ubuntu-bionic|centos7)
+        BASE_IMAGE="$1"
+        ;;
+    centos6)
+        echo "$1 is not working" 1>&2
+        exit 2
+        ;;
+    *)
+        echo "Invalid base image name: $1" 1>&2
+        exit 1
+        ;;
+    esac
+fi
+
+case "$BASE_IMAGE" in
+ubuntu-xenial)
+    ;;
+ubuntu-bionic)
+    # use the installed compiler
+    COMPILER="gcc@7.5.0"
+    ;;
+centos7)
+    ;;
+esac
+
+if [ $# -ge 2 ]; then
+    COMPILER="$2"
+fi
+
+if [ $# -ge 3 ]; then
+    MPIIMPL="$3"
+fi
+
+docker run --rm \
+    -v "${PWD}:/opt/spack-pdi" \
+    -e "COMPILER=${COMPILER}" \
+    -e "MPIIMPL=${MPIIMPL}" \
+    -e "PARALLELISM=${PARALLELISM}" \
+    -e "SPACK_INSTALL_ARGS=${SPACK_INSTALL_ARGS}" \
+    "spack/${BASE_IMAGE}:latest" \
+    docker-shell bash "/opt/spack-pdi/tests/spack_install_pdi.sh"
