@@ -52,4 +52,4 @@ docker run --rm \
     -e "PARALLELISM=${PARALLELISM}" \
     -e "SPACK_INSTALL_ARGS=${SPACK_INSTALL_ARGS}" \
     "spack/${BASE_IMAGE}:latest" \
-    docker-shell bash "/opt/spack-pdi/tests/spack_install_pdi.sh"
+    docker-shell bash "/opt/spack-pdi/tests/spack_install_pdi"

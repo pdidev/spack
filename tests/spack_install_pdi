@@ -1,18 +1,18 @@
 #/bin/bash
 set -e
 
+
+echo -e "\n\n******* Adding required spack repositories *******\n"
 git clone https://github.com/leobago/fti-spack /opt/spack-fti
 spack repo add /opt/spack-fti
 git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git /opt/spack-SIONlib
 spack repo add /opt/spack-SIONlib
 spack repo add /opt/spack-pdi
-mkdir /opt/spack-environment
-cd /opt/spack-environment
-cp /opt/spack-pdi/tests/spack-${MPIIMPL}.yaml spack.yaml
 
+
+echo -e "\n\n******* Checking if install is required for ${COMPILER} *******\n"
 COMPILER_NAME="$(echo ${COMPILER} | sed 's/@.*//')"
 COMPILER_VERSION="$(echo ${COMPILER} | sed 's/^[^@]*//')"
-
 case "${COMPILER_NAME}" in
 "clang")
     COMPILER_NAME=llvm
@@ -22,11 +22,9 @@ intel|oneapi)
 ;;
 esac
 COMPILERPKG="${COMPILER_NAME}${COMPILER_VERSION}"
-
-echo "Checking if install is required for compiler ${COMPILER_NAME} (${COMPILER_VERSION})"
 if ! spack compilers | grep "${COMPILERPKG}" &>/dev/null
 then
-    echo "Installing compiler ${COMPILER_NAME} (${COMPILER_VERSION})"
+    echo -e "\n\n******* Installing compiler ${COMPILER_NAME} (${COMPILER_VERSION}) *******\n"
     spack spec "${COMPILERPKG}"
     for N in $(seq 2 ${PARALLELISM})
     do spack install ${SPACK_INSTALL_ARGS} "${COMPILERPKG}" &
@@ -41,14 +39,22 @@ else
     echo "No install required for ${COMPILER_NAME} (${COMPILER_VERSION})"
 fi
 
+echo -e "\n\n******* Setting up environment *******\n"
+mkdir /opt/spack-environment
+cd /opt/spack-environment
+cp /opt/spack-pdi/tests/spack-${MPIIMPL}.yaml spack.yaml
+echo '  concretization: together' >> spack.yaml
 spack env activate .
 spack config add config:install_tree:root:/opt/software
 spack config add config:view:/opt/view
 spack config add "packages:all:compiler:[${COMPILER}]"
-spack config add "config:concretization:together"
 spack add pdiplugin-decl-hdf5 pdiplugin-decl-netcdf pdiplugin-flowvr pdiplugin-mpi pdiplugin-pycall pdiplugin-serialize pdiplugin-set-value pdiplugin-trace pdiplugin-user-code pdiplugin-decl-sion pdiplugin-fti
+cat spack.yaml
 
+echo -e "\n\n******* Resolving dependencies *******\n"
 spack concretize
+
+echo -e "\n\n******* Installing *******\n"
 for N in $(seq 2 ${PARALLELISM})
 do spack install ${SPACK_INSTALL_ARGS} &
 done
