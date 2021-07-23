@@ -13,9 +13,23 @@ jobs:
         compiler: [ gcc, clang, intel, oneapi ]
         mpiimpl: [ openmpi, mpich ]
         exclude:
-        # clang does not compile with gcc@4.8.5
+        # default centos7 gcc (@4.8.5) is too old for PDI, @5.4.0 minimum is required
+        - base_image: centos7
+          compiler: gcc
+        # intel compiler relies on default centos7 gcc (@4.8.5) too old for PDI
+        - base_image: centos7
+          compiler: intel
+        # clang does not compile with default centos7 gcc (@4.8.5)
         - base_image: centos7
           compiler: clang
+        include:
+        # replace default centos7 gcc (@4.8.5) by gcc@11.1.0
+        - base_image: centos7
+          compiler: gcc@11.1.0
+          mpiimpl: openmpi
+        - base_image: centos7
+          compiler: gcc@11.1.0
+          mpiimpl: mpich
     steps:
       - name: Checkout
         uses: actions/checkout@v2

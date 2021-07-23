@@ -3,5 +3,6 @@ spack:
   specs:
     - cmake~doc~ncurses+openssl~ownlibs~qt
     - binutils~gold
-    - mesa~llvm
+    - flowvr ^mesa~llvm swr=none
+    - mesa ~llvm swr=none
     - mpich
