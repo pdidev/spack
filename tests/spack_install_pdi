@@ -2,7 +2,30 @@
 set -e
 
 
-echo -e "\n\n******* Adding required spack repositories *******\n"
+do_spack_pinstall ()
+{
+    for N in $(seq 1 ${PARALLELISM})
+    do spack install ${SPACK_INSTALL_ARGS} "$@" &
+    done
+    wait || {
+        tail -n +1 -- /tmp/root/spack-stage/spack-stage-*/spack-*-out.txt
+        false
+    }
+}
+
+
+echo -e "\n\n******* Handling configuration *******\n" >&2
+PDI_SPACK_REPO="${PDI_SPACK_REPO:-/opt/spack-pdi}"
+PDI_ENVS_DIR="${PDI_ENVS_DIR:-${PDI_SPACK_REPO}/tests}"
+echo "PDI_SPACK_REPO=${PDI_SPACK_REPO}"
+echo "PDI_ENVS_DIR=${PDI_ENVS_DIR}"
+echo "COMPILER=${COMPILER}"
+echo "PARALLELISM=${PARALLELISM}"
+echo "MPIIMPL=${MPIIMPL}"
+echo "SPACK_INSTALL_ARGS=${SPACK_INSTALL_ARGS}"
+
+
+echo -e "\n\n******* Adding required spack repositories *******\n" >&2
 git clone https://github.com/leobago/fti-spack /opt/spack-fti
 spack repo add /opt/spack-fti
 git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git /opt/spack-SIONlib
@@ -10,7 +33,7 @@ spack repo add /opt/spack-SIONlib
 spack repo add /opt/spack-pdi
 
 
-echo -e "\n\n******* Checking if install is required for ${COMPILER} *******\n"
+echo -e "\n\n******* Checking if install is required for ${COMPILER} *******\n" >&2
 COMPILER_NAME="$(echo ${COMPILER} | sed 's/@.*//')"
 COMPILER_VERSION="$(echo ${COMPILER} | sed 's/^[^@]*//')"
 case "${COMPILER_NAME}" in
@@ -24,22 +47,16 @@ esac
 COMPILERPKG="${COMPILER_NAME}${COMPILER_VERSION}"
 if ! spack compilers | grep "${COMPILERPKG}" &>/dev/null
 then
-    echo -e "\n\n******* Installing compiler ${COMPILER_NAME} (${COMPILER_VERSION}) *******\n"
+    echo -e "\n\n******* Installing compiler ${COMPILER_NAME} (${COMPILER_VERSION}) *******\n" >&2
     spack spec "${COMPILERPKG}"
-    for N in $(seq 2 ${PARALLELISM})
-    do spack install ${SPACK_INSTALL_ARGS} "${COMPILERPKG}" &
-    done
-    spack install ${SPACK_INSTALL_ARGS} "${COMPILERPKG}" || \
-            { tail -n +1 -- /tmp/root/spack-stage/spack-stage-*/spack-*-out.txt && false; }
-    wait || \
-            { tail -n +1 -- /tmp/root/spack-stage/spack-stage-*/spack-*-out.txt && false; }
+    do_spack_pinstall "${COMPILERPKG}"
     spack load "${COMPILERPKG}"
     spack compiler find
 else
     echo "No install required for ${COMPILER_NAME} (${COMPILER_VERSION})"
 fi
 
-echo -e "\n\n******* Setting up environment *******\n"
+echo -e "\n\n******* Setting up environment *******\n" >&2
 mkdir /opt/spack-environment
 cd /opt/spack-environment
 cp /opt/spack-pdi/tests/spack-${MPIIMPL}.yaml spack.yaml
@@ -48,17 +65,11 @@ spack env activate .
 spack config add config:install_tree:root:/opt/software
 spack config add config:view:/opt/view
 spack config add "packages:all:compiler:[${COMPILER}]"
-spack add pdiplugin-decl-hdf5 pdiplugin-decl-netcdf pdiplugin-flowvr pdiplugin-mpi pdiplugin-pycall pdiplugin-serialize pdiplugin-set-value pdiplugin-trace pdiplugin-user-code pdiplugin-decl-sion pdiplugin-fti
+spack add pdiplugin-decl-hdf5@develop HDF5test pdiplugin-decl-netcdf@develop pdiplugin-flowvr@develop pdiplugin-mpi@develop pdiplugin-pycall@develop pdiplugin-serialize@develop pdiplugin-set-value@develop pdiplugin-trace@develop pdiplugin-user-code@develop pdiplugin-decl-sion@develop pdiplugin-fti@develop
 cat spack.yaml
 
-echo -e "\n\n******* Resolving dependencies *******\n"
+echo -e "\n\n******* Resolving dependencies *******\n" >&2
 spack concretize
 
-echo -e "\n\n******* Installing *******\n"
-for N in $(seq 2 ${PARALLELISM})
-do spack install ${SPACK_INSTALL_ARGS} &
-done
-spack install ${SPACK_INSTALL_ARGS} || \
-        { tail -n +1 -- /tmp/root/spack-stage/spack-stage-*/spack-*-out.txt && false; }
-wait || \
-        { tail -n +1 -- /tmp/root/spack-stage/spack-stage-*/spack-*-out.txt && false; }
+echo -e "\n\n******* Installing *******\n" >&2
+do_spack_pinstall
