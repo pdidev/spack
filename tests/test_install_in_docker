@@ -4,7 +4,7 @@ BASE_IMAGE="${BASE_IMAGE:-ubuntu-bionic}"
 # compiler if not specified otherwise
 COMPILER="gcc@7.3.0"
 # mpi implementation if not specified otherwise
-MPIIMPL="openmpi"
+DEPVERS="openmpi"
 # parallelism
 PARALLELISM="${PARALLELISM:-1}"
 # spack install arguments
@@ -42,13 +42,13 @@ if [ $# -ge 2 ]; then
 fi
 
 if [ $# -ge 3 ]; then
-    MPIIMPL="$3"
+    DEPVERS="$3"
 fi
 
 docker run --rm \
     -v "${PWD}:/opt/spack-pdi" \
     -e "COMPILER=${COMPILER}" \
-    -e "MPIIMPL=${MPIIMPL}" \
+    -e "DEPVERS=${DEPVERS}" \
     -e "PARALLELISM=${PARALLELISM}" \
     -e "SPACK_INSTALL_ARGS=${SPACK_INSTALL_ARGS}" \
     "spack/${BASE_IMAGE}:latest" \

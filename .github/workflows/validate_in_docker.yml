@@ -9,27 +9,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base_image: [ ubuntu-bionic, ubuntu-xenial, centos7 ]
-        compiler: [ gcc, clang, intel, oneapi ]
-        mpiimpl: [ openmpi, mpich ]
+        base_image: [ ubuntu-bionic, centos7 ]
+        compiler: [ gcc@5.4.0, gcc@11.1.0, "clang@3.5.1 ~gold", "clang ~gold", intel, oneapi ]
+        depvers: [ openmpi-latest, openmpi-mini, mpich-latest, mpich-mini ]
         exclude:
-        # default centos7 gcc (@4.8.5) is too old for PDI, @5.4.0 minimum is required
-        - base_image: centos7
-          compiler: gcc
         # intel compiler relies on default centos7 gcc (@4.8.5) too old for PDI
         - base_image: centos7
           compiler: intel
         # clang does not compile with default centos7 gcc (@4.8.5)
         - base_image: centos7
-          compiler: clang
-        include:
-        # replace default centos7 gcc (@4.8.5) by gcc@11.1.0
+          compiler: "clang@3.5.1 ~gold"
+        # clang does not compile with default centos7 gcc (@4.8.5)
         - base_image: centos7
-          compiler: gcc@11.1.0
-          mpiimpl: openmpi
-        - base_image: centos7
-          compiler: gcc@11.1.0
-          mpiimpl: mpich
+          compiler: "clang ~gold"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -37,7 +29,7 @@ jobs:
         env:
           BASE_IMAGE: ${{ matrix.base_image }}
           COMPILER: ${{ matrix.compiler }}
-          MPIIMPL: ${{ matrix.mpiimpl }}
+          DEPVERS: ${{ matrix.depvers }}
           PARALLELISM: 2
         run: |
-          ./tests/test_install_in_docker "${BASE_IMAGE}" "${COMPILER}" "${MPIIMPL}"
+          ./tests/test_install_in_docker "${BASE_IMAGE}" "${COMPILER}" "${DEPVERS}"
