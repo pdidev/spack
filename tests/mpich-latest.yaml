@@ -5,5 +5,5 @@ spack:
     - cmake~doc~ncurses+openssl~ownlibs~qt
     - flowvr ^mesa~llvm swr=none
     - mesa ~llvm swr=none
-    - mpich
+    - mpich ~fortran
     - sionlib@1.7.6~fortran
