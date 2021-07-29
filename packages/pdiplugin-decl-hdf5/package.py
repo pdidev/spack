@@ -27,8 +27,9 @@ class PdipluginDeclHdf5(CMakePackage):
     version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
     version('0.6.5',   sha256='a1100effb62d43556bd5e50d82f51e51710dbafc8d85c5a2e03ba7c168460be9')
 
-    variant('tests', default=False, description='Build tests')
-    variant('mpi',   default=True,  description='Enable MPI')
+    variant('fortran', default=True,  description='Enable Fortran (for tests only)')
+    variant('tests',   default=False, description='Build tests')
+    variant('mpi',     default=True,  description='Enable MPI')
 
     depends_on('cmake@3.5:',             type=('build'))
     depends_on('hdf5@1.8: +shared',      type=('build', 'link', 'run'), when='~mpi')
@@ -49,6 +50,8 @@ class PdipluginDeclHdf5(CMakePackage):
         args = [
             '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
             '-DBUILD_TESTING:BOOL={:s}'.format(
+                'ON' if '+tests' in self.spec else 'OFF'),
+            '-DBUILD_FORTRAN:BOOL={:s}'.format(
                 'ON' if '+tests' in self.spec else 'OFF'),
             '-DBUILD_HDF5_PARALLEL:BOOL={:s}'.format(
                 'ON' if '+mpi' in self.spec else 'OFF'),

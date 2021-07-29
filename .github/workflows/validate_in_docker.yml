@@ -18,7 +18,7 @@ jobs:
           - intel
           #- oneapi #TODO: meson (used in mesa) fails with oneapi
         depvers:
-          - openmpi-latest
+          #- openmpi-latest #TODO: Fails with HDF5 not parallel...
           #- openmpi-mini #TODO: try with latest first
           - mpich-latest
           #- mpich-mini #TODO: try with latest first
