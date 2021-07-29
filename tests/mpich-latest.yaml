@@ -6,4 +6,5 @@ spack:
     - flowvr ^mesa~llvm swr=none
     - mesa ~llvm swr=none
     - mpich ~fortran
+    - paraconf~fortran
     - sionlib@1.7.6~fortran

@@ -10,6 +10,7 @@ spack:
     - mesa ~llvm swr=none
     - mpich@3.0.4 ~fortran~pci~romio device=ch3 netmod=tcp
     - netcdf-c@4.3.3
+    - paraconf~fortran
     - py-pybind11@2.3.0
     - py-pyyaml@3.11
     - sionlib@1.7.6~fortran
