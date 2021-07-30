@@ -17,6 +17,7 @@ class PdipluginSetValue(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.3.0',   sha256='86947c40f025a09ab228360fa002f7241801f5fb70c75f815210d607cf30b200')
     version('1.2.2',   sha256='b93a9165d4b9f1e09790c9be3c950530537cf9a9dc01210afc77e411939bdf41')
     version('1.2.1',   sha256='0c90294fb2bb9ca5f6b957d9d8f68f3a3039fc256ba92f7e5bbe316768b43037')
     version('1.2.0',   sha256='8d5821d473140ea48036e8f03668bf6295d06f8b7561d464cc1b5748bf8d2aa3')
@@ -24,6 +25,8 @@ class PdipluginSetValue(CMakePackage):
     version('1.0.1',   sha256='c35f6d19cecfc3963c08c8d516386c1cd782fcdbe4e39aa91dd01376d2346cb6')
     version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
 
+    variant('tests',   default=False, description='Build tests')
+    
     depends_on('cmake@3.5:',  type=('build'))
     depends_on('pdi@develop', type=('link', 'run'), when='@develop')
     depends_on('pdi@1.2.2',   type=('link', 'run'), when='@1.2.2')
@@ -40,6 +43,8 @@ class PdipluginSetValue(CMakePackage):
     def cmake_args(self):
         return [
             '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
+            '-DBUILD_TESTING:BOOL={:s}'.format(
+                'ON' if '+tests' in self.spec else 'OFF'),
             '-DBUILD_CFG_VALIDATOR:BOOL=OFF',
         ]
 

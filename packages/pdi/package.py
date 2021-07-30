@@ -21,6 +21,7 @@ class Pdi(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.3.0',   sha256='86947c40f025a09ab228360fa002f7241801f5fb70c75f815210d607cf30b200')
     version('1.2.2',   sha256='b93a9165d4b9f1e09790c9be3c950530537cf9a9dc01210afc77e411939bdf41')
     version('1.2.1',   sha256='0c90294fb2bb9ca5f6b957d9d8f68f3a3039fc256ba92f7e5bbe316768b43037')
     version('1.2.0',   sha256='8d5821d473140ea48036e8f03668bf6295d06f8b7561d464cc1b5748bf8d2aa3')
@@ -54,11 +55,11 @@ class Pdi(CMakePackage):
         args = [
             '-DBUILD_DOCUMENTATION:BOOL={:s}'.format(
                 'ON' if '+docs' in self.spec else 'OFF'),
-            '-DBUILD_TESTING:BOOL={:s}'.format(
-                'ON' if '+tests' in self.spec else 'OFF'),
             '-DBUILD_FORTRAN:BOOL={:s}'.format(
                 'ON' if '+fortran' in self.spec else 'OFF'),
             '-DBUILD_PYTHON:BOOL={:s}'.format(
-                'ON' if '+python' in self.spec else 'OFF')
+                'ON' if '+python' in self.spec else 'OFF'),
+            '-DBUILD_TESTING:BOOL={:s}'.format(
+                'ON' if '+tests' in self.spec else 'OFF'),
         ]
         return args
