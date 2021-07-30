@@ -1,52 +1,27 @@
 #!/bin/bash
 
+# base spack image if not specified
 BASE_IMAGE="${BASE_IMAGE:-ubuntu-bionic}"
-# compiler if not specified otherwise
-COMPILER="gcc@7.3.0"
-# mpi implementation if not specified otherwise
-DEPVERS="openmpi"
-# parallelism
-PARALLELISM="${PARALLELISM:-1}"
-# spack install arguments
+# compiler if not specified
+COMPILER="${COMPILER:-gcc}"
+# depenncy set if not specified
+DEPVERS="${DEPVERS:-mpich-latest}"
+# parallelism if not specified 
+PARALLELISM="${PARALLELISM:-$(( $(cat /proc/cpuinfo | grep -c processor 2>/dev/null) + 1 ))}"
+# spack install arguments if not specified
 SPACK_INSTALL_ARGS="${SPACK_INSTALL_ARGS:-"--show-log-on-error --fail-fast"}"
 
-if [ $# -ge 1 ]; then
-    case "$1" in
-    ubuntu-xenial|ubuntu-bionic|centos7)
-        BASE_IMAGE="$1"
-        ;;
-    centos6)
-        echo "$1 is not working" 1>&2
-        exit 2
-        ;;
-    *)
-        echo "Invalid base image name: $1" 1>&2
-        exit 1
-        ;;
-    esac
-fi
-
-case "$BASE_IMAGE" in
-ubuntu-xenial)
-    ;;
-ubuntu-bionic)
-    # use the installed compiler
-    COMPILER="gcc@7.5.0"
-    ;;
-centos7)
-    ;;
-esac
-
-if [ $# -ge 2 ]; then
-    COMPILER="$2"
-fi
-
-if [ $# -ge 3 ]; then
-    DEPVERS="$3"
-fi
+echo "  ** You can set the following environment variables:"
+echo "BASE_IMAGE(ubuntu-xenial,ubuntu-bionic,centos6,centos7)=${BASE_IMAGE}"
+echo "COMPILER(spack-spec)=${COMPILER}"
+echo "DEPVERS(filename-base)=${DEPVERS}"
+echo "PARALLELISM(int)=${PARALLELISM}"
+echo "SPACK_INSTALL_ARGS(args)=${SPACK_INSTALL_ARGS}"
 
 docker run --rm \
-    -v "${PWD}:/opt/spack-pdi" \
+    -v "${PWD}:/opt/spack-pdi:ro" \
+    -e "PDI_SPACK_REPO=/opt/spack-pdi" \
+    -e "PDI_DEPS_DIR=/opt/spack-pdi/tests" \
     -e "COMPILER=${COMPILER}" \
     -e "DEPVERS=${DEPVERS}" \
     -e "PARALLELISM=${PARALLELISM}" \

@@ -22,22 +22,36 @@ do_spack_pinstall ()
 
 
 echo -e "\n\n******* Handling configuration *******\n"
+# compiler if not specified
+COMPILER="${COMPILER:-gcc}"
+# dependency set if not specified
+DEPVERS="${DEPVERS:-mpich-latest}"
+# parallelism if not specified 
+PARALLELISM="${PARALLELISM:-1}"
+# spack install arguments if not specified
+SPACK_INSTALL_ARGS="${SPACK_INSTALL_ARGS:-"--show-log-on-error --fail-fast"}"
+# path to PDI spack repository if not specified
 PDI_SPACK_REPO="${PDI_SPACK_REPO:-/opt/spack-pdi}"
-PDI_ENVS_DIR="${PDI_ENVS_DIR:-${PDI_SPACK_REPO}/tests}"
-echo "PDI_SPACK_REPO=${PDI_SPACK_REPO}"
-echo "PDI_ENVS_DIR=${PDI_ENVS_DIR}"
+# path to the dependency set files if not specified
+PDI_DEPS_DIR="${PDI_DEPS_DIR:-${PDI_SPACK_REPO}/tests}"
+# path to spack work directory if not specified
+SPACK_WORKDIR="${SPACK_WORKDIR:-/opt/spackwd}"
 echo "COMPILER=${COMPILER}"
-echo "PARALLELISM=${PARALLELISM}"
 echo "DEPVERS=${DEPVERS}"
+echo "PARALLELISM=${PARALLELISM}"
 echo "SPACK_INSTALL_ARGS=${SPACK_INSTALL_ARGS}"
+echo "PDI_SPACK_REPO=${PDI_SPACK_REPO}"
+echo "PDI_DEPS_DIR=${PDI_DEPS_DIR}"
+echo "SPACK_WORKDIR=${SPACK_WORKDIR}"
 
 
 echo -e "\n\n******* Adding required spack repositories *******\n"
-git clone https://github.com/leobago/fti-spack /opt/spack-fti
-spack repo add /opt/spack-fti
-git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git /opt/spack-SIONlib
-spack repo add /opt/spack-SIONlib
-spack repo add /opt/spack-pdi
+mkdir -p "${SPACK_WORKDIR}/repos"
+git clone https://github.com/leobago/fti-spack ${SPACK_WORKDIR}/repos/fti
+spack repo add "${SPACK_WORKDIR}/repos/fti"
+git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git "${SPACK_WORKDIR}/repos/SIONlib"
+spack repo add "${SPACK_WORKDIR}/repos/SIONlib"
+spack repo add "${PDI_SPACK_REPO}"
 
 
 echo -e "\n\n******* Checking if install is required for ${COMPILER} *******\n"
@@ -64,15 +78,27 @@ else
 fi
 
 echo -e "\n\n******* Setting up environment *******\n"
-mkdir /opt/spack-environment
-cd /opt/spack-environment
-cp /opt/spack-pdi/tests/${DEPVERS}.yaml spack.yaml
+mkdir -p "${SPACK_WORKDIR}/environment"
+cd "${SPACK_WORKDIR}/environment"
+cp "${PDI_DEPS_DIR}/${DEPVERS}.yaml" spack.yaml
 echo '  concretization: together' >> spack.yaml
 spack env activate .
-spack config add config:install_tree:root:/opt/software
-spack config add config:view:/opt/view
+# spack config add config:install_tree:root:/opt/software
+# spack config add config:view:/opt/view
 spack config add "packages:all:compiler:[${COMPILER}]"
-spack add pdiplugin-decl-hdf5@develop pdiplugin-decl-netcdf@develop pdiplugin-flowvr@develop pdiplugin-mpi@develop pdiplugin-pycall@develop pdiplugin-serialize@develop pdiplugin-set-value@develop pdiplugin-trace@develop pdiplugin-user-code@develop pdiplugin-decl-sion@develop pdiplugin-fti@develop
+spack add \
+    pdiplugin-decl-hdf5@develop~fortran \
+    pdiplugin-decl-netcdf@develop \
+    pdiplugin-flowvr@develop \
+    pdiplugin-mpi@develop \
+    pdiplugin-pycall@develop \
+    pdiplugin-serialize@develop \
+    pdiplugin-set-value@develop \
+    pdiplugin-trace@develop \
+    pdiplugin-user-code@develop \
+    pdiplugin-decl-sion@develop \
+    pdiplugin-fti@develop \
+    pdi@develop~fortran
 cat spack.yaml
 
 echo -e "\n\n******* Resolving dependencies *******\n"

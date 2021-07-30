@@ -23,7 +23,7 @@ jobs:
           - mpich-latest
           #- mpich-mini #TODO: try with latest first
         exclude:
-        # intel compiler relies on default centos7 gcc (@4.8.5) too old for PDI
+        #TODO:  intel compiler relies on default centos7 gcc (@4.8.5) too old for PDI
         - base_image: centos7
           compiler: intel
         # OpenMPI requires fortran support, not provided by clang
@@ -54,4 +54,4 @@ jobs:
           DEPVERS: ${{ matrix.depvers }}
           PARALLELISM: 2
         run: |
-          ./tests/test_install_in_docker "${BASE_IMAGE}" "${COMPILER}" "${DEPVERS}"
+          ./tests/test_install_in_docker
