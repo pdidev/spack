@@ -49,7 +49,7 @@ echo -e "\n\n******* Adding required spack repositories *******\n"
 mkdir -p "${SPACK_WORKDIR}/repos"
 git clone https://github.com/leobago/fti-spack ${SPACK_WORKDIR}/repos/fti
 spack repo add "${SPACK_WORKDIR}/repos/fti"
-git clone https://gitlab.version.fz-juelich.de/SIONlib/spack-repository.git "${SPACK_WORKDIR}/repos/SIONlib"
+git clone https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository.git "${SPACK_WORKDIR}/repos/SIONlib"
 spack repo add "${SPACK_WORKDIR}/repos/SIONlib"
 spack repo add "${PDI_SPACK_REPO}"
 
