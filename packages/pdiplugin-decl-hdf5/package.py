@@ -38,6 +38,8 @@ class PdipluginDeclHdf5(CMakePackage):
     depends_on('hdf5@1.8: +shared',      type=('build', 'link', 'run'), when='~mpi')
     depends_on('hdf5@1.8: +shared +mpi', type=('build', 'link', 'run'), when='+mpi')
     depends_on('pdi@develop',            type=('link', 'run'),          when='@develop')
+    depends_on('pdi@1.3.1',              type=('link', 'run'),          when='@1.3.1')
+    depends_on('pdi@1.3.0',              type=('link', 'run'),          when='@1.3.0')
     depends_on('pdi@1.2.2',              type=('link', 'run'),          when='@1.2.2')
     depends_on('pdi@1.2.1',              type=('link', 'run'),          when='@1.2.1')
     depends_on('pdi@1.2.0',              type=('link', 'run'),          when='@1.2.0')
