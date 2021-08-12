@@ -31,6 +31,8 @@ class PdipluginTrace(CMakePackage):
     
     depends_on('cmake@3.5:',  type=('build'))
     depends_on('pdi@develop', type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.3.1',   type=('link', 'run'), when='@1.3.1')
+    depends_on('pdi@1.3.0',   type=('link', 'run'), when='@1.3.0')
     depends_on('pdi@1.2.2',   type=('link', 'run'), when='@1.2.2')
     depends_on('pdi@1.2.1',   type=('link', 'run'), when='@1.2.1')
     depends_on('pdi@1.2.0',   type=('link', 'run'), when='@1.2.0')
