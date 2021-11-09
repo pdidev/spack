@@ -2,7 +2,7 @@ name: "validate in docker"
 on:
   pull_request:
   push:
-    branches: [ stable ]
+    branches: [ stable  ]
 jobs:
   build_in_docker:
     runs-on: ubuntu-20.04
