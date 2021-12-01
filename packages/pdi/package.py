@@ -21,6 +21,10 @@ class Pdi(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.4.3',   sha256='b7f049cae9e6fb0ddba3a458e15d6f1578876663c04b18f62b052f9698750974')
+    version('1.4.2',   sha256='b252d5098f3b13b5d883265597f567aa0aa423c95fe4a10554772d485ce37e86')
+    version('1.4.1',   sha256='55e17629ca373232a8a2530c4ad83403729c74fbe4fcbcfc32e8128800cb40a4')
+    version('1.4.0',   sha256='1c273d39df14f44ccb3e6d0fc36f88c19fff7a3f819e7d6d6c80b5ac9eed033b')
     version('1.3.1',   sha256='a4a1f9d4d6ca6790487edf65e3d7c9f5a5d17fb0bcdf81dfab94efc854fcc387')
     version('1.3.0',   sha256='86947c40f025a09ab228360fa002f7241801f5fb70c75f815210d607cf30b200')
     version('1.2.2',   sha256='b93a9165d4b9f1e09790c9be3c950530537cf9a9dc01210afc77e411939bdf41')
@@ -42,8 +46,7 @@ class Pdi(CMakePackage):
     depends_on('doxygen@1.8.13:', type=('build'), when='+docs')
     depends_on('googletest@1.8.0: +gmock', type=('link'), when='+tests')
     depends_on('paraconf +shared', type=('link', 'run'), when='-fortran')
-    depends_on('paraconf +shared +fortran',
-               type=('link', 'run'), when='+fortran')
+    depends_on('paraconf +shared +fortran',type=('link', 'run'), when='+fortran')
     depends_on('pkgconfig', type=('build'))
     depends_on('python@3.7:', type=('build', 'link', 'run'), when='+python')
     depends_on('py-pybind11@2.3.0:', type=('link'), when='+python')
