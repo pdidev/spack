@@ -130,18 +130,17 @@ For example on Ruche, you can do:
 ```sh
 spack load gcc@9.2.0
 spack compiler find
-spack unload
+spack unload gcc@9.2.0
 ```
 
 
 
-#### Step #4: actually install
+#### Step #4: actually install Gysela
 
 Options for installation are :
-* `build_type=X` to specify build type. Values are `'Release', 'Timed', 'Deterministic', 'Debug' and 'Scorep'`, defaults to `Release`
-* `+pdi` for compilation with PDI for IOs default `off`
-* `+pycall` for use of the `pdi-pycall` plugin, requires `+pdi`.
-* `gysela_dir=/path/to/desired/installation/dir` defaults to `$HOME/gysela`.
+* `build_type=X` to specify build type. Values are `'Release', 'Timed', 'Deterministic', 'Debug' and 'Scorep'` (defaults to `Release`),
+* `+pdi` for compilation with PDI for IOs (defaults to `off`),
+* `gysela_dir=/path/to/desired/installation/dir` (defaults to `$HOME/gysela`).
 This information is also available by doing `spack info gysela`. 
 
 Add the correct options to `spack install gysela`
