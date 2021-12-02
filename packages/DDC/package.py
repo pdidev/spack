@@ -6,7 +6,7 @@
 from spack import *
 
 
-class DDC(CMakePackage):
+class Ddc(CMakePackage):
     """DDC is a domain decomposition library."""
 
     homepage = "https://github.com/Maison-de-la-Simulation/ddc"
