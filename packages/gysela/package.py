@@ -34,7 +34,7 @@ class Gysela(CMakePackage):
     
     homepage = "https://gyseladoc.gforge.inria.fr"
     url = "https://gitlab.maisondelasimulation.fr/gysela-developpers/gysela/-/archive/release-v37.0/gysela-release-v37.0.tar.gz"
-    git = "https://gitlab.maisondelasimulation.fr/gysela-developpers/gysela.git"
+    git = "git@gitlab.maisondelasimulation.fr:gysela-developpers/gysela.git"
     
     version('develop', branch='master-spack', no_cache=True)
     # version('37.0',  sha256='0cab6b92de1d976f5c15f64272e41dcf93536860dce25e70084f86254571e0b8') Comes with its own Zpp,
