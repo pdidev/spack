@@ -60,7 +60,7 @@ class Gysela(CMakePackage):
 
     depends_on('pdi +fortran +python',             type=('build','link','run'), when='+pdi')
     depends_on('pdiplugin-mpi',                    type=('link','run'), when='+pdi')
-    depends_on('pdiplugin-decl-hdf5',              type=('link','run'), when='+pdi')
+    depends_on('pdiplugin-decl-hdf5 ~mpi',         type=('link','run'), when='+pdi')
     depends_on('pdiplugin-set-value',              type=('link','run'), when='+pdi')
     depends_on('pdiplugin-trace',                  type=('link','run'), when='+pdi')
     depends_on('pdiplugin-user-code',              type=('link','run'), when='+pdi')
