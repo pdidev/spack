@@ -33,7 +33,7 @@ class Gysela(CMakePackage):
     field."""
     
     homepage = "https://gyseladoc.gforge.inria.fr"
-    url = "https://gitlab.maisondelasimulation.fr/gysela-developpers/gysela/-/archive/release-v37.0/gysela-release-v37.0.tar.gz"
+    # url = "https://gitlab.maisondelasimulation.fr/gysela-developpers/gysela/-/archive/release-v37.0/gysela-release-v37.0.tar.gz"
     git = "https://gitlab.maisondelasimulation.fr/gysela-developpers/gysela.git"
     
     version('develop', branch='master-spack', no_cache=True)
@@ -43,6 +43,7 @@ class Gysela(CMakePackage):
     
     variant('pdi',               default=False,     description='Build with PDI for IOs')
     variant('pycall',            default=False,     description='Build with PDI and the pycall plugin, requires "+pdi"')
+    variant('deisa',             default=False,     description='Build with deisa PDI plugin')
     variant('build_type',        default='Release', description='CMake build type',
             values=('Release', 'Timed', 'Deterministic', 'Debug', 'Scorep'))
     variant('gysela_dir', default= os.environ.get('HOME')+'/gysela', description = 'Where to put gysela')
@@ -65,6 +66,7 @@ class Gysela(CMakePackage):
     depends_on('pdiplugin-trace',                  type=('link','run'), when='+pdi')
     depends_on('pdiplugin-user-code',              type=('link','run'), when='+pdi')
     depends_on('pdiplugin-pycall',                 type=('link','run'), when='+pycall')
+    depends_on('pdiplugin-deisa',                  type=('link','run'), when='+deisa') #Probably only needs run 
 
 
     
