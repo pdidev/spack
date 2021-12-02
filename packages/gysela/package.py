@@ -42,29 +42,24 @@ class Gysela(CMakePackage):
     
     
     variant('pdi',               default=False,     description='Build with PDI for IOs')
-    variant('pycall',            default=False,     description='Build with PDI and the pycall plugin, requires "+pdi"')
     variant('build_type',        default='Release', description='CMake build type',
             values=('Release', 'Timed', 'Deterministic', 'Debug', 'Scorep'))
     variant('gysela_dir', default= os.environ.get('HOME')+'/gysela', description = 'Where to put gysela')
-    # variant('Arch', default='default',description = 'Machine name')
     
     
-    depends_on('cmake@3.5:',                       type=('build'))
-    depends_on('mpi',                              type=('build','link','run'))
-    depends_on('lapack',                           type=('link','run')) 
-    
+    depends_on('cmake@3.5:',          type=('build'))
+    depends_on('mpi',                 type=('build','link','run'))
     # Has sometimes  issues when lapack is provided by open-blas. Use ^netlib-lapack or ^intel-mkl when calling spack install. 
-    
-    depends_on('zpp',                              type=('build'))
-    depends_on('py-numpy',                         type=('run')) # For validate_data only. 
-
-    depends_on('pdi +fortran +python',             type=('build','link','run'), when='+pdi')
-    depends_on('pdiplugin-mpi',                    type=('link','run'), when='+pdi')
-    depends_on('pdiplugin-decl-hdf5 ~mpi',         type=('link','run'), when='+pdi')
-    depends_on('pdiplugin-set-value',              type=('link','run'), when='+pdi')
-    depends_on('pdiplugin-trace',                  type=('link','run'), when='+pdi')
-    depends_on('pdiplugin-user-code',              type=('link','run'), when='+pdi')
-    depends_on('pdiplugin-pycall',                 type=('link','run'), when='+pycall')
+    depends_on('lapack',              type=('link','run')) 
+    depends_on('zpp',                 type=('build'))
+    depends_on('py-numpy',            type=('run')) # For validate_data only. 
+    depends_on('pdi +fortran',        type=('build','link','run'), when='+pdi')
+    depends_on('pdiplugin-decl-hdf5', type=('run'), when='+pdi')
+    depends_on('pdiplugin-mpi',       type=('run'), when='+pdi')
+    depends_on('pdiplugin-pycall',    type=('run'), when='+pdi')
+    depends_on('pdiplugin-set-value', type=('run'), when='+pdi')
+    depends_on('pdiplugin-trace',     type=('run'), when='+pdi')
+    depends_on('pdiplugin-user-code', type=('run'), when='+pdi')
 
 
     
@@ -75,12 +70,11 @@ class Gysela(CMakePackage):
 
         stage_dir = str(self.stage.source_path)
         
-        toolchain_file=os.path.join(stage_dir, 'cmake', 'archs', 'default.cmake')
+        #toolchain_file=os.path.join(stage_dir, 'cmake', 'archs', 'default.cmake')
         args = [
             '-Wno-dev',
-            '-DUSE_PDI={:s}'.format('ON' 
-                if '+pdi' in self.spec or '+pdi-pycall' in self.spec else 'OFF'),
-             '-DCMAKE_TOOL_CHAIN_FILE={:s}'.format(toolchain_file),
+            '-DUSE_PDI={:s}'.format('ON' if '+pdi' in self.spec else 'OFF'),
+             #'-DCMAKE_TOOL_CHAIN_FILE={:s}'.format(toolchain_file),
         ]
         return args
 
