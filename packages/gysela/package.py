@@ -33,26 +33,36 @@ class Gysela(CMakePackage):
     field."""
     
     homepage = "https://gyseladoc.gforge.inria.fr"
+
     url = "https://gitlab.maisondelasimulation.fr/gysela-developpers/gysela/-/archive/release-v37.0/gysela-release-v37.0.tar.gz"
     git = "git@gitlab.maisondelasimulation.fr:gysela-developpers/gysela.git"
+
     
     version('develop', branch='master-spack', no_cache=True)
     # version('37.0',  sha256='0cab6b92de1d976f5c15f64272e41dcf93536860dce25e70084f86254571e0b8') Comes with its own Zpp,
     # Doesn't work because of shebang limit. 
     
     
-    variant('pdi',               default=False,     description='Build with PDI for IOs')
-    variant('build_type',        default='Release', description='CMake build type',
+    variant('pdi',               default=False,                             description='Build with PDI for IOs')
+    variant('deisa',             default=False,                             description='Build with the deisa PDI plugin')
+    variant('numpy',             default=True,                              description='Link to numpy for validate_data')             
+    variant('gysela_dir',        default= os.environ.get('HOME')+'/gysela', description='Where to put gysela')
+
+    variant('build_type',        default='Release',                         description='CMake build type',
             values=('Release', 'Timed', 'Deterministic', 'Debug', 'Scorep'))
-    variant('gysela_dir', default= os.environ.get('HOME')+'/gysela', description = 'Where to put gysela')
+    
     
     
     depends_on('cmake@3.5:',          type=('build'))
     depends_on('mpi',                 type=('build','link','run'))
     # Has sometimes  issues when lapack is provided by open-blas. Use ^netlib-lapack or ^intel-mkl when calling spack install. 
+
     depends_on('lapack',              type=('link','run')) 
     depends_on('zpp',                 type=('build'))
+    depends_on('hdf5',                type=('link','run'))
+
     depends_on('py-numpy',            type=('run')) # For validate_data only. 
+
     depends_on('pdi +fortran',        type=('build','link','run'), when='+pdi')
     depends_on('pdiplugin-decl-hdf5', type=('run'), when='+pdi')
     depends_on('pdiplugin-mpi',       type=('run'), when='+pdi')
@@ -60,6 +70,8 @@ class Gysela(CMakePackage):
     depends_on('pdiplugin-set-value', type=('run'), when='+pdi')
     depends_on('pdiplugin-trace',     type=('run'), when='+pdi')
     depends_on('pdiplugin-user-code', type=('run'), when='+pdi')
+    depends_on('pdiplugin-deisa',     type=('link','run'), when='+deisa') #Probably only needs run 
+
 
 
     
@@ -74,6 +86,7 @@ class Gysela(CMakePackage):
         args = [
             '-Wno-dev',
             '-DUSE_PDI={:s}'.format('ON' if '+pdi' in self.spec else 'OFF'),
+            '-DHDF5_USE_EMBEDDED=OFF',
              #'-DCMAKE_TOOL_CHAIN_FILE={:s}'.format(toolchain_file),
         ]
         return args
