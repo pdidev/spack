@@ -46,7 +46,7 @@ This will let spack use the already installed packages when it sees fit, which i
 You can however force spack to use already installed package by using the flag `--reuse` when calling `spack install`.
 
 
-**For example on Ruche**, you can do:
+**For example on [Ruche](https://mesocentre.pages.centralesupelec.fr/user_doc/ruche/09_softwares/)**, you can do:
 ```sh
 cat<<EOF > spack/etc/spack/defaults/upstreams.yaml
 upstreams:
@@ -97,7 +97,7 @@ This can be done automatically by calling `spack compiler find` when the compile
 This is needed if you want to use the Intel compilers. 
 
 
-**For example on Ruche**, you can do:
+**For example on [Ruche](https://mesocentre.pages.centralesupelec.fr/user_doc/ruche/09_softwares/)**, you can do:
 ```sh
 spack load gcc@9.2.0
 spack compiler find
@@ -134,6 +134,8 @@ spack install deisa
 
 ### Gysela
 
+#### Gysela Options
+
 Before installing Gysela, you choose select the set of options that suit you:
 * `build_type=X` to specify build type, valid values are `'Release', 'Timed', 'Deterministic', 'Debug' and 'Scorep'` (defaults to `Release`),
 * `+pdi` for compilation with PDI for IOs (defaults to `off`),
@@ -141,7 +143,15 @@ Before installing Gysela, you choose select the set of options that suit you:
 This information is also available by doing `spack info gysela`. 
 
 Gysela sometimes has issues when lapack is provided by open-blas.
-It is thus recommended to use `^netlib-lapack` or `^intel-mkl` when calling spack install. 
+It is thus recommended to use `^intel-mkl` (or `^netlib-lapack`) when calling spack install.
+
+To check what you will actually install, you can run:
+```sh
+# Get info about what you will install with Gysela
+spack solve ${YOUR_OPTIONS} gysela
+```
+
+#### Gysela Installation proper
 
 **Warning:** 
 Since Gysela is not publicly available for download, you will need a ssh key properly installed to download it.
@@ -152,24 +162,15 @@ You can install Gysela using the following instructions after you've [done the s
 spack install ${YOUR_OPTIONS} gysela
 ```
 
-To check what you will actually install, you can run:
-```sh
-# Get info about what you will install with Gysela
-spack solve ${YOUR_OPTIONS} gysela
-```
 
-
-**For example on Ruche**, you can do:
+**For example on [Ruche](https://mesocentre.pages.centralesupelec.fr/user_doc/ruche/09_softwares/)**, you can do:
 ```sh
 # Install Gysela
 export GYSELA_INSTALLDIR="${HOME}/gysela_spack"
 spack install --reuse "gysela gysela_dir=${GYSELA_INSTALLDIR} %gcc@9.2.0 +pdi ^netlib-lapack"
 ```
 
-Then go on to the next section to run Gysela.
-
-
-#### run the spack-installed Gysela
+#### Execution of spack-installed Gysela
 
 To actually run Gysela you need to move to the installation directory selected in the previous section and load the module.
 
