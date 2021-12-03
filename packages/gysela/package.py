@@ -32,16 +32,19 @@ class Gysela(CMakePackage):
     computing ions advections and a Poisson solver for computing the magnetic
     field."""
     
+    
     homepage = "https://gyseladoc.gforge.inria.fr"
     url = "https://gitlab.maisondelasimulation.fr/gysela-developpers/gysela/-/archive/release-v37.0/gysela-release-v37.0.tar.gz"
     git = "git@gitlab.maisondelasimulation.fr:gysela-developpers/gysela.git"
     
+    
     version('develop', branch='master-spack', no_cache=True)
+    # 37.0 Doesn't work because of shebang limit. 
     # version('37.0',  sha256='0cab6b92de1d976f5c15f64272e41dcf93536860dce25e70084f86254571e0b8') Comes with its own Zpp,
-    # Doesn't work because of shebang limit. 
     
     
     variant('pdi',               default=False,     description='Build with PDI for IOs')
+    variant('deisa',             default=False,     description='Build with deisa PDI plugin')
     variant('build_type',        default='Release', description='CMake build type',
             values=('Release', 'Timed', 'Deterministic', 'Debug', 'Scorep'))
     variant('gysela_dir', default= os.environ.get('HOME')+'/gysela', description = 'Where to put gysela')
@@ -60,23 +63,21 @@ class Gysela(CMakePackage):
     depends_on('pdiplugin-set-value', type=('run'), when='+pdi')
     depends_on('pdiplugin-trace',     type=('run'), when='+pdi')
     depends_on('pdiplugin-user-code', type=('run'), when='+pdi')
+    depends_on('pdiplugin-deisa',     type=('link','run'), when='+deisa') #Probably only needs run 
 
 
-    
     root_cmakeslists_dir = 'src'
+    
 
     def cmake_args(self):
-        
-
         stage_dir = str(self.stage.source_path)
         
-        #toolchain_file=os.path.join(stage_dir, 'cmake', 'archs', 'default.cmake')
         args = [
             '-Wno-dev',
             '-DUSE_PDI={:s}'.format('ON' if '+pdi' in self.spec else 'OFF'),
-             #'-DCMAKE_TOOL_CHAIN_FILE={:s}'.format(toolchain_file),
         ]
         return args
+    
 
     def install(self, spec, prefix):
         """Make the install targets"""

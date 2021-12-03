@@ -172,7 +172,7 @@ export GYSELA_INSTALLDIR="${HOME}/gysela_spack"
 spack install --reuse "gysela gysela_dir=${GYSELA_INSTALLDIR} %gcc@9.2.0 +pdi ^netlib-lapack"
 ```
 
-Then go on to the next section to run Gysela
+Then go on to the next section to run Gysela.
 
 
 ## Step #5: running the spack-installed Gysela
