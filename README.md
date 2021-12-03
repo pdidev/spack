@@ -1,10 +1,10 @@
 # PDI spack repository
 
 This is a [spack](https://spack.io/) repository with recipes for:
-* [DDC](https://github.com/Maison-de-la-Simulation/ddc),
-* Deisa,
-* [Gysela](https://gyselax.github.io/).
-* [PDI](https://pdi.dev) and its plugins,
+[DDC](https://github.com/Maison-de-la-Simulation/ddc),
+Deisa,
+[Gysela](https://gyselax.github.io/),
+[PDI](https://pdi.dev) and its plugins.
 
 Each of thiese can be installed in a few simple steps:
 1. [setup spack](#step-1-setup),
