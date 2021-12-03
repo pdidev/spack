@@ -1,9 +1,20 @@
 # PDI spack repository
 
-This is a [spack](https://spack.io/) repository with recipes for 
-* [PDI](pdi.dev),
-* its plugins and dependencies,
+This is a [spack](https://spack.io/) repository with recipes for:
+* Deisa,
+* [DDC](https://github.com/Maison-de-la-Simulation/ddc),
+* [PDI](https://pdi.dev) and its plugins,
 * [Gysela](https://gyselax.github.io/).
+
+Each of thiese can be installed in a few simple steps:
+1. [setup spack](#step-1-setup),
+2. [(optional): reuse already installed packages](#step-2-optional-reuse-already-installed-packages),
+3. [(optional): reuse already installed compilers](#step-3-optional-reuse-already-installed-compilers),
+4. [install](#step-4-installation):
+   * [install PDI and most of its plugins](#pdi),
+     - [PDI Decl'SION plugin](#declsion),
+     - [PDI FTI plugin](#fti),
+   * [Gysela](#gysela).
 
 
 ## Step #1: Setup
@@ -19,9 +30,9 @@ spack repo add spack/var/spack/repos/pdi
 ```
 
 
-## Step #2 (optional): reuse existing packages
+## Step #2 (optional): reuse already installed packages
 
-### Option #2.1: Reuse existing packages on super-computers that use spack
+### Option #2.1: Reuse already installed packages on super-computers that use spack
 
 You can tell your local spack instance that there is an upstream spack instance by editing `spack/etc/spack/defaults/upstreams.yaml`.
 ```yaml
@@ -43,7 +54,7 @@ EOF
 ```
 
 
-### Option #2.2: Reuse existing packages on super-computers that do not use spack
+### Option #2.2: Reuse already installed packages on super-computers that does not use spack
 
 If there are packages already present on the machine that you want spack to use _e.g._ MPI, you can specify them as externals through the `packages.yaml` file found in either in a Spack installation’s `etc/spack/` or a user’s `~/.spack/` directory.  Here’s an example of an external configuration:
 ```yaml
@@ -60,7 +71,7 @@ packages:
 Is it recommended to only put MPI implementations, CMake and `openssl` as externals and let spack take care of the rest.
 
 
-## Step #3 (optional): use existing compilers
+## Step #3 (optional): reuse already installed compilers
 
 For compilers, you can specify them in the user's `~/.spack/linux/compilers.yaml`. 
 ```yaml
