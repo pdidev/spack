@@ -1,6 +1,6 @@
 from spack import *
 
-class PdiPluginDeisa(CMakePackage):
+class PdipluginDeisa(CMakePackage):
     
     
     git = 'https://github.com/GueroudjiAmal/deisa.git'
