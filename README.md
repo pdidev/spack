@@ -42,7 +42,8 @@ upstreams:
   name-of-spack-instance:
     install_tree: /path/to/spack/opt/spack
 ```
-This will let spack use the already installed packages when it sees fit, which is almost never.
+
+This will let spack use the already installed packages when it sees fit, (which is almost never).
 You can however force spack to use already installed package by using the flag `--reuse` when calling `spack install`.
 
 
@@ -50,7 +51,7 @@ You can however force spack to use already installed package by using the flag `
 ```sh
 cat<<EOF > spack/etc/spack/defaults/upstreams.yaml
 upstreams:
-  name-of-spack-instance:
+  ruche-system:
     install_tree: /gpfs/softs/spack/opt/spack/
 EOF
 ```
