@@ -11,10 +11,10 @@ Each of thiese can be installed in a few simple steps:
 2. [(optional): reuse already installed packages](#step-2-optional-reuse-already-installed-packages),
 3. [(optional): reuse already installed compilers](#step-3-optional-reuse-already-installed-compilers),
 4. [install](#step-4-installation):
-   * [install PDI and most of its plugins](#pdi),
-     - [PDI Decl'SION plugin](#declsion),
-     - [PDI FTI plugin](#fti),
-   * [Gysela](#gysela).
+   * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
+     - [install PDI Decl'SION plugin](#pdi-declsion-plugin),
+     - [install PDI FTI plugin](#pdi-fti-plugin),
+   * [install Gysela](#gysela).
 
 
 ## Step #1: Setup
@@ -106,10 +106,10 @@ spack unload gcc@9.2.0
 ## Step #4: Installation
 
 Then depending on what you want to install, go to the following:
-* [install PDI and most of its plugins](#pdi),
-* [PDI Decl'SION plugin](#declsion),
-* [PDI FTI plugin](#fti),
-* [Gysela](#gysela).
+* [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
+  - [install PDI Decl'SION plugin](#pdi-declsion-plugin),
+  - [install PDI FTI plugin](#pdi-fti-plugin),
+* [install Gysela](#gysela).
 
 
 ### PDI and most of its plugins
