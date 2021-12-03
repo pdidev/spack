@@ -1,20 +1,22 @@
 # PDI spack repository
 
 This is a [spack](https://spack.io/) repository with recipes for:
-* Deisa,
 * [DDC](https://github.com/Maison-de-la-Simulation/ddc),
-* [PDI](https://pdi.dev) and its plugins,
+* Deisa,
 * [Gysela](https://gyselax.github.io/).
+* [PDI](https://pdi.dev) and its plugins,
 
 Each of thiese can be installed in a few simple steps:
 1. [setup spack](#step-1-setup),
 2. [(optional): reuse already installed packages](#step-2-optional-reuse-already-installed-packages),
 3. [(optional): reuse already installed compilers](#step-3-optional-reuse-already-installed-compilers),
 4. [install](#step-4-installation):
+   * [install Gysela](#gysela),
+   * [install DDC](#ddc),
+   * [install Deisa](#deisa),
    * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
      - [install PDI Decl'SION plugin](#pdi-declsion-plugin),
      - [install PDI FTI plugin](#pdi-fti-plugin),
-   * [install Gysela](#gysela).
 
 
 ## Step #1: Setup
@@ -112,40 +114,21 @@ Then depending on what you want to install, go to the following:
 * [install Gysela](#gysela).
 
 
-### PDI and most of its plugins
+### DDC
 
-You can install PDI and most of its plugins using the following instructions after you've [done the setup](#setup):
+You can install DDC using the following instructions after you've [done the setup](#setup):
 ```sh
-# Install PDI and most of its plugins
-spack install pdiplugin-decl-hdf5 pdiplugin-decl-netcdf pdiplugin-flowvr pdiplugin-mpi pdiplugin-pycall pdiplugin-serialize pdiplugin-set-value pdiplugin-trace pdiplugin-user-code
-```
-
-If you only need some of the plugins, you can adapt the last line.
-
-
-### PDI Decl'SION plugin
-
-PDI Decl'SION plugin depends on the [SIONlib recipe](https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository).
-To install it, you need to use the following instructions after you've [done the setup](#setup):
-```sh
-# 1. Get SIONlib spack repo
-git clone https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository.git spack/var/spack/repos/SIONlib
-spack repo add spack/var/spack/repos/SIONlib
-# 2. Install decl-sion plugin
-spack install pdiplugin-decl-sion
+# Install DDC
+spack install ddc
 ```
 
 
-### PDI FTI plugin
+### Deisa
 
-PDI FTI plugin depends on the [FTI recipe](https://github.com/leobago/fti-spack).
-To install it, you need to use the following instructions after you've [done the setup](#setup):
+You can install Deisa using the following instructions after you've [done the setup](#setup):
 ```sh
-# 1. Get SIONlib spack repo
-git clone https://github.com/leobago/fti-spack spack/var/spack/repos/FTI
-spack repo add spack/var/spack/repos/FTI
-# 2. Install fti plugin
-spack install pdiplugin-fti
+# Install Deisa
+spack install deisa
 ```
 
 
@@ -186,7 +169,7 @@ spack install --reuse "gysela gysela_dir=${GYSELA_INSTALLDIR} %gcc@9.2.0 +pdi ^n
 Then go on to the next section to run Gysela.
 
 
-## Step #5: running the spack-installed Gysela
+#### run the spack-installed Gysela
 
 To actually run Gysela you need to move to the installation directory selected in the previous section and load the module.
 
@@ -197,4 +180,41 @@ cd "${GYSELA_INSTALLDIR}/wk"
 spack load gysela
 # now you can run
 ./subgys
+```
+
+
+### PDI and most of its plugins
+
+You can install PDI and most of its plugins using the following instructions after you've [done the setup](#setup):
+```sh
+# Install PDI and most of its plugins
+spack install pdiplugin-decl-hdf5 pdiplugin-decl-netcdf pdiplugin-flowvr pdiplugin-mpi pdiplugin-pycall pdiplugin-serialize pdiplugin-set-value pdiplugin-trace pdiplugin-user-code
+```
+
+If you only need some of the plugins, you can adapt the last line.
+
+
+#### PDI Decl'SION plugin
+
+PDI Decl'SION plugin depends on the [SIONlib recipe](https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository).
+To install it, you need to use the following instructions after you've [done the setup](#setup):
+```sh
+# 1. Get SIONlib spack repo
+git clone https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository.git spack/var/spack/repos/SIONlib
+spack repo add spack/var/spack/repos/SIONlib
+# 2. Install decl-sion plugin
+spack install pdiplugin-decl-sion
+```
+
+
+#### PDI FTI plugin
+
+PDI FTI plugin depends on the [FTI recipe](https://github.com/leobago/fti-spack).
+To install it, you need to use the following instructions after you've [done the setup](#setup):
+```sh
+# 1. Get SIONlib spack repo
+git clone https://github.com/leobago/fti-spack spack/var/spack/repos/FTI
+spack repo add spack/var/spack/repos/FTI
+# 2. Install fti plugin
+spack install pdiplugin-fti
 ```
