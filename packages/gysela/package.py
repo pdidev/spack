@@ -47,7 +47,6 @@ class Gysela(CMakePackage):
     variant('deisa',             default=False,                             description='Build with the deisa PDI plugin')
     variant('numpy',             default=True,                              description='Link to numpy for validate_data')             
     variant('gysela_dir',        default= os.environ.get('HOME')+'/gysela', description='Where to put gysela')
-
     variant('build_type',        default='Release',                         description='CMake build type',
             values=('Release', 'Timed', 'Deterministic', 'Debug', 'Scorep'))
     
@@ -61,7 +60,7 @@ class Gysela(CMakePackage):
     depends_on('zpp',                 type=('build'))
     depends_on('hdf5',                type=('link','run'))
 
-    depends_on('py-numpy',            type=('run')) # For validate_data only. 
+    depends_on('py-numpy',            type=('run'), when='+numpy') # For validate_data only. 
 
     depends_on('pdi +fortran',        type=('build','link','run'), when='+pdi')
     depends_on('pdiplugin-decl-hdf5', type=('run'), when='+pdi')
@@ -100,7 +99,7 @@ class Gysela(CMakePackage):
                 inspect.getmodule(self).ninja(*self.install_targets)
             
             # With how the CMAKE/MAKE are done for gysela, everything gets lost in spack's temporary staging dirs.
-            # This piece of code ensures that the would git (not including the build dir) is available in the user
+            # This piece of code ensures that the whole git (not including the build dir) is available in the user
             # specified path with gysela_dir=/path/to/desired/install/dir/.
 
             # target directory
