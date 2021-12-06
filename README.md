@@ -120,7 +120,7 @@ Then depending on what you want to install, go to the following:
 You can install DDC using the following instructions after you've [done the setup](#setup):
 ```sh
 # Install DDC
-spack install ddc
+spack install DDC
 ```
 
 

@@ -19,8 +19,21 @@ class Ddc(CMakePackage):
 
     version('main', branch='main', submodules=True)
 
+    variant('tests', default=True, description='Build the tests')
+    variant('benchmarks', default=False, description='Build the benchmarks')
+    variant('pdi_wrapper', default=True, description='Build the PDI wrapper')
+
     depends_on("cmake@3.15:", type='build')
     depends_on("mdspan")
-    depends_on("pdi")
-    depends_on("googletest", type='test')
-    depends_on("benchmark", type='test')
+    depends_on("pdi", when='+pdi_wrapper')
+    depends_on("googletest", type='test', when='+tests')
+    depends_on("benchmark", type='test', when='+benchmarks')
+
+    def cmake_args(self):
+        args = [
+            self.define_from_variant('BUILD_TESTING', 'tests'),
+            self.define_from_variant('BUILD_BENCHMARKS', 'benchmarks'),
+            self.define_from_variant('DDC_BUILD_PDI_WRAPPER', 'pdi_wrapper')
+        ]
+
+        return args
