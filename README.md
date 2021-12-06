@@ -117,7 +117,7 @@ Then depending on what you want to install, go to the following:
 
 ### DDC
 
-You can install DDC using the following instructions after you've [done the setup](#setup):
+You can install [DDC](https://github.com/Maison-de-la-Simulation/ddc) using the following instructions after you've [done the setup](#setup):
 ```sh
 # Install DDC
 spack install ddc
