@@ -4,6 +4,7 @@ This is a [spack](https://spack.io/) repository with recipes for:
 [DDC](https://github.com/Maison-de-la-Simulation/ddc),
 Deisa,
 [Gysela](https://gyselax.github.io/),
+[layout-contiguous](https://github.com/Maison-de-la-Simulation/layout-contiguous),
 [PDI](https://pdi.dev) and its plugins.
 
 Each of thiese can be installed in a few simple steps:
@@ -14,6 +15,7 @@ Each of thiese can be installed in a few simple steps:
    * [install Gysela](#gysela),
    * [install DDC](#ddc),
    * [install Deisa](#deisa),
+   * [install layout-contiguous](#layout-contiguous),
    * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
      - [install PDI Decl'SION plugin](#pdi-declsion-plugin),
      - [install PDI FTI plugin](#pdi-fti-plugin),
@@ -182,6 +184,15 @@ cd "${GYSELA_INSTALLDIR}/wk"
 spack load gysela
 # now you can run
 ./subgys
+```
+
+
+### layout-contiguous
+
+You can install [layout-contiguous](https://github.com/Maison-de-la-Simulation/layout-contiguous) using the following instructions after you've [done the setup](#setup):
+```sh
+# Install layout-contiguous
+spack install layout-contiguous
 ```
 
 
