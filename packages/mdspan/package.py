@@ -11,11 +11,9 @@ class Mdspan(CMakePackage):
 
     homepage = "https://github.com/Kokkos/mdspan"
     git = "https://github.com/Kokkos/mdspan.git"
-    url = "https://github.com/kokkos/mdspan/releases/tag/mdspan-0.2.0.tar.gz"
+    url = "https://github.com/kokkos/mdspan/archive/refs/tags/mdspan-0.2.0.tar.gz"
 
     maintainers = ['crtrott']
-
-    test_requires_compiler = True
 
     version('stable',  branch='stable', preferred=True)
     version('0.2.0', sha256='1ce8e2be0588aa6f2ba34c930b06b892182634d93034071c0157cb78fa294212', extension='tag.gz')
