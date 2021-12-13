@@ -10,7 +10,7 @@ Deisa,
 Each of thiese can be installed in a few simple steps:
 1. [setup spack](#step-1-setup),
 2. [(optional): reuse already installed packages](#step-2-optional-reuse-already-installed-packages),
-3. [(optional): reuse already installed compilers](#step-3-optional-reuse-already-installed-compilers),
+3. [(optional): setup a non-default compiler](#step-3-optional-setup-a-non-default-compiler),
 4. [install](#step-4-installation):
    * [install Gysela](#gysela),
    * [install DDC](#ddc),
@@ -76,7 +76,7 @@ packages:
 Is it recommended to only put MPI implementations, CMake and `openssl` as externals and let spack take care of the rest.
 
 
-## Step #3 (optional): reuse already installed compilers
+## Step #3 (optional): setup a non-default compiler
 
 For compilers, you can specify them in the user's `~/.spack/linux/compilers.yaml`. 
 ```yaml
