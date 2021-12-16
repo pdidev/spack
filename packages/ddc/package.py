@@ -17,7 +17,7 @@ class Ddc(CMakePackage):
 
     test_requires_compiler = True
 
-    version('main', branch='main', submodules=True)
+    version('main', branch='main')
 
     variant('tests', default=True, description='Build the tests')
     variant('benchmarks', default=False, description='Build the benchmarks')
@@ -31,9 +31,14 @@ class Ddc(CMakePackage):
 
     def cmake_args(self):
         args = [
+            '-DDDC_mdspan_DEPENDENCY_POLICY=INSTALLED',
             self.define_from_variant('BUILD_TESTING', 'tests'),
             self.define_from_variant('BUILD_BENCHMARKS', 'benchmarks'),
             self.define_from_variant('DDC_BUILD_PDI_WRAPPER', 'pdi_wrapper')
         ]
+        if '+tests' in self.spec:
+            args.append('-DDDC_GTest_DEPENDENCY_POLICY=INSTALLED')
+        if '+benchmarks' in self.spec:
+            args.append('-DDDC_benchmark_DEPENDENCY_POLICY=INSTALLED')
 
         return args
