@@ -18,7 +18,7 @@ class Ddc(CMakePackage):
     test_requires_compiler = True
 
     version('main', branch='main')
-    version('0.0.0', sha256='0d832e17266f87166eea25ea0b35644e319e751b36153cd2739e293a7dc75a80', extension='tag.gz')
+    version('0.0.0', sha256='0d832e17266f87166eea25ea0b35644e319e751b36153cd2739e293a7dc75a80', extension='tar.gz')
 
     variant('tests', default=True, description='Build the tests')
     variant('benchmarks', default=False, description='Build the benchmarks')

@@ -10,7 +10,7 @@ class LayoutContiguous(CMakePackage):
     maintainers = ['tpadioleau', 'jbigot']
 
     version('main',  branch='main')
-    version('0.1.0', sha256='33c9e7f63e787808363ae03b2003b2853553f476d0e2df9c69861d0df043256d', extension='tag.gz')
+    version('0.1.0', sha256='33c9e7f63e787808363ae03b2003b2853553f476d0e2df9c69861d0df043256d', extension='tar.gz')
 
     depends_on("cmake@3.21:", type='build')
     depends_on("mdspan@0.2:")
