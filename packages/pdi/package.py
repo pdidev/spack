@@ -48,10 +48,10 @@ class Pdi(CMakePackage):
     depends_on('paraconf@0.4.14: +shared', type=('link', 'run'), when='-fortran')
     depends_on('paraconf@0.4.14: +shared +fortran',type=('link', 'run'), when='+fortran')
     depends_on('pkgconfig', type=('build'))
-    depends_on('python@3.7:', type=('build', 'link', 'run'), when='+python')
+    depends_on('python@3.6:', type=('build', 'link', 'run'), when='+python')
     depends_on('py-pybind11@2.3.0:', type=('link'), when='+python')
     depends_on('spdlog@1.3.1:', type=('link', 'run'))
-    depends_on('zpp@1.0.8', type=('build'), when='+fortran')
+    depends_on('zpp@1.0.8:', type=('build'), when='+fortran')
 
     root_cmakelists_dir = 'pdi'
 
