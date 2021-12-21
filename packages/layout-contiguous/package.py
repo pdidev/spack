@@ -14,3 +14,11 @@ class LayoutContiguous(CMakePackage):
 
     depends_on("cmake@3.21:", type='build')
     depends_on("mdspan@0.2:")
+    depends_on("googletest", type='test')
+
+    def cmake_args(self):
+        args = [
+            self.define('BUILD_TESTING', True)
+        ]
+
+        return args
