@@ -16,6 +16,7 @@ class Zpp(PythonPackage):
 
     maintainers = ['jbigot']
 
+    version('1.0.15', sha256='33d49280ca0d8e5221faa4c694949647146d15f16dacc09c36f20e7c34831135')
     version('1.0.14', sha256='c52962a9d9c3aa28d513090ef327e05eccc7923473415d9dcbdacf22911d6c9f')
     version('1.0.13', sha256='c76985c172491667677eba01072656eb04a59791d8b6a4e396721eddb570c548')
     version('1.0.12', sha256='1fcc206096a144d24dd8cc7d2278d1eb4d0b4a5e2e3aa4936e7de30fe2d435ce')
