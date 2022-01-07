@@ -30,7 +30,7 @@ class Paraconf(CMakePackage):
 
     depends_on('cmake@3.5:',     type=('build'))
     depends_on('pkgconfig',      type=('build'))
-    depends_on('libyaml@0.2.2:', type=('link', 'run'))
+    depends_on('libyaml@0.1.7:', type=('link', 'run'))
 
     root_cmakelists_dir = 'paraconf'
 
