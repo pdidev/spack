@@ -111,10 +111,13 @@ spack unload gcc@9.2.0
 ## Step #4: Installation
 
 Then depending on what you want to install, go to the following:
+* [install Gysela](#gysela),
+* [install DDC](#ddc),
+* [install Deisa](#deisa),
+* [install layout-contiguous](#layout-contiguous),
 * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
   - [install PDI Decl'SION plugin](#pdi-declsion-plugin),
   - [install PDI FTI plugin](#pdi-fti-plugin),
-* [install Gysela](#gysela).
 
 
 ### DDC
@@ -139,19 +142,19 @@ spack install deisa
 
 #### Gysela Options
 
-Before installing Gysela, you choose select the set of options that suit you:
+Before installing Gysela, you choose select the set of options that suit you by adding elements to your spec:
 * `build_type=X` to specify build type, valid values are `'Release', 'Timed', 'Deterministic', 'Debug' and 'Scorep'` (defaults to `Release`),
 * `+pdi` for compilation with PDI for IOs (defaults to `off`),
 * `gysela_dir=/path/to/put/gysela` to choose where to install Gysela (defaults to `$HOME/gysela`).
 This information is also available by doing `spack info gysela`. 
 
 Gysela sometimes has issues when lapack is provided by open-blas.
-It is thus recommended to use `^intel-mkl` (or `^netlib-lapack`) when calling spack install.
+It is thus recommended to add `^intel-mkl` (or `^netlib-lapack`) when calling spack install.
 
 To check what you will actually install, you can run:
 ```sh
 # Get info about what you will install with Gysela
-spack solve ${YOUR_OPTIONS} gysela
+spack solve gysela ${SPEC_ELEMENTS}
 ```
 
 #### Gysela Installation proper
@@ -162,7 +165,7 @@ Since Gysela is not publicly available for download, you will need a ssh key pro
 You can install Gysela using the following instructions after you've [done the setup](#setup):
 ```sh
 # Install Gysela
-spack install ${YOUR_OPTIONS} gysela
+spack install gysela ${SPEC_ELEMENTS}
 ```
 
 
@@ -170,7 +173,7 @@ spack install ${YOUR_OPTIONS} gysela
 ```sh
 # Install Gysela
 export GYSELA_INSTALLDIR="${HOME}/gysela_spack"
-spack install --reuse gysela %gcc@9.2.0 +pdi "gysela_dir=${GYSELA_INSTALLDIR}" "^netlib-lapack"
+spack install --reuse gysela %gcc@9.2.0 +pdi "gysela_dir=${GYSELA_INSTALLDIR}" "^intel-mkl"
 ```
 
 #### Execution of spack-installed Gysela
