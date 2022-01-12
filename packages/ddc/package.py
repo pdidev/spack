@@ -22,6 +22,7 @@ class Ddc(CMakePackage):
 
     variant('tests', default=True, description='Build the tests')
     variant('benchmarks', default=False, description='Build the benchmarks')
+    variant('docs', default=False, description='Build the documentation')
     variant('pdi_wrapper', default=True, description='Build the PDI wrapper')
 
     depends_on("cmake@3.15:", type='build')
@@ -29,12 +30,17 @@ class Ddc(CMakePackage):
     depends_on("pdi", when='+pdi_wrapper')
     depends_on("googletest", type='test', when='+tests')
     depends_on("benchmark", type='test', when='+benchmarks')
+    depends_on('doxygen@1.8.13:', type='build', when='+docs')
+    depends_on('pdiplugin-decl-hdf5', type='run', when='+docs')
+    depends_on('pdiplugin-set-value', type='run', when='+docs')
+    depends_on('pdiplugin-trace', type='run', when='+docs')
 
     def cmake_args(self):
         args = [
             '-DDDC_mdspan_DEPENDENCY_POLICY=INSTALLED',
             self.define_from_variant('BUILD_TESTING', 'tests'),
             self.define_from_variant('BUILD_BENCHMARKS', 'benchmarks'),
+            self.define_from_variant('BUILD_DOCUMENTATION', 'docs'),
             self.define_from_variant('DDC_BUILD_PDI_WRAPPER', 'pdi_wrapper')
         ]
         if '+tests' in self.spec:
