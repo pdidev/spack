@@ -25,5 +25,5 @@ class Voicexx(CMakePackage):
     depends_on('pdiplugin-set-value', type='run')
     depends_on('pdiplugin-trace', type='run')
     depends_on("cmake@3.15:", type='build')
-    depends_on('googletest +gmock', type='test')
-    depends_on("benchmark", type='test', when='+benchmarks')
+    depends_on('googletest +gmock', type=('build', 'test'))
+    depends_on("benchmark", type=('build', 'test'), when='+benchmarks')
