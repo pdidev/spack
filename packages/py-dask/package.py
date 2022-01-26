@@ -14,7 +14,7 @@ class PyDask(PythonPackage):
 
     maintainers = ['skosukhin']
 
-    version('2021.11.2')
+    version('2021.11.2', sha256='e12bfe272928d62fa99623d98d0e0b0c045b33a47509ef31a22175aa5fd10917')
 
 
     variant('array',       default=True, description='Install requirements for dask.array')
