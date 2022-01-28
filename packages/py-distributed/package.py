@@ -21,7 +21,7 @@ class PyDistributed(PythonPackage):
         'distributed.http.scheduler', 'distributed.http.scheduler.prometheus',
         'distributed.http.worker', 'distributed.diagnostics'
     ]
-    version('deisa', branch = 'main', no_cache=True)
+    version('deisa', branch='main', no_cache=True)
 
 #    version('2021.6.2', sha256='d7d112a86ab049dcefa3b21fd1baea4212a2c03d22c24bd55ad38d21a7f5d148')
 #    version('2021.4.1', sha256='4c1b189ec5aeaf770c473f730f4a3660dc655601abd22899e8a0662303662168')
@@ -35,9 +35,11 @@ class PyDistributed(PythonPackage):
 
     depends_on('py-click@6.6:', type=('build', 'run'))
     depends_on('py-cloudpickle@0.2.2:', type=('build', 'run'), when='@:2.16.0')
-    depends_on('py-cloudpickle@1.3.0:', type=('build', 'run'), when='@2.17.0:2.20.0')
+    depends_on('py-cloudpickle@1.3.0:',
+               type=('build', 'run'), when='@2.17.0:2.20.0')
     depends_on('py-cloudpickle@1.5.0:', type=('build', 'run'), when='@2.21.0:')
-    depends_on('py-contextvars', type=('build', 'run'), when='@2020: ^python@:3.6')
+    depends_on('py-contextvars', type=('build', 'run'),
+               when='@2020: ^python@:3.6')
     depends_on('py-msgpack', type=('build', 'run'), when='@:2.10.0')
     depends_on('py-msgpack@0.6.0:', type=('build', 'run'), when='@2.11.0:')
     depends_on('py-psutil@5.0:', type=('build', 'run'))
@@ -52,7 +54,8 @@ class PyDistributed(PythonPackage):
     depends_on('py-zict@0.1.3:', type=('build', 'run'))
     depends_on('py-pyyaml', type=('build', 'run'))
     depends_on('py-futures', when='@:1 ^python@2.7:2.8', type=('build', 'run'))
-    depends_on('py-singledispatch', when='@:1 ^python@2.7:2.8', type=('build', 'run'))
+    depends_on('py-singledispatch', when='@:1 ^python@2.7:2.8',
+               type=('build', 'run'))
 
     def patch(self):
         filter_file('^dask .*', '', 'requirements.txt')

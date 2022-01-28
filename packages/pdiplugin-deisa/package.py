@@ -1,18 +1,19 @@
 from spack import *
 
+
 class PdipluginDeisa(CMakePackage):
-    
-    
+    """The Deisa plugin let one use Deisa through PDI."""
+
     git = 'https://github.com/GueroudjiAmal/deisa.git'
 
     version('develop', branch='master', no_cache=True)
 
-    depends_on('cmake@3.5:',         type=('build'))
+    depends_on('cmake@3.10:', type=('build'))
 
-    depends_on('pdi+python@1.4.3',     type=('link', 'run'))
-    depends_on('mpi',                  type=('build','link','run'))
+    depends_on('pdi+python@1.4.3', type=('link', 'run'))
+    depends_on('mpi', type=('build', 'link', 'run'))
     depends_on('py-distributed@deisa', type=('run'))
-    depends_on('py-dask',              type=('run'))
+    depends_on('py-dask@2021.11.2:', type=('run'))
 
     def cmake_args(self):
         args = [

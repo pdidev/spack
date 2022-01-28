@@ -32,9 +32,12 @@ class PdipluginDeclNetcdf(CMakePackage):
 
     variant('tests',   default=False, description='Build tests')
     
-    depends_on('cmake@3.5:',               type=('build'))
+    depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
+    depends_on('cmake@3.10:', type=('build'), when='+tests')
+    depends_on('cmake@3.5:', type=('build'), when='@:1.4.3')
     depends_on('googletest@1.8.0: +gmock', type=('link'),        when='@1.3: +tests')
-    depends_on('netcdf-c@4:4.999',         type=('link'))
+    depends_on('netcdf-c@4.6.0:4.999.999', type=('link'), when='@1.5.0:')
+    depends_on('netcdf-c@4.0.0:4.999.999', type=('link'), when='@:1.4.3')
     depends_on('pdi@develop',              type=('link', 'run'), when='@develop')
     depends_on('pdi@1.4.3',                type=('link', 'run'), when='@1.4.3')
     depends_on('pdi@1.4.2',                type=('link', 'run'), when='@1.4.2')

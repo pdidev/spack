@@ -33,7 +33,8 @@ class PdipluginFlowvr(CMakePackage):
 
     variant('tests', default=False, description='Build tests')
 
-    depends_on('cmake@3.5:',         type=('build'))
+    depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
+    depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
     depends_on('flowvr@2.3.2:2.999', type=('build'),       when='@0.6.6:')
     depends_on('flowvr@2.3:2.3.1',   type=('build'),       when='@:0.6.5')
     depends_on('freeglut',           type=('link'),        when='tests')
@@ -53,7 +54,7 @@ class PdipluginFlowvr(CMakePackage):
     depends_on('pdi@1.0.0',          type=('link', 'run'), when='@1.0.0')
     depends_on('pdi@0.6.5',          type=('link', 'run'), when='@0.6.5')
     depends_on('pkgconfig',          type=('build'))
-    depends_on('py-pyyaml',          type=('build', 'run'))
+    depends_on('py-py-pyyaml@3.12:', type=('build', 'run'))
 
     root_cmakelists_dir = 'plugins/flowvr'
 

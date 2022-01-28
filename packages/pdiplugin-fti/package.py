@@ -32,8 +32,10 @@ class PdipluginFti(CMakePackage):
 
     variant('tests',   default=False, description='Build tests')
     
-    depends_on('cmake@3.5:',      type=('build'))
-    depends_on('fti@1.5:1.999',   type=('link'))
+    depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
+    depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
+    depends_on('fti@1.6:1.999', type=('link'), when='@1.5.0:')
+    depends_on('fti@1.5:1.999', type=('link'), when='@:1.4.3')
     depends_on('pdi@develop',     type=('link', 'run'), when='@develop')
     depends_on('pdi@1.4.3',       type=('link', 'run'), when='@1.4.3')
     depends_on('pdi@1.4.2',       type=('link', 'run'), when='@1.4.2')

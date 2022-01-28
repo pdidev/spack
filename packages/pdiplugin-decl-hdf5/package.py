@@ -37,10 +37,13 @@ class PdipluginDeclHdf5(CMakePackage):
     variant('tests',   default=False, description='Build tests')
     variant('mpi',     default=True,  description='Enable MPI')
 
-    depends_on('cmake@3.5:',               type=('build'))
-    depends_on('googletest@1.8.0: +gmock', type=('link'),                 when='@1.3: +tests')
-    depends_on('hdf5@1.8: +shared',        type=('build', 'link', 'run'), when='~mpi')
-    depends_on('hdf5@1.8: +shared +mpi',   type=('build', 'link', 'run'), when='+mpi')
+    depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
+    depends_on('cmake@3.10:', type=('build'), when='+tests')
+    depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
+    depends_on('googletest@1.8.0: +gmock', type=('link'), when='@1.3: +tests')
+    depends_on('hdf5@1.10.0:', type=('build', 'link', 'run'), when='@1.5.0:')
+    depends_on('hdf5 +mpi', type=('build', 'link', 'run'), when='+mpi')
+    depends_on('hdf5@1.8.0:1.999.999 +shared', type=('build', 'link', 'run'))
     depends_on('pdi@develop',              type=('link', 'run'),          when='@develop')
     depends_on('pdi@1.4.3',                type=('link', 'run'),          when='@1.4.3')
     depends_on('pdi@1.4.2',                type=('link', 'run'),          when='@1.4.2')
@@ -74,3 +77,4 @@ class PdipluginDeclHdf5(CMakePackage):
 
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
         run_env.append_path('PDI_PLUGIN_PATH', self.prefix.lib)
+
