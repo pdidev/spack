@@ -9,49 +9,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base_image: [ ubuntu-bionic, centos7 ]
-        compiler:
-          - gcc@5.4.0
-          - gcc@11.1.0
-          - "clang@6.0.0 ~gold"
-          - "clang ~gold"
-          - intel
-          #- oneapi #TODO: meson (used in mesa) fails with oneapi
-        depvers:
-          #- openmpi-latest #TODO: Fails with HDF5 not parallel...
-          #- openmpi-mini #TODO: try with latest first
-          - mpich-latest
-          #- mpich-mini #TODO: try with latest first
-        exclude:
-        #TODO:  intel compiler relies on default centos7 gcc (@4.8.5) too old for PDI
-        - base_image: centos7
-          compiler: intel
-        # OpenMPI requires fortran support, not provided by clang
-        - depvers: openmpi-latest
-          compiler: "clang@6.0.0 ~gold"
-        # OpenMPI requires fortran support, not provided by clang
-        - depvers: openmpi-mini
-          compiler: "clang@6.0.0 ~gold"
-        # OpenMPI requires fortran support, not provided by clang
-        - depvers: openmpi-latest
-          compiler: "clang ~gold"
-        # OpenMPI requires fortran support, not provided by clang
-        - depvers: openmpi-mini
-          compiler: "clang ~gold"
-        # clang does not compile with default centos7 gcc (@4.8.5)
-        - base_image: centos7
-          compiler: "clang@6.0.0 ~gold"
-        # clang does not compile with default centos7 gcc (@4.8.5)
-        - base_image: centos7
-          compiler: "clang ~gold"
+        version:  ['latest', 'oldest']
+        compiler: ['gcc', 'clang']
+        mpi:      ['openmpi']
+        level:    ['mini', 'all']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
         env:
-          BASE_IMAGE: ${{ matrix.base_image }}
+          VERSION: ${{ matrix.version }}
           COMPILER: ${{ matrix.compiler }}
-          DEPVERS: ${{ matrix.depvers }}
-          PARALLELISM: 2
-        run: |
-          ./tests/test_install_in_docker
+          MPI: ${{ matrix.mpi }}
+          LEVEL: ${{ matrix.level }}
+        run: ./tests/test_install_in_docker

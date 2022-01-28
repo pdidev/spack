@@ -1,30 +1,27 @@
 #!/bin/bash
 
-# base spack image if not specified
-BASE_IMAGE="${BASE_IMAGE:-ubuntu-bionic}"
+cd "$(dirname "$0")"
+cd ..
+
+# version if not specified
+VERSION="${VERSION:-latest}"
 # compiler if not specified
 COMPILER="${COMPILER:-gcc}"
-# depenncy set if not specified
-DEPVERS="${DEPVERS:-mpich-latest}"
-# parallelism if not specified 
-PARALLELISM="${PARALLELISM:-$(( $(cat /proc/cpuinfo | grep -c processor 2>/dev/null) + 1 ))}"
-# spack install arguments if not specified
-SPACK_INSTALL_ARGS="${SPACK_INSTALL_ARGS:-"--show-log-on-error --fail-fast"}"
+# MPI implementation if not specified
+MPI="${MPI:-openmpi}"
+# libraries included if not specified
+LEVEL="${LEVEL:-all}"
 
 echo "  ** You can set the following environment variables:"
-echo "BASE_IMAGE(ubuntu-xenial,ubuntu-bionic,centos6,centos7)=${BASE_IMAGE}"
-echo "COMPILER(spack-spec)=${COMPILER}"
-echo "DEPVERS(filename-base)=${DEPVERS}"
-echo "PARALLELISM(int)=${PARALLELISM}"
-echo "SPACK_INSTALL_ARGS(args)=${SPACK_INSTALL_ARGS}"
+echo "VERSION(oldest|latest)=${VERSION}"
+echo "COMPILER(gcc|clang)=${COMPILER}"
+echo "MPI(openmpi)=${MPI}"
+echo "LEVEL(mini|all)=${LEVEL}"
+DASH_LEVEL="-${LEVEL}"
+DASH_LEVEL="${DASH_LEVEL/-mini/}"
 
 docker run --rm \
     -v "${PWD}:/opt/spack-pdi:ro" \
-    -e "PDI_SPACK_REPO=/opt/spack-pdi" \
-    -e "PDI_DEPS_DIR=/opt/spack-pdi/tests" \
-    -e "COMPILER=${COMPILER}" \
-    -e "DEPVERS=${DEPVERS}" \
-    -e "PARALLELISM=${PARALLELISM}" \
-    -e "SPACK_INSTALL_ARGS=${SPACK_INSTALL_ARGS}" \
-    "spack/${BASE_IMAGE}:latest" \
-    docker-shell bash "/opt/spack-pdi/tests/spack_install_pdi"
+    --entrypoint spack-env \
+    "ghcr.io/pdidev/test_env/builder:${VERSION}-${COMPILER}-${MPI}${DASH_LEVEL}" \
+    "/opt/spack-pdi/tests/spack_install_pdi"

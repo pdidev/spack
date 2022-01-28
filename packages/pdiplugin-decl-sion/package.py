@@ -32,8 +32,8 @@ class PdipluginDeclSion(CMakePackage):
 
     variant('tests', default=False, description='Build tests')
 
+    depends_on('cmake@3.5:', type=('build'))
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
-    depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
     depends_on('pdi@develop',       type=('link', 'run'), when='@develop')
     depends_on('pdi@1.4.3',         type=('link', 'run'), when='@1.4.3')
     depends_on('pdi@1.4.2',         type=('link', 'run'), when='@1.4.2')
@@ -49,8 +49,8 @@ class PdipluginDeclSion(CMakePackage):
     depends_on('pdi@1.0.0',         type=('link', 'run'), when='@1.0.0')
     depends_on('pdi@0.6.5',         type=('link', 'run'), when='@0.6.5')
     depends_on('pkgconfig',         type=('build'))
-    depends_on('sionlib@1.7.6:1.999.999', type=('link', 'run'), when='@1.5.0:')
-    depends_on('sionlib@1.7:1.999', type=('link', 'run'), when='@:1.4.3')
+    depends_on('sionlib@1.7.0:1.999.999', type=('link', 'run'))
+    depends_on('sionlib@1.7.6:', type=('link', 'run'), when='@1.5.0:')
 
     root_cmakelists_dir = 'plugins/decl_sion'
 

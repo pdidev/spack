@@ -45,7 +45,7 @@ class Pdi(CMakePackage):
     depends_on('cmake@3.10:', type=('build'), when='+tests')
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('doxygen@1.8.12:', type=('build'), when='+docs')
-    depends_on('doxygen@1.8.13:', type=('build'), when='@:1.4.3: +docs')
+    depends_on('doxygen@1.8.13:', type=('build'), when='@:1.4.3 +docs')
     depends_on('googletest@1.8.0: +gmock', type=('link'), when='+tests')
     depends_on('paraconf@0.4.14: +shared', type=('link', 'run'), when='-fortran')
     depends_on('paraconf@0.4.14: +shared +fortran', type=('link', 'run'), when='+fortran')

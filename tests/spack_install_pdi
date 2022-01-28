@@ -2,107 +2,47 @@
 set -e
 
 
-do_spack_pinstall ()
-{
-    RUNNING_SPACKS=""
-    for N in $(seq 1 ${PARALLELISM})
-    do
-        spack install ${SPACK_INSTALL_ARGS} "$@" &
-        RUNNING_SPACKS="$RUNNING_SPACKS $!"
-    done
-    for N in $RUNNING_SPACKS
-    do
-        wait $N || {
-            echo -e "\n\n******* Failure logs *******\n"
-            tail -n +1 -- /tmp/root/spack-stage/spack-stage-*/spack-*-out.txt
-            return 1
-        }
-    done
-}
-
-
-echo -e "\n\n******* Handling configuration *******\n"
-# compiler if not specified
-COMPILER="${COMPILER:-gcc}"
-# dependency set if not specified
-DEPVERS="${DEPVERS:-mpich-latest}"
-# parallelism if not specified 
-PARALLELISM="${PARALLELISM:-1}"
-# spack install arguments if not specified
-SPACK_INSTALL_ARGS="${SPACK_INSTALL_ARGS:-"--show-log-on-error --fail-fast"}"
-# path to PDI spack repository if not specified
-PDI_SPACK_REPO="${PDI_SPACK_REPO:-/opt/spack-pdi}"
-# path to the dependency set files if not specified
-PDI_DEPS_DIR="${PDI_DEPS_DIR:-${PDI_SPACK_REPO}/tests}"
-# path to spack work directory if not specified
-SPACK_WORKDIR="${SPACK_WORKDIR:-/opt/spackwd}"
-echo "COMPILER=${COMPILER}"
-echo "DEPVERS=${DEPVERS}"
-echo "PARALLELISM=${PARALLELISM}"
-echo "SPACK_INSTALL_ARGS=${SPACK_INSTALL_ARGS}"
-echo "PDI_SPACK_REPO=${PDI_SPACK_REPO}"
-echo "PDI_DEPS_DIR=${PDI_DEPS_DIR}"
-echo "SPACK_WORKDIR=${SPACK_WORKDIR}"
-
-
 echo -e "\n\n******* Adding required spack repositories *******\n"
-mkdir -p "${SPACK_WORKDIR}/repos"
-git clone https://github.com/leobago/fti-spack ${SPACK_WORKDIR}/repos/fti
-spack repo add "${SPACK_WORKDIR}/repos/fti"
-git clone https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository.git "${SPACK_WORKDIR}/repos/SIONlib"
-spack repo add "${SPACK_WORKDIR}/repos/SIONlib"
-spack repo add "${PDI_SPACK_REPO}"
+rm -rf ${SPACK_ROOT}/var/spack/repos/fti || true
+git clone --depth 1 https://github.com/leobago/fti-spack ${SPACK_ROOT}/var/spack/repos/fti
+spack repo add ${SPACK_ROOT}/var/spack/repos/fti || true
+
+rm -rf ${SPACK_ROOT}/var/spack/repos/SIONlib || true
+git clone --depth 1 https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository.git ${SPACK_ROOT}/var/spack/repos/SIONlib
+spack repo add ${SPACK_ROOT}/var/spack/repos/SIONlib || true
+
+rm -rf ${SPACK_ROOT}/var/spack/repos/pdi || true
+cp -a /opt/spack-pdi ${SPACK_ROOT}/var/spack/repos/pdi
+spack repo add ${SPACK_ROOT}/var/spack/repos/pdi || true
 
 
-echo -e "\n\n******* Checking if install is required for ${COMPILER} *******\n"
-COMPILER_NAME="$(echo ${COMPILER} | sed 's/[ @%~+].*//')"
-COMPILER_VERSION="$(echo ${COMPILER} | sed 's/^[^ @%~+]*//')"
-case "${COMPILER_NAME}" in
-"clang")
-    COMPILER_NAME=llvm
-;;
-intel|oneapi)
-    COMPILER_NAME=intel-oneapi-compilers
-;;
-esac
-COMPILERPKG="${COMPILER_NAME}${COMPILER_VERSION}"
-if ! spack compilers | grep "${COMPILERPKG}" &>/dev/null
-then
-    echo -e "\n\n******* Installing compiler ${COMPILER_NAME} (${COMPILER_VERSION}) *******\n"
-    spack spec "${COMPILERPKG}"
-    do_spack_pinstall "${COMPILERPKG}"
-    spack load "${COMPILERPKG}"
-    spack compiler find
-else
-    echo "No install required for ${COMPILER_NAME} (${COMPILER_VERSION})"
-fi
-
-echo -e "\n\n******* Setting up environment *******\n"
-mkdir -p "${SPACK_WORKDIR}/environment"
-cd "${SPACK_WORKDIR}/environment"
-cp "${PDI_DEPS_DIR}/${DEPVERS}.yaml" spack.yaml
-echo '  concretization: together' >> spack.yaml
-spack env activate .
-# spack config add config:install_tree:root:/opt/software
-# spack config add config:view:/opt/view
-spack config add "packages:all:compiler:[${COMPILER}]"
-spack add \
-    pdiplugin-decl-hdf5@develop~fortran \
+echo -e "\n\n******* Solve *******\n"
+spack solve -I --reuse \
+    pdi@develop \
+    pdiplugin-decl-hdf5@develop \
     pdiplugin-decl-netcdf@develop \
+    pdiplugin-decl-sion@develop \
     pdiplugin-flowvr@develop \
+    pdiplugin-fti@develop^fti~fortran~hdf5 \
     pdiplugin-mpi@develop \
     pdiplugin-pycall@develop \
     pdiplugin-serialize@develop \
     pdiplugin-set-value@develop \
     pdiplugin-trace@develop \
-    pdiplugin-user-code@develop \
+    pdiplugin-user-code@develop
+
+
+echo -e "\n\n******* Installation *******\n"
+spack install --fail-fast --show-log-on-error --reuse \
+    pdi@develop \
+    pdiplugin-decl-hdf5@develop \
+    pdiplugin-decl-netcdf@develop \
     pdiplugin-decl-sion@develop \
-    pdiplugin-fti@develop \
-    pdi@develop~fortran
-cat spack.yaml
-
-echo -e "\n\n******* Resolving dependencies *******\n"
-spack concretize
-
-echo -e "\n\n******* Installing *******\n"
-do_spack_pinstall
+    pdiplugin-flowvr@develop \
+    pdiplugin-fti@develop^fti~fortran~hdf5 \
+    pdiplugin-mpi@develop \
+    pdiplugin-pycall@develop \
+    pdiplugin-serialize@develop \
+    pdiplugin-set-value@develop \
+    pdiplugin-trace@develop \
+    pdiplugin-user-code@develop
