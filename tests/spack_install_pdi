@@ -7,9 +7,8 @@ rm -rf ${SPACK_ROOT}/var/spack/repos/fti || true
 git clone --depth 1 https://github.com/leobago/fti-spack ${SPACK_ROOT}/var/spack/repos/fti
 spack repo add ${SPACK_ROOT}/var/spack/repos/fti || true
 
+spack repo remove ${SPACK_ROOT}/var/spack/repos/SIONlib || true
 rm -rf ${SPACK_ROOT}/var/spack/repos/SIONlib || true
-git clone --depth 1 https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository.git ${SPACK_ROOT}/var/spack/repos/SIONlib
-spack repo add ${SPACK_ROOT}/var/spack/repos/SIONlib || true
 
 rm -rf ${SPACK_ROOT}/var/spack/repos/pdi || true
 cp -a /opt/spack-pdi ${SPACK_ROOT}/var/spack/repos/pdi

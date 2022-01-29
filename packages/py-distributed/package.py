@@ -1,5 +1,6 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
+# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other Spack Project Developers,
+# Copyright (C) 2021-2022 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 

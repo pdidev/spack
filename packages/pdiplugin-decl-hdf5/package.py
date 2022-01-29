@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# Copyright (C) 2020-2022 Commissariat a l'energie atomique et aux energies alternatives (CEA)
 # and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
