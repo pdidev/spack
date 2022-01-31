@@ -17,8 +17,7 @@ Each of thiese can be installed in a few simple steps:
    * [install Deisa](#deisa),
    * [install layout-contiguous](#layout-contiguous),
    * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
-     - [install PDI Decl'SION plugin](#pdi-declsion-plugin),
-     - [install PDI FTI plugin](#pdi-fti-plugin),
+     - [install PDI FTI plugin](#pdi-fti-plugin).
 
 
 ## Step #1: Setup
@@ -116,8 +115,7 @@ Then depending on what you want to install, go to the following:
 * [install Deisa](#deisa),
 * [install layout-contiguous](#layout-contiguous),
 * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
-  - [install PDI Decl'SION plugin](#pdi-declsion-plugin),
-  - [install PDI FTI plugin](#pdi-fti-plugin),
+  - [install PDI FTI plugin](#pdi-fti-plugin).
 
 
 ### DDC
@@ -204,23 +202,10 @@ spack install layout-contiguous
 You can install PDI and most of its plugins using the following instructions after you've [done the setup](#setup):
 ```sh
 # Install PDI and most of its plugins
-spack install pdiplugin-decl-hdf5 pdiplugin-decl-netcdf pdiplugin-flowvr pdiplugin-mpi pdiplugin-pycall pdiplugin-serialize pdiplugin-set-value pdiplugin-trace pdiplugin-user-code
+spack install pdiplugin-decl-hdf5 pdiplugin-decl-netcdf pdiplugin-decl-sion pdiplugin-flowvr pdiplugin-mpi pdiplugin-pycall pdiplugin-serialize pdiplugin-set-value pdiplugin-trace pdiplugin-user-code
 ```
 
 If you only need some of the plugins, you can adapt the last line.
-
-
-#### PDI Decl'SION plugin
-
-PDI Decl'SION plugin depends on the [SIONlib recipe](https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository).
-To install it, you need to use the following instructions after you've [done the setup](#setup):
-```sh
-# 1. Get SIONlib spack repo
-git clone https://gitlab.jsc.fz-juelich.de/cstao-public/SIONlib/spack-repository.git spack/var/spack/repos/SIONlib
-spack repo add spack/var/spack/repos/SIONlib
-# 2. Install decl-sion plugin
-spack install pdiplugin-decl-sion
-```
 
 
 #### PDI FTI plugin
@@ -228,7 +213,7 @@ spack install pdiplugin-decl-sion
 PDI FTI plugin depends on the [FTI recipe](https://github.com/leobago/fti-spack).
 To install it, you need to use the following instructions after you've [done the setup](#setup):
 ```sh
-# 1. Get SIONlib spack repo
+# 1. Get FTI spack repo
 git clone https://github.com/leobago/fti-spack spack/var/spack/repos/FTI
 spack repo add spack/var/spack/repos/FTI
 # 2. Install fti plugin
