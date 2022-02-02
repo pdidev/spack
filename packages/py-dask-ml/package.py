@@ -18,13 +18,13 @@ class PyDaskMl(PythonPackage):
     variant('docs', default=False, description='Build HTML documentation')
     variant('xgboost', default=False, description='Deploys XGBoost alongside Dask')
 
-    depends_on('python@3.6:', type=('build', 'run'))
+    depends_on('python@3.7:', type=('build', 'run'))
 
     depends_on('py-setuptools', type='build')
     depends_on('py-setuptools-scm', type='build')
 
-    depends_on('py-dask+array+dataframe@2.4.0:', type=('build', 'run'))
-    depends_on('py-distributed@2.4.0:', type=('build', 'run'))
+    depends_on('py-dask+array+dataframe@2021.11.2:', type=('build', 'run'))
+    depends_on('py-distributed@deisa', type=('build', 'run'))
     depends_on('py-numba', type=('build', 'run'))
     depends_on('py-numpy@1.17.3:', type=('build', 'run'))
     depends_on('py-pandas@0.24.2:', type=('build', 'run'))
