@@ -6,7 +6,7 @@ class PdipluginDeisa(CMakePackage):
 
     git = 'https://github.com/GueroudjiAmal/deisa.git'
 
-    version('develop', branch='master', no_cache=True)
+    version('develop', branch='master')
 
     depends_on('cmake@3.10:', type=('build'))
 
