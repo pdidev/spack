@@ -28,7 +28,7 @@ To use it, you should first setup spack:
 git clone https://github.com/spack/spack.git
 . spack/share/spack/setup-env.sh
 # 2. Get and enable this spack repo
-git clone https://github.com/pdidev/spack.git spack/var/spack/repos/pdi
+git clone https://github.com/GueroudjiAmal/spack.git spack/var/spack/repos/pdi
 spack repo add spack/var/spack/repos/pdi
 ```
 
