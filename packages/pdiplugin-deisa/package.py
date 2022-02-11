@@ -6,14 +6,17 @@ class PdipluginDeisa(CMakePackage):
 
     git = 'https://github.com/GueroudjiAmal/deisa.git'
 
-    version('develop', branch='master', no_cache=True)
+    version('develop', branch='master')
 
     depends_on('cmake@3.10:', type=('build'))
 
     depends_on('pdi+python@1.4.3', type=('link', 'run'))
     depends_on('mpi', type=('build', 'link', 'run'))
+    depends_on('pdiplugin-mpi', type=('build', 'link', 'run'))
     depends_on('py-distributed@deisa', type=('run'))
     depends_on('py-dask@2021.11.2:', type=('run'))
+    depends_on('py-dask-ml@2021.11.30:', type=('run'))
+    depends_on('py-xarray', type=('run'))
 
     def cmake_args(self):
         args = [
