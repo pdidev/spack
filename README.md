@@ -11,13 +11,7 @@ Each of thiese can be installed in a few simple steps:
 1. [setup spack](#step-1-setup),
 2. [(optional): reuse already installed packages](#step-2-optional-reuse-already-installed-packages),
 3. [(optional): setup a non-default compiler](#step-3-optional-setup-a-non-default-compiler),
-4. [install](#step-4-installation):
-   * [install Gysela](#gysela),
-   * [install DDC](#ddc),
-   * [install Deisa](#deisa),
-   * [install layout-contiguous](#layout-contiguous),
-   * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
-     - [install PDI FTI plugin](#pdi-fti-plugin).
+4. [install](#step-4-installation).
 
 
 ## Step #1: Setup
@@ -109,31 +103,18 @@ spack unload gcc@9.2.0
 
 ## Step #4: Installation
 
-Then depending on what you want to install, go to the following:
+For most packages, the installation is as simple as:
+```sh
+# Install <packagename>
+spack install <packagename>
+```
+
+So for example, for ddc: `spack install ddc` and for deisa: `spack install deisa`.
+
+A few package do however have slightly more complex installation instructions:
 * [install Gysela](#gysela),
-* [install DDC](#ddc),
-* [install Deisa](#deisa),
-* [install layout-contiguous](#layout-contiguous),
 * [install PDI and most of its plugins](#pdi-and-most-of-its-plugins),
   - [install PDI FTI plugin](#pdi-fti-plugin).
-
-
-### DDC
-
-You can install [DDC](https://github.com/Maison-de-la-Simulation/ddc) using the following instructions after you've [done the setup](#setup):
-```sh
-# Install DDC
-spack install ddc
-```
-
-
-### Deisa
-
-You can install Deisa using the following instructions after you've [done the setup](#setup):
-```sh
-# Install Deisa
-spack install deisa
-```
 
 
 ### Gysela
@@ -185,15 +166,6 @@ cd "${GYSELA_INSTALLDIR}/wk"
 spack load gysela
 # now you can run
 ./subgys
-```
-
-
-### layout-contiguous
-
-You can install [layout-contiguous](https://github.com/Maison-de-la-Simulation/layout-contiguous) using the following instructions after you've [done the setup](#setup):
-```sh
-# Install layout-contiguous
-spack install layout-contiguous
 ```
 
 
