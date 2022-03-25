@@ -35,11 +35,13 @@ class Pdi(CMakePackage):
     version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
     version('0.6.5',   sha256='a1100effb62d43556bd5e50d82f51e51710dbafc8d85c5a2e03ba7c168460be9')
 
+    variant('benchs',  default=False, description='Build benchmarks')
     variant('docs',    default=False, description='Build documentation')
     variant('tests',   default=False, description='Build tests')
     variant('fortran', default=True,  description='Enable Fortran support')
     variant('python',  default=True,  description='Enable Python support')
 
+    depends_on('benchmark@1.5.0:', type=('link'), when='@1.5.0: +benchs')
     depends_on('cmake@3.5:', type=('build'))
     depends_on('cmake@3.10:', type=('build'), when='+docs')
     depends_on('cmake@3.10:', type=('build'), when='+tests')
@@ -62,6 +64,8 @@ class Pdi(CMakePackage):
 
     def cmake_args(self):
         args = [
+            '-DBUILD_BENCHMARKING:BOOL={:s}'.format(
+                'ON' if '+benchs' in self.spec else 'OFF'),
             '-DBUILD_DOCUMENTATION:BOOL={:s}'.format(
                 'ON' if '+docs' in self.spec else 'OFF'),
             '-DBUILD_FORTRAN:BOOL={:s}'.format(
