@@ -40,6 +40,7 @@ class PdipluginDeclHdf5(CMakePackage):
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('cmake@3.10:', type=('build'), when='+tests')
     depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
+    depends_on('fmt@6.1.2:', type=('link'), when='@1.5.0:')
     depends_on('googletest@1.8.0: +gmock', type=('link'), when='@1.3: +tests')
     depends_on('hdf5@1.10.0:', type=('build', 'link', 'run'), when='@1.5.0:')
     depends_on('hdf5 +mpi', type=('build', 'link', 'run'), when='+mpi')

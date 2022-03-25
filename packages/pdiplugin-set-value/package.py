@@ -49,6 +49,7 @@ class PdipluginSetValue(CMakePackage):
     depends_on('pdi@1.0.0',   type=('link', 'run'), when='@1.0.0')
     depends_on('pdi@0.6.5',   type=('link', 'run'), when='@0.6.5')
     depends_on('pkgconfig',   type=('build'))
+    depends_on('spdlog@1.5.0:', type=('link'), when='@1.5.0:')
 
     root_cmakelists_dir = 'plugins/set_value'
 

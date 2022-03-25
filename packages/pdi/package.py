@@ -46,6 +46,7 @@ class Pdi(CMakePackage):
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('doxygen@1.8.12:', type=('build'), when='+docs')
     depends_on('doxygen@1.8.13:', type=('build'), when='@:1.4.3 +docs')
+    depends_on('fmt@6.1.2:', type=('link'), when='@1.5.0:')
     depends_on('googletest@1.8.0: +gmock', type=('link'), when='+tests')
     depends_on('paraconf@0.4.14: +shared', type=('link', 'run'), when='-fortran')
     depends_on('paraconf@0.4.14: +shared +fortran', type=('link', 'run'), when='+fortran')
@@ -53,7 +54,7 @@ class Pdi(CMakePackage):
     depends_on('python@3.6.5:', type=('build', 'link', 'run'), when='+python')
     depends_on('py-pybind11@2.3.0:2.999.999', type=('link'), when='+python')
     depends_on('spdlog@1.3.1:1.999.999', type=('link', 'run'))
-    depends_on('spdlog@1.5.0:', type=('link', 'run'), when='@1.5.0:')
+    depends_on('spdlog@1.5.0:', type=('link'), when='@1.5.0:')
     depends_on('zpp@1.0.8:', type=('build'), when='+fortran')
     depends_on('zpp@1.0.15:', type=('build'), when='@1.5.0: +fortran')
 

@@ -35,6 +35,7 @@ class PdipluginDeclNetcdf(CMakePackage):
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('cmake@3.10:', type=('build'), when='+tests')
     depends_on('cmake@3.5:', type=('build'), when='@:1.4.3')
+    depends_on('fmt@6.1.2:', type=('link'), when='@1.5.0:')
     depends_on('googletest@1.8.0: +gmock', type=('link'),        when='@1.3: +tests')
     depends_on('netcdf-c@4.6.0:4.999.999', type=('link'), when='@1.5.0:')
     depends_on('netcdf-c@4.0.0:4.999.999', type=('link'), when='@:1.4.3')
