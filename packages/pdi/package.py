@@ -21,6 +21,7 @@ class Pdi(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.5.0',   sha256='13cbddbdc728a4e19213395034a147bf4e4eb5518c7c734f621a08311343dd4d')
     version('1.4.3',   sha256='b7f049cae9e6fb0ddba3a458e15d6f1578876663c04b18f62b052f9698750974')
     version('1.4.2',   sha256='b252d5098f3b13b5d883265597f567aa0aa423c95fe4a10554772d485ce37e86')
     version('1.4.1',   sha256='55e17629ca373232a8a2530c4ad83403729c74fbe4fcbcfc32e8128800cb40a4')
