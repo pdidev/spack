@@ -17,6 +17,7 @@ class PdipluginFti(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.5.1',   sha256='3b93d238823fc06e9ec5bb0f9f9d9e1a42fdc0061004df0e898d728aaa93ce23')
     version('1.5.0',   sha256='13cbddbdc728a4e19213395034a147bf4e4eb5518c7c734f621a08311343dd4d')
     version('1.4.3',   sha256='b7f049cae9e6fb0ddba3a458e15d6f1578876663c04b18f62b052f9698750974')
     version('1.4.2',   sha256='b252d5098f3b13b5d883265597f567aa0aa423c95fe4a10554772d485ce37e86')
@@ -38,6 +39,7 @@ class PdipluginFti(CMakePackage):
     depends_on('fti@1.6:1.999', type=('link'), when='@1.5.0:')
     depends_on('fti@1.5:1.999', type=('link'), when='@:1.4.3')
     depends_on('pdi@develop',     type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.5.1',       type=('link', 'run'), when='@1.5.1')
     depends_on('pdi@1.5.0',       type=('link', 'run'), when='@1.5.0')
     depends_on('pdi@1.4.3',       type=('link', 'run'), when='@1.4.3')
     depends_on('pdi@1.4.2',       type=('link', 'run'), when='@1.4.2')
