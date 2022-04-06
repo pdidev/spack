@@ -9,11 +9,11 @@ from spack import *
 class PyDaskMl(PythonPackage):
     """Scalable Machine Learning with Dask."""
 
-    homepage = "https://ml.dask.org/"
-    pypi     = "dask-ml/dask-ml-2022.1.22.tar.gz"
+    #homepage = "https://ml.dask.org/"
+    #pypi     = "dask-ml/dask-ml-2022.1.22.tar.gz"
     
-    #git='https://github.com/dask/dask-ml.git'
-    version('2022.1.22')    
+    git='https://github.com/GueroudjiAmal/dask-ml.git'
+    version('deisa', branch='main')
 
     variant('docs', default=False, description='Build HTML documentation')
     variant('xgboost', default=False, description='Deploys XGBoost alongside Dask')
