@@ -15,7 +15,7 @@ class PdipluginDeisa(CMakePackage):
     depends_on('pdiplugin-mpi', type=('build', 'link', 'run'))
     depends_on('py-distributed@deisa', type=('run'))
     depends_on('py-dask@2021.11.2:', type=('run'))
-    depends_on('py-dask-ml@2021.11.30:', type=('run'))
+    depends_on('py-dask-ml@deisa', type=('run'))
     depends_on('py-xarray', type=('run'))
 
     def cmake_args(self):
