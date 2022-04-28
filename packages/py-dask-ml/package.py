@@ -17,7 +17,9 @@ class PyDaskMl(PythonPackage):
 
     variant('docs', default=False, description='Build HTML documentation')
     variant('xgboost', default=False, description='Deploys XGBoost alongside Dask')
-
+    
+    depends_on('git', type=('build'), when='@deisa')
+    
     depends_on('python@3.7:', type=('build', 'run'))
     
     depends_on('py-setuptools', type='build')
