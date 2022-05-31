@@ -16,6 +16,8 @@ class PdipluginDeclSion(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.5.3',   sha256='aa2fc692f1352d53cf9444f842144648180183313f5c8e7b799e1cb542f6f1ba')
+    version('1.5.2',   sha256='8dc14fe7ab1c7efed31e4c7522bc43e191be5dbb4227ffedcb04902d95a6fad0')
     version('1.5.1',   sha256='3b93d238823fc06e9ec5bb0f9f9d9e1a42fdc0061004df0e898d728aaa93ce23')
     version('1.5.0',   sha256='13cbddbdc728a4e19213395034a147bf4e4eb5518c7c734f621a08311343dd4d')
     version('1.4.3',   sha256='b7f049cae9e6fb0ddba3a458e15d6f1578876663c04b18f62b052f9698750974')
@@ -37,6 +39,8 @@ class PdipluginDeclSion(CMakePackage):
     depends_on('cmake@3.5:', type=('build'))
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('pdi@develop',       type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.5.3',         type=('link', 'run'), when='@1.5.3')
+    depends_on('pdi@1.5.2',         type=('link', 'run'), when='@1.5.2')
     depends_on('pdi@1.5.1',         type=('link', 'run'), when='@1.5.1')
     depends_on('pdi@1.5.0',         type=('link', 'run'), when='@1.5.0')
     depends_on('pdi@1.4.3',         type=('link', 'run'), when='@1.4.3')
