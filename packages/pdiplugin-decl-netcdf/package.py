@@ -17,6 +17,7 @@ class PdipluginDeclNetcdf(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.5.4',   sha256='0af1fe9fb85066772a921efdf1f3bb554559066a62eaebce4c9c6afd3b2a5c38')
     version('1.5.3',   sha256='aa2fc692f1352d53cf9444f842144648180183313f5c8e7b799e1cb542f6f1ba')
     version('1.5.2',   sha256='8dc14fe7ab1c7efed31e4c7522bc43e191be5dbb4227ffedcb04902d95a6fad0')
     version('1.5.1',   sha256='3b93d238823fc06e9ec5bb0f9f9d9e1a42fdc0061004df0e898d728aaa93ce23')
@@ -44,6 +45,7 @@ class PdipluginDeclNetcdf(CMakePackage):
     depends_on('netcdf-c@4.6.0:4.999.999', type=('link'), when='@1.5.0:')
     depends_on('netcdf-c@4.0.0:4.999.999', type=('link'), when='@:1.4.3')
     depends_on('pdi@develop',              type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.5.4',                type=('link', 'run'), when='@1.5.4')
     depends_on('pdi@1.5.3',                type=('link', 'run'), when='@1.5.3')
     depends_on('pdi@1.5.2',                type=('link', 'run'), when='@1.5.2')
     depends_on('pdi@1.5.1',                type=('link', 'run'), when='@1.5.1')
