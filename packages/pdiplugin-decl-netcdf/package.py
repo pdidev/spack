@@ -36,34 +36,36 @@ class PdipluginDeclNetcdf(CMakePackage):
     version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
 
     variant('tests',   default=False, description='Build tests')
+    variant('mpi',     default=True,  description='Enable parallel NetCDF')
     
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('cmake@3.10:', type=('build'), when='+tests')
-    depends_on('cmake@3.5:', type=('build'), when='@:1.4.3')
+    depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
     depends_on('fmt@6.1.2:', type=('link'), when='@1.5.0:')
-    depends_on('googletest@1.8.0: +gmock', type=('link'),        when='@1.3: +tests')
-    depends_on('netcdf-c@4.6.0:4.999.999', type=('link'), when='@1.5.0:')
-    depends_on('netcdf-c@4.0.0:4.999.999', type=('link'), when='@:1.4.3')
-    depends_on('pdi@develop',              type=('link', 'run'), when='@develop')
-    depends_on('pdi@1.5.4',                type=('link', 'run'), when='@1.5.4')
-    depends_on('pdi@1.5.3',                type=('link', 'run'), when='@1.5.3')
-    depends_on('pdi@1.5.2',                type=('link', 'run'), when='@1.5.2')
-    depends_on('pdi@1.5.1',                type=('link', 'run'), when='@1.5.1')
-    depends_on('pdi@1.5.0',                type=('link', 'run'), when='@1.5.0')
-    depends_on('pdi@1.4.3',                type=('link', 'run'), when='@1.4.3')
-    depends_on('pdi@1.4.2',                type=('link', 'run'), when='@1.4.2')
-    depends_on('pdi@1.4.1',                type=('link', 'run'), when='@1.4.1')
-    depends_on('pdi@1.4.0',                type=('link', 'run'), when='@1.4.0')
-    depends_on('pdi@1.3.1',                type=('link', 'run'), when='@1.3.1')
-    depends_on('pdi@1.3.0',                type=('link', 'run'), when='@1.3.0')
-    depends_on('pdi@1.2.2',                type=('link', 'run'), when='@1.2.2')
-    depends_on('pdi@1.2.1',                type=('link', 'run'), when='@1.2.1')
-    depends_on('pdi@1.2.0',                type=('link', 'run'), when='@1.2.0')
-    depends_on('pdi@1.1.0',                type=('link', 'run'), when='@1.1.0')
-    depends_on('pdi@1.0.1',                type=('link', 'run'), when='@1.0.1')
-    depends_on('pdi@1.0.0',                type=('link', 'run'), when='@1.0.0')
-    depends_on('pdi@0.6.5',                type=('link', 'run'), when='@0.6.5')
-    depends_on('pkgconfig',                type=('build'))
+    depends_on('googletest@1.8.0: +gmock', type=('link'), when='@1.3: +tests')
+    depends_on('netcdf-c@4.6.2:4.999.999+mpi', type=('link'), when='+mpi')
+    depends_on('netcdf-c@4.6.0:4.999.999',     type=('link'), when='@1.5.0: ~mpi')
+    depends_on('netcdf-c@4.0.0:4.999.999',     type=('link'), when='@:1.4.3 ~mpi')
+    depends_on('pdi@develop', type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.5.4',   type=('link', 'run'), when='@1.5.4')
+    depends_on('pdi@1.5.3',   type=('link', 'run'), when='@1.5.3')
+    depends_on('pdi@1.5.2',   type=('link', 'run'), when='@1.5.2')
+    depends_on('pdi@1.5.1',   type=('link', 'run'), when='@1.5.1')
+    depends_on('pdi@1.5.0',   type=('link', 'run'), when='@1.5.0')
+    depends_on('pdi@1.4.3',   type=('link', 'run'), when='@1.4.3')
+    depends_on('pdi@1.4.2',   type=('link', 'run'), when='@1.4.2')
+    depends_on('pdi@1.4.1',   type=('link', 'run'), when='@1.4.1')
+    depends_on('pdi@1.4.0',   type=('link', 'run'), when='@1.4.0')
+    depends_on('pdi@1.3.1',   type=('link', 'run'), when='@1.3.1')
+    depends_on('pdi@1.3.0',   type=('link', 'run'), when='@1.3.0')
+    depends_on('pdi@1.2.2',   type=('link', 'run'), when='@1.2.2')
+    depends_on('pdi@1.2.1',   type=('link', 'run'), when='@1.2.1')
+    depends_on('pdi@1.2.0',   type=('link', 'run'), when='@1.2.0')
+    depends_on('pdi@1.1.0',   type=('link', 'run'), when='@1.1.0')
+    depends_on('pdi@1.0.1',   type=('link', 'run'), when='@1.0.1')
+    depends_on('pdi@1.0.0',   type=('link', 'run'), when='@1.0.0')
+    depends_on('pdi@0.6.5',   type=('link', 'run'), when='@0.6.5')
+    depends_on('pkgconfig',   type=('build'))
 
     root_cmakelists_dir = 'plugins/decl_netcdf'
 
@@ -72,6 +74,10 @@ class PdipluginDeclNetcdf(CMakePackage):
             '-DINSTALL_PDIPLUGINDIR:PATH={:s}'.format(self.prefix.lib),
             '-DBUILD_TESTING:BOOL={:s}'.format(
                 'ON' if '+tests' in self.spec else 'OFF'),
+            '-DBUILD_HDF5_PARALLEL:BOOL={:s}'.format(
+                'ON' if '+mpi' in self.spec else 'OFF'),
+            '-DBUILD_NETCDF_PARALLEL:BOOL={:s}'.format(
+                'ON' if '+mpi' in self.spec else 'OFF'),
             '-DBUILD_CFG_VALIDATOR:BOOL=OFF',
         ]
 
