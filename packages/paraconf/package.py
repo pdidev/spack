@@ -11,10 +11,11 @@ class Paraconf(CMakePackage):
     Yaml tree on top of libyaml."""
 
     homepage = "https://github.com/pdidev/paraconf"
-    url = "https://github.com/pdidev/paraconf/archive/0.4.15.tar.gz"
+    url = "https://github.com/pdidev/paraconf/archive/0.4.16.tar.gz"
 
     maintainers = ['jbigot']
 
+    version('0.4.16', sha256='d896cb5bbf1c6b311f6bed44263548c799265e1f22d50475aecbddc80b0db982')
     version('0.4.15', sha256='914befa7a8d6fbf2de3466e434a9ea20363900af5519859663a24c7a51bd26a6')
     version('0.4.14', sha256='8a07bdf972ce137932b0d5e08036cf90db23b69f7eaabf52eb7d495d1da01d99')
     version('0.4.13', sha256='28da96ba45bcb826a387488f283baa0c88bc0b00fa74f4c110d444c0b9a8030c')

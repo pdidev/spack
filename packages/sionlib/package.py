@@ -78,8 +78,9 @@ class Sionlib(AutotoolsPackage):
             description="collector selection plug-in for MSA-aware collective I/O",
             values=("none", "hostname-regex", "deep-est-sdv"), multi=False)
 
-    depends_on("mpi", when="parallel=mpi")
     depends_on("cuda@9:", when="+cuda")
+    depends_on("file", type=('build'))
+    depends_on("mpi", when="parallel=mpi")
 
     conflicts("+fortran", when="@:1.7.6 %gcc@10:",
               msg="Fortran interface for sionlib < 1.7.7 cannot be built with GCC >= 10")
