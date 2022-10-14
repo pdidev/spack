@@ -19,6 +19,7 @@ class PyDeisa(PythonPackage):
 
 
     depends_on('python@3.9:', type=('build', 'run'))
-    depends_on('py-dask +distributed ^py-distributed@deisa', type=('run'))
+    depends_on('py-dask', type=('run'))
+    depends_on('py-distributed@deisa', type=('run'))
     depends_on('py-setuptools@59:', type='build')
     depends_on('py-pyyaml', type=('build', 'run'))
