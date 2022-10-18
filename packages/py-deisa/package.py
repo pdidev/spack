@@ -11,11 +11,11 @@ class PyDeisa(PythonPackage):
     """
     """
 
-    pypi = 'deisa/deisa-0.2.1.tar.gz'
+    pypi = 'deisa/deisa-0.2.4.tar.gz'
 
     maintainers = ['GueroudjiAmal']
 
-    version('0.2.1', sha256='c91b8cfcf890f26e24d643ed3eaeae7a5e46bb5db92bd3295fd7d1b7e39bf97b')
+    version('0.2.4', sha256='e157bf3ebf052cbdcf9f43f42ba7a99a627de6599d6d152dc49945d0e3da4428')
 
 
     depends_on('python@3.9:', type=('build', 'run'))
