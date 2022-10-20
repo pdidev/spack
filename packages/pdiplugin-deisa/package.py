@@ -4,7 +4,7 @@ from spack import *
 class PdipluginDeisa(CMakePackage):
     """The Deisa plugin let one use Deisa through PDI."""
 
-    git = 'https://github.com/GueroudjiAmal/deisa.git'
+    git = 'https://github.com/pdidev/deisa.git'
 
     version('develop', branch='master')
 
