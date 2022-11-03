@@ -13,12 +13,13 @@ class PdipluginDeclHdf5(CMakePackage):
     PDI library"""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.3.1/pdi-1.3.1.tar.bz2"
+    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.5.5/pdi-1.5.5.tar.bz2"
     git = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.5.5',   sha256='11bf5db61f23107dfd2135e637e9233524855c78104c57288c6af21d02d1ea53')
     version('1.5.4',   sha256='0af1fe9fb85066772a921efdf1f3bb554559066a62eaebce4c9c6afd3b2a5c38')
     version('1.5.3',   sha256='aa2fc692f1352d53cf9444f842144648180183313f5c8e7b799e1cb542f6f1ba')
     version('1.5.2',   sha256='8dc14fe7ab1c7efed31e4c7522bc43e191be5dbb4227ffedcb04902d95a6fad0')
@@ -52,26 +53,27 @@ class PdipluginDeclHdf5(CMakePackage):
     depends_on('hdf5@1.10.0:', type=('build', 'link', 'run'), when='@1.5.0:')
     depends_on('hdf5 +mpi', type=('build', 'link', 'run'), when='+mpi')
     depends_on('hdf5@1.8.0:1.999.999 +shared', type=('build', 'link', 'run'))
-    depends_on('pdi@develop',              type=('link', 'run'),          when='@develop')
-    depends_on('pdi@1.5.4',                type=('link', 'run'),          when='@1.5.4')
-    depends_on('pdi@1.5.3',                type=('link', 'run'),          when='@1.5.3')
-    depends_on('pdi@1.5.2',                type=('link', 'run'),          when='@1.5.2')
-    depends_on('pdi@1.5.1',                type=('link', 'run'),          when='@1.5.1')
-    depends_on('pdi@1.5.0',                type=('link', 'run'),          when='@1.5.0')
-    depends_on('pdi@1.4.3',                type=('link', 'run'),          when='@1.4.3')
-    depends_on('pdi@1.4.2',                type=('link', 'run'),          when='@1.4.2')
-    depends_on('pdi@1.4.1',                type=('link', 'run'),          when='@1.4.1')
-    depends_on('pdi@1.4.0',                type=('link', 'run'),          when='@1.4.0')
-    depends_on('pdi@1.3.1',                type=('link', 'run'),          when='@1.3.1')
-    depends_on('pdi@1.3.0',                type=('link', 'run'),          when='@1.3.0')
-    depends_on('pdi@1.2.2',                type=('link', 'run'),          when='@1.2.2')
-    depends_on('pdi@1.2.1',                type=('link', 'run'),          when='@1.2.1')
-    depends_on('pdi@1.2.0',                type=('link', 'run'),          when='@1.2.0')
-    depends_on('pdi@1.1.0',                type=('link', 'run'),          when='@1.1.0')
-    depends_on('pdi@1.0.1',                type=('link', 'run'),          when='@1.0.1')
-    depends_on('pdi@1.0.0',                type=('link', 'run'),          when='@1.0.0')
-    depends_on('pdi@0.6.5',                type=('link', 'run'),          when='@0.6.5')
-    depends_on('pkgconfig',                type=('build'))
+    depends_on('pdi@develop', type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.5.5',   type=('link', 'run'), when='@1.5.5')
+    depends_on('pdi@1.5.4',   type=('link', 'run'), when='@1.5.4')
+    depends_on('pdi@1.5.3',   type=('link', 'run'), when='@1.5.3')
+    depends_on('pdi@1.5.2',   type=('link', 'run'), when='@1.5.2')
+    depends_on('pdi@1.5.1',   type=('link', 'run'), when='@1.5.1')
+    depends_on('pdi@1.5.0',   type=('link', 'run'), when='@1.5.0')
+    depends_on('pdi@1.4.3',   type=('link', 'run'), when='@1.4.3')
+    depends_on('pdi@1.4.2',   type=('link', 'run'), when='@1.4.2')
+    depends_on('pdi@1.4.1',   type=('link', 'run'), when='@1.4.1')
+    depends_on('pdi@1.4.0',   type=('link', 'run'), when='@1.4.0')
+    depends_on('pdi@1.3.1',   type=('link', 'run'), when='@1.3.1')
+    depends_on('pdi@1.3.0',   type=('link', 'run'), when='@1.3.0')
+    depends_on('pdi@1.2.2',   type=('link', 'run'), when='@1.2.2')
+    depends_on('pdi@1.2.1',   type=('link', 'run'), when='@1.2.1')
+    depends_on('pdi@1.2.0',   type=('link', 'run'), when='@1.2.0')
+    depends_on('pdi@1.1.0',   type=('link', 'run'), when='@1.1.0')
+    depends_on('pdi@1.0.1',   type=('link', 'run'), when='@1.0.1')
+    depends_on('pdi@1.0.0',   type=('link', 'run'), when='@1.0.0')
+    depends_on('pdi@0.6.5',   type=('link', 'run'), when='@0.6.5')
+    depends_on('pkgconfig', type=('build'))
 
     root_cmakelists_dir = 'plugins/decl_hdf5'
 
