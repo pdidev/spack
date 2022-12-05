@@ -73,5 +73,5 @@ class PdipluginTrace(CMakePackage):
             '-DBUILD_CFG_VALIDATOR:BOOL=OFF',
         ]
 
-    def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
-        run_env.append_path('PDI_PLUGIN_PATH', self.prefix.lib)
+    def setup_run_environment(self, env):
+        env.set('PDI_PLUGIN_PATH', self.prefix.lib)
