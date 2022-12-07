@@ -34,7 +34,7 @@ class PyDistributed(PythonPackage):
     depends_on('python@3.6:', when='@2:', type=('build', 'run'))
     depends_on('py-setuptools', type=('build', 'run'))
 
-    depends_on('py-click@6.6:', type=('build', 'run'))
+    depends_on('py-click@6.6:8.0', type=('build', 'run'))
     depends_on('py-cloudpickle@0.2.2:', type=('build', 'run'), when='@:2.16.0')
     depends_on('py-cloudpickle@1.3.0:',
                type=('build', 'run'), when='@2.17.0:2.20.0')
