@@ -37,7 +37,7 @@ class PdipluginSetValue(CMakePackage):
     version('1.0.0',   sha256='57f5bfd2caa35de144651b0f4db82b2a403997799c258ca3a4e632f8ff2cfc1b')
 
     variant('tests',   default=False, description='Build tests')
-    
+
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
     depends_on('pdi@develop', type=('link', 'run'), when='@develop')
@@ -74,4 +74,4 @@ class PdipluginSetValue(CMakePackage):
         ]
 
     def setup_run_environment(self, env):
-        env.set('PDI_PLUGIN_PATH', self.prefix.lib)
+        env.prepend_path('PDI_PLUGIN_PATH', self.prefix.lib)

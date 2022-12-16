@@ -76,4 +76,4 @@ class PdipluginDeclSion(CMakePackage):
         return args
 
     def setup_run_environment(self, env):
-        env.set('PDI_PLUGIN_PATH', self.prefix.lib)
+        env.prepend_path('PDI_PLUGIN_PATH', self.prefix.lib)

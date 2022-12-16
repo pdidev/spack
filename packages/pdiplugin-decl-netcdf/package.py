@@ -38,7 +38,7 @@ class PdipluginDeclNetcdf(CMakePackage):
 
     variant('tests',   default=False, description='Build tests')
     variant('mpi',     default=True,  description='Enable parallel NetCDF')
-    
+   
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('cmake@3.10:', type=('build'), when='+tests')
     depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
@@ -84,4 +84,4 @@ class PdipluginDeclNetcdf(CMakePackage):
         ]
 
     def setup_run_environment(self, env):
-        env.set('PDI_PLUGIN_PATH', self.prefix.lib)
+        env.prepend_path('PDI_PLUGIN_PATH', self.prefix.lib)
