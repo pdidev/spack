@@ -15,12 +15,13 @@ class Pdi(CMakePackage):
     available to codes, potentially mixed in a single execution."""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.5.5/pdi-1.5.5.tar.bz2"
+    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.6.0/pdi-1.6.0.tar.bz2"
     git = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.6.0',   sha256='ae45d388c98c5e33d552d5e3216c1f92bf97d5dd01c669107084c1f3202fcd5a')
     version('1.5.5',   sha256='11bf5db61f23107dfd2135e637e9233524855c78104c57288c6af21d02d1ea53')
     version('1.5.4',   sha256='0af1fe9fb85066772a921efdf1f3bb554559066a62eaebce4c9c6afd3b2a5c38')
     version('1.5.3',   sha256='aa2fc692f1352d53cf9444f842144648180183313f5c8e7b799e1cb542f6f1ba')
@@ -54,10 +55,12 @@ class Pdi(CMakePackage):
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('doxygen@1.8.12:', type=('build'), when='+docs')
     depends_on('doxygen@1.8.13:', type=('build'), when='@:1.4.3 +docs')
-    depends_on('fmt@6.1.2:', type=('link'), when='@1.5.0:')
+    depends_on('fmt@6.1.2:', type=('link'), when='@1.5.0:1.5.999')
     depends_on('googletest@1.8.0: +gmock', type=('link'), when='+tests')
-    depends_on('paraconf@0.4.16: +shared', type=('link', 'run'), when='@1.5.3:-fortran')
-    depends_on('paraconf@0.4.16: +shared +fortran', type=('link', 'run'), when='@1.5.3:+fortran')
+    depends_on('paraconf@1.0.0: +shared', type=('link', 'run'), when='@1.6.0:-fortran')
+    depends_on('paraconf@1.0.0: +shared +fortran', type=('link', 'run'), when='@1.6.0:+fortran')
+    depends_on('paraconf@0.4.16: +shared', type=('link', 'run'), when='@1.5.0:-fortran')
+    depends_on('paraconf@0.4.16: +shared +fortran', type=('link', 'run'), when='@1.5.0:+fortran')
     depends_on('paraconf@0.4.14: +shared', type=('link', 'run'), when='-fortran')
     depends_on('paraconf@0.4.14: +shared +fortran', type=('link', 'run'), when='+fortran')
     depends_on('pkgconfig', type=('build'))

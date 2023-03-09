@@ -10,12 +10,13 @@ class PdipluginDeclSion(CMakePackage):
     """Decl'sion plugin for the PDI library"""
 
     homepage = "https://pdi.julien-bigot.fr/"
-    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.5.5/pdi-1.5.5.tar.bz2"
+    url = "https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/1.6.0/pdi-1.6.0.tar.bz2"
     git = "https://gitlab.maisondelasimulation.fr/pdidev/pdi.git"
 
     maintainers = ['jbigot']
 
     version('develop', branch='master', no_cache=True)
+    version('1.6.0',   sha256='ae45d388c98c5e33d552d5e3216c1f92bf97d5dd01c669107084c1f3202fcd5a')
     version('1.5.5',   sha256='11bf5db61f23107dfd2135e637e9233524855c78104c57288c6af21d02d1ea53')
     version('1.5.4',   sha256='0af1fe9fb85066772a921efdf1f3bb554559066a62eaebce4c9c6afd3b2a5c38')
     version('1.5.3',   sha256='aa2fc692f1352d53cf9444f842144648180183313f5c8e7b799e1cb542f6f1ba')
@@ -41,6 +42,7 @@ class PdipluginDeclSion(CMakePackage):
     depends_on('cmake@3.5:', type=('build'))
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('pdi@develop',       type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.6.0',   type=('link', 'run'), when='@1.6.0')
     depends_on('pdi@1.5.5',         type=('link', 'run'), when='@1.5.5')
     depends_on('pdi@1.5.4',         type=('link', 'run'), when='@1.5.4')
     depends_on('pdi@1.5.3',         type=('link', 'run'), when='@1.5.3')
