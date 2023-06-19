@@ -14,7 +14,7 @@ class LayoutContiguous(CMakePackage):
 
     depends_on("cmake@3.20:", type='build')
     depends_on("mdspan@0.2:")
-    depends_on("googletest", type='test')
+    depends_on("googletest", type=('build', 'test'))
 
     def cmake_args(self):
         args = [
