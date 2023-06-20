@@ -42,8 +42,8 @@ class PdipluginFti(CMakePackage):
    
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
-    depends_on('fti@1.6:1.999', type=('link'), when='@1.5.0:')
-    depends_on('fti@1.5:1.999', type=('link'), when='@:1.4.3')
+    depends_on('fti@1.6:1', type=('link'), when='@1.5.0:')
+    depends_on('fti@1.5:1', type=('link'), when='@:1.4.3')
     depends_on('pdi@develop', type=('link', 'run'), when='@develop')
     depends_on('pdi@1.7.1',   type=('link', 'run'), when='@1.7.1')
     depends_on('pdi@1.6.0',   type=('link', 'run'), when='@1.6.0')

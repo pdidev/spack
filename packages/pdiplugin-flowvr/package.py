@@ -43,9 +43,9 @@ class PdipluginFlowvr(CMakePackage):
 
     depends_on('cmake@3.10:', type=('build'), when='@1.5.0:')
     depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
-    depends_on('flowvr@2.3.2:2.999', type=('build'), when='@0.6.6:')
+    depends_on('flowvr@2.3.2:2', type=('build'), when='@0.6.6:')
     depends_on('flowvr@2.3:2.3.1',   type=('build'), when='@:0.6.5')
-    depends_on('fmt@6.1.2:',  type=('link'),        when='@1.5.0:1.5.999')
+    depends_on('fmt@6.1.2:',  type=('link'),        when='@1.5')
     depends_on('freeglut',    type=('link'),        when='tests')
     depends_on('opengl',      type=('link'),        when='tests')
     depends_on('pdi@develop', type=('link', 'run'), when='@develop')

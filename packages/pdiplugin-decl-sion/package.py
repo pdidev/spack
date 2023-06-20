@@ -65,7 +65,7 @@ class PdipluginDeclSion(CMakePackage):
     depends_on('pdi@1.0.0',   type=('link', 'run'), when='@1.0.0')
     depends_on('pdi@0.6.5',   type=('link', 'run'), when='@0.6.5')
     depends_on('pkgconfig',   type=('build'))
-    depends_on('sionlib@1.7.0:1.999.999', type=('link', 'run'))
+    depends_on('sionlib@1.7.0:1', type=('link', 'run'))
     depends_on('sionlib@1.7.6:', type=('link', 'run'), when='@1.5.0:')
 
     root_cmakelists_dir = 'plugins/decl_sion'
