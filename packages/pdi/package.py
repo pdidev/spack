@@ -80,7 +80,7 @@ class Pdi(CMakePackage):
         fixed = ''
         if version <= Version('1.7.1'):
             return (f"https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/"
-                    + "{version}/pdi-{version}.tar.bz2")
+                    + f"{version}/pdi-{version}.tar.bz2")
         return f"https://github.com/pdidev/pdi/archive/refs/tags/{version}.tar.gz"
 
     def cmake_args(self):
