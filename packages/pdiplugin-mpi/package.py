@@ -4,6 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
+try:
+    from spack.package import *
+except:
+    pass
 
 
 class PdipluginMpi(CMakePackage):
