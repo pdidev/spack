@@ -19,6 +19,7 @@ class PdipluginPycall(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='main', no_cache=True)
+    version('1.8.1',   sha256='43f0c0b2bda5515ecf99da7be1600af2c1f669d6c73e3f309275b14940c7e35c')
     version('1.8.0',   sha256='5d353bfa64f45ee4715b88bd30330030f79f2020cd6bede0ad9b8f9beddadea9')
     version('1.7.1',   sha256='d67e3a498bfe4491c4e9aeb40015b32481a7902b122f087dcebf05451a3d9ce1')
     version('1.6.0',   sha256='ae45d388c98c5e33d552d5e3216c1f92bf97d5dd01c669107084c1f3202fcd5a')
@@ -45,8 +46,8 @@ class PdipluginPycall(CMakePackage):
     variant('tests', default=False, description='Build tests')
 
     depends_on('cmake@3.16.3:', type=('build'), when='@1.8:')
-    depends_on('cmake@3.10:', type=('build'), when='@1.5:')
-    depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
+    depends_on('cmake@3.10:',   type=('build'), when='@1.5:')
+    depends_on('cmake@3.5:',    type=('build'), when='@:1.4.3')
     depends_on('pdi+python@develop', type=('link', 'run'), when='@develop')
     depends_on('pdi+python@1.8.0',   type=('link', 'run'), when='@1.8.0')
     depends_on('pdi+python@1.7.1',   type=('link', 'run'), when='@1.7.1')
@@ -70,7 +71,8 @@ class PdipluginPycall(CMakePackage):
     depends_on('pdi+python@1.0.1',   type=('link', 'run'), when='@1.0.1')
     depends_on('pdi+python@1.0.0',   type=('link', 'run'), when='@1.0.0')
     depends_on('pdi+python@0.6.5',   type=('link', 'run'), when='@0.6.5')
-    depends_on('pkgconfig',          type=('build'))
+    depends_on('py-setuptools', type=('build'), when='+python^python@3.12:')
+    depends_on('pkgconfig', type=('build'))
 
     root_cmakelists_dir = 'plugins/pycall'
 
