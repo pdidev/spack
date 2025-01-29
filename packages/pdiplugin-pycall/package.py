@@ -71,7 +71,7 @@ class PdipluginPycall(CMakePackage):
     depends_on('pdi+python@1.0.1',   type=('link', 'run'), when='@1.0.1')
     depends_on('pdi+python@1.0.0',   type=('link', 'run'), when='@1.0.0')
     depends_on('pdi+python@0.6.5',   type=('link', 'run'), when='@0.6.5')
-    depends_on('py-setuptools', type=('build'), when='+python^python@3.12:')
+    depends_on('py-setuptools', type=('build'), when='^python@3.12:')
     depends_on('pkgconfig', type=('build'))
 
     root_cmakelists_dir = 'plugins/pycall'
