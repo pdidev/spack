@@ -57,6 +57,7 @@ class PdipluginDeclNetcdf(CMakePackage):
     depends_on('netcdf-c@4.6.2:4+mpi', type=('link'), when='+mpi')
     depends_on('netcdf-c@4', type=('link'))
     depends_on('pdi@develop', type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.8.1',   type=('link', 'run'), when='@1.8.1')
     depends_on('pdi@1.8.0',   type=('link', 'run'), when='@1.8.0')
     depends_on('pdi@1.7.1',   type=('link', 'run'), when='@1.7.1')
     depends_on('pdi@1.6.0',   type=('link', 'run'), when='@1.6.0')
