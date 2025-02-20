@@ -20,11 +20,11 @@ class Pdi(CMakePackage):
 
     homepage = "https://pdi.dev"
     git = "https://github.com/pdidev/pdi.git"
-    url = "https://github.com/pdidev/pdi/archive/refs/tags/1.8.1.tar.gz"
 
     maintainers = ['jbigot']
 
     version('develop', branch='main', no_cache=True)
+    version('1.8.2',   sha256='bb4d1654c97f7ff379067adbff339f8b4117c0cf9432f41f1a5cb20a747cac1a')
     version('1.8.1',   sha256='43f0c0b2bda5515ecf99da7be1600af2c1f669d6c73e3f309275b14940c7e35c')
     version('1.8.0',   sha256='5d353bfa64f45ee4715b88bd30330030f79f2020cd6bede0ad9b8f9beddadea9')
     version('1.7.1',   sha256='d67e3a498bfe4491c4e9aeb40015b32481a7902b122f087dcebf05451a3d9ce1')

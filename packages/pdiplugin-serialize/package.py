@@ -20,6 +20,7 @@ class PdipluginSerialize(CMakePackage):
     maintainers = ['jbigot']
 
     version('develop', branch='main', no_cache=True)
+    version('1.8.2',   sha256='bb4d1654c97f7ff379067adbff339f8b4117c0cf9432f41f1a5cb20a747cac1a')
     version('1.8.1',   sha256='43f0c0b2bda5515ecf99da7be1600af2c1f669d6c73e3f309275b14940c7e35c')
     version('1.8.0',   sha256='5d353bfa64f45ee4715b88bd30330030f79f2020cd6bede0ad9b8f9beddadea9')
     version('1.7.1',   sha256='d67e3a498bfe4491c4e9aeb40015b32481a7902b122f087dcebf05451a3d9ce1')
@@ -51,6 +52,7 @@ class PdipluginSerialize(CMakePackage):
     depends_on('cmake@3.5:',  type=('build'), when='@:1.4.3')
     depends_on('googletest@1.8: +gmock', type=('link'), when='@1.3:1.7 +tests')
     depends_on('pdi@develop', type=('link', 'run'), when='@develop')
+    depends_on('pdi@1.8.2',   type=('link', 'run'), when='@1.8.2')
     depends_on('pdi@1.8.1',   type=('link', 'run'), when='@1.8.1')
     depends_on('pdi@1.8.0',   type=('link', 'run'), when='@1.8.0')
     depends_on('pdi@1.7.1',   type=('link', 'run'), when='@1.7.1')
