@@ -6,7 +6,7 @@
 from spack import *
 try:
     from spack.package import *
-except:
+except BaseException:
     pass
 
 
@@ -29,13 +29,13 @@ class Paraconf(CMakePackage):
     version('0.4.10', sha256='0a0028354b131436e70af06c9e029f738ed771088e53633b2b5d1c8ee1276e83')
     version('0.4.9', sha256='e99a01584e07e4d09b026fcd9a39500fbdbc3074a2598a4bc89f400825094c5a')
 
-    variant('shared',  default=True,
+    variant('shared', default=True,
             description='Build shared libraries rather than static ones')
-    variant('fortran', default=True,  description='Enable Fortran support')
-    variant('tests',   default=False, description='Build tests')
+    variant('fortran', default=True, description='Enable Fortran support')
+    variant('tests', default=False, description='Build tests')
 
-    depends_on('cmake@3.5:',     type=('build'))
-    depends_on('pkgconfig',      type=('build'))
+    depends_on('cmake@3.5:', type=('build'))
+    depends_on('pkgconfig', type=('build'))
     depends_on('libyaml@0.1.7:', type=('link', 'run'))
 
     root_cmakelists_dir = 'paraconf'

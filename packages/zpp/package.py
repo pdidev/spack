@@ -6,7 +6,7 @@
 from spack import *
 try:
     from spack.package import *
-except:
+except BaseException:
     pass
 
 
