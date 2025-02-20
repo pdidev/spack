@@ -20,6 +20,7 @@ class Pdi(CMakePackage):
 
     homepage = "https://pdi.dev"
     git = "https://github.com/pdidev/pdi.git"
+    url = "https://github.com/pdidev/pdi/archive/refs/tags/1.8.1.tar.gz"
 
     maintainers = ['jbigot']
 
@@ -70,8 +71,8 @@ class Pdi(CMakePackage):
     depends_on('paraconf +fortran',        type=('link', 'run'), when='+fortran')
     depends_on('paraconf@0.4.14: +shared', type=('link', 'run'))
     depends_on('pkgconfig', type=('build'))
-    depends_on('python@3.6.5:', type=('build', 'link', 'run'), when='+python')
-    depends_on('python@3.8.2:', type=('build', 'link', 'run'), when='@1.8: +python')
+    depends_on('python@3.6.5:3.11', type=('build', 'link', 'run'), when='+python')
+    depends_on('python@3.8.2:',     type=('build', 'link', 'run'), when='@1.8: +python')
     depends_on('py-pybind11@2.3:2',  type=('link'), when='+python')
     depends_on('py-pybind11@:2.11',  type=('link'), when='@:1.6 +python')
     depends_on('py-pybind11@2.4.3:', type=('link'), when='@1.8: +python')
