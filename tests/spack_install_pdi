@@ -1,6 +1,14 @@
-#/bin/bash
-set -e
+#!/bin/bash
+set -ex
 
+if [ "x${PDIV}" = 'xrelease' -o  "x${PDIV}" = 'x' ]
+then
+    PDIV=''
+else
+    PDIV="@${PDIV}"
+fi
+
+set +x
 
 echo -e "\n\n******* Adding required spack repositories *******\n"
 if [ -e ${SPACK_ROOT}/var/spack/repos/pdi ]
@@ -11,27 +19,27 @@ spack repo add "$(dirname "$(dirname "$0")")"
 
 echo -e "\n\n******* Solve *******\n"
 spack solve -I --reuse \
-    pdi@develop \
-    pdiplugin-decl-hdf5@develop \
-    pdiplugin-decl-netcdf@develop \
-    pdiplugin-mpi@develop \
-    pdiplugin-pycall@develop \
-    pdiplugin-serialize@develop \
-    pdiplugin-set-value@develop \
-    pdiplugin-trace@develop \
-    pdiplugin-user-code@develop \
+    "pdi${PDIV}" \
+    "pdiplugin-decl-hdf5${PDIV}" \
+    "pdiplugin-decl-netcdf${PDIV}" \
+    "pdiplugin-mpi${PDIV}" \
+    "pdiplugin-pycall${PDIV}" \
+    "pdiplugin-serialize${PDIV}" \
+    "pdiplugin-set-value${PDIV}" \
+    "pdiplugin-trace${PDIV}" \
+    "pdiplugin-user-code${PDIV}" \
     zpp
 
 
 echo -e "\n\n******* Installation *******\n"
 spack install --fail-fast --show-log-on-error --reuse \
-    pdi@develop \
-    pdiplugin-decl-hdf5@develop \
-    pdiplugin-decl-netcdf@develop \
-    pdiplugin-mpi@develop \
-    pdiplugin-pycall@develop \
-    pdiplugin-serialize@develop \
-    pdiplugin-set-value@develop \
-    pdiplugin-trace@develop \
-    pdiplugin-user-code@develop \
+    "pdi${PDIV}" \
+    "pdiplugin-decl-hdf5${PDIV}" \
+    "pdiplugin-decl-netcdf${PDIV}" \
+    "pdiplugin-mpi${PDIV}" \
+    "pdiplugin-pycall${PDIV}" \
+    "pdiplugin-serialize${PDIV}" \
+    "pdiplugin-set-value${PDIV}" \
+    "pdiplugin-trace${PDIV}" \
+    "pdiplugin-user-code${PDIV}" \
     zpp

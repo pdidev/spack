@@ -13,6 +13,7 @@ jobs:
         version:  ['latest', 'oldest']
         compiler: ['gcc', 'clang']
         mpi:      ['openmpi','mpich']
+        pdiv:     ['develop','release']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,4 +22,5 @@ jobs:
           VERSION: ${{ matrix.version }}
           COMPILER: ${{ matrix.compiler }}
           MPI: ${{ matrix.mpi }}
+          PDIV: ${{ matrix.pdiv }}
         run: ./tests/test_install_in_docker
