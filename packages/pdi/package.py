@@ -24,13 +24,14 @@ class Pdi(CMakePackage):
     maintainers = ['jbigot']
 
     version("develop", branch='main', no_cache=True)
+    version("1.9.0", sha256="04fee7851c4f2a156daddf7eb2c3c3b0132d80d3f0e448cdeebda0b7c4595639")
     version("1.8.3", sha256="df7200289a2a368ec874140039b417abdfe681b57fb1b9f4c52f924952226020")
-    version("1.8.2", sha256="bb4d1654c97f7ff379067adbff339f8b4117c0cf9432f41f1a5cb20a747cac1a")
+    version("1.8.2", sha256="bb4d1654c97f7ff379067adbff339f8b4117c0cf9432f41f1a5cb20a747cac1a", deprecated=True)
     version("1.8.1", sha256="43f0c0b2bda5515ecf99da7be1600af2c1f669d6c73e3f309275b14940c7e35c", deprecated=True)
     version("1.8.0", sha256="5d353bfa64f45ee4715b88bd30330030f79f2020cd6bede0ad9b8f9beddadea9", deprecated=True)
-    version("1.7.1", sha256="d67e3a498bfe4491c4e9aeb40015b32481a7902b122f087dcebf05451a3d9ce1", deprecated=True)
-    version("1.7.0", sha256="a0c274840d2fcfeec6b0fb63713d08454b7f655744ff3bc6a7c489e8c66a602d")
-    version("1.6.0", sha256="ae45d388c98c5e33d552d5e3216c1f92bf97d5dd01c669107084c1f3202fcd5a")
+    version("1.7.1", sha256="d67e3a498bfe4491c4e9aeb40015b32481a7902b122f087dcebf05451a3d9ce1")
+    version("1.7.0", sha256="a0c274840d2fcfeec6b0fb63713d08454b7f655744ff3bc6a7c489e8c66a602d", deprecated=True)
+    version("1.6.0", sha256="ae45d388c98c5e33d552d5e3216c1f92bf97d5dd01c669107084c1f3202fcd5a", deprecated=True)
     version("1.5.5", sha256="11bf5db61f23107dfd2135e637e9233524855c78104c57288c6af21d02d1ea53", deprecated=True)
     version("1.5.4", sha256="0af1fe9fb85066772a921efdf1f3bb554559066a62eaebce4c9c6afd3b2a5c38", deprecated=True)
     version("1.5.3", sha256="aa2fc692f1352d53cf9444f842144648180183313f5c8e7b799e1cb542f6f1ba", deprecated=True)
