@@ -30,6 +30,10 @@ class PdipluginDeclHdf5(CMakePackage):
     variant('tests', default=False, description='Build tests')
     variant('mpi', default=True, description='Enable parallel HDF5')
 
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", type="build", when="+fortran")
+
     depends_on('benchmark@1.5:1', type=('link'), when='@1.5:1.7 +benchs')
     depends_on('cmake@3.16.3:', type=('build'), when='@1.8:')
     depends_on('cmake@3.10:', type=('build'), when='@1.5:')

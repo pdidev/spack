@@ -25,6 +25,9 @@ class PdipluginTrace(CMakePackage):
 
     variant('tests', default=False, description='Build tests')
 
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+
     depends_on('cmake@3.16.3:', type=('build'), when='@1.8:')
     depends_on('cmake@3.10:', type=('build'), when='@1.5:')
     depends_on('cmake@3.5:', type=('build'), when='@:1.4.3')

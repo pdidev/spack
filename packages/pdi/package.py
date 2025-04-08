@@ -58,6 +58,10 @@ class Pdi(CMakePackage):
     variant('fortran', default=True, description='Enable Fortran support')
     variant('python', default=True, description='Enable Python support')
 
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", type="build", when="+fortran")
+
     depends_on('benchmark@1.5:', type=('link'), when='@1.5:1.7 +benchs')
     depends_on('cmake@3.5:', type=('build'))
     depends_on('cmake@3.10:', type=('build'), when='+docs')
