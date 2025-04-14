@@ -21,9 +21,12 @@ class PdipluginTrace(CMakePackage):
     git = "https://github.com/pdidev/pdi.git"
     url = "https://github.com/pdidev/pdi/archive/refs/tags/1.8.0.tar.gz"
 
-    license("BSD-3-Clause")
+    if spack_version_info[0] >= 1:
+        license("BSD-3-Clause")
 
-    maintainers("jbigot")
+        maintainers("jbigot")
+    else:
+        maintainers = ["jbigot"]
 
     for v in Pdi.versions:
         version(str(v), **Pdi.versions[v])

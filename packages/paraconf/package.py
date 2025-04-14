@@ -18,9 +18,12 @@ class Paraconf(CMakePackage):
     homepage = "https://github.com/pdidev/paraconf"
     url = "https://github.com/pdidev/paraconf/archive/1.0.0.tar.gz"
 
-    license("BSD-3-Clause")
+    if spack_version_info[0] >= 1:
+        license("BSD-3-Clause")
 
-    maintainers("jbigot")
+        maintainers("jbigot")
+    else:
+        maintainers = ["jbigot"]
 
     version("1.0.0", sha256="9336492c292088a7d97192f2b1fa306e11f6f32373ac75f29b9af7eecd5c0c11")
     version("0.4.16", sha256="d896cb5bbf1c6b311f6bed44263548c799265e1f22d50475aecbddc80b0db982")
