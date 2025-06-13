@@ -10,7 +10,7 @@ try:
 except BaseException:
     from spack import *
 
-from spack.pkg.pdi.pdi import Pdi
+from .pdi import Pdi
 
 
 class PdipluginSerialize(CMakePackage):

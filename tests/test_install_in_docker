@@ -21,11 +21,68 @@ echo "MPI(openmpi|mpich)=${MPI}"
 echo "VARIANT(mini|all)=${VARIANT}"
 echo "PDIV(develop|release|\$x.\$y.\$z)=${PDIV}"
 
+
+SCRIPTDIR="$(mktemp --tmpdir -d pdi.spack.test.XXXXXX)"
+SCRIPTDIR="${SCRIPTDIR}/scriptdir"
+mkdir -p "${SCRIPTDIR}"
+
+cat<<'EOF' > "${SCRIPTDIR}/spack_install_pdi.bash"
+#!/bin/bash
+set -ex
+
+if [ "x${PDIV}" = 'xrelease' -o  "x${PDIV}" = 'x' ]
+then
+    PDIV=''
+else
+    PDIV="@${PDIV}"
+fi
+
+set +x
+
+echo -e "\n\n******* Adding required spack repositories *******\n"
+if [ -e ${SPACK_ROOT}/var/spack/repos/pdi ]
+then
+    spack repo rm ${SPACK_ROOT}/var/spack/repos/pdi &>/dev/null || true
+fi
+spack repo add /opt/spack-pdi
+
+echo -e "\n\n******* Solve *******\n"
+spack solve -I --reuse \
+    "pdi${PDIV}" \
+    "pdiplugin-decl-hdf5${PDIV}" \
+    "pdiplugin-decl-netcdf${PDIV}" \
+    "pdiplugin-mpi${PDIV}" \
+    "pdiplugin-pycall${PDIV}" \
+    "pdiplugin-serialize${PDIV}" \
+    "pdiplugin-set-value${PDIV}" \
+    "pdiplugin-trace${PDIV}" \
+    "pdiplugin-user-code${PDIV}" \
+    zpp
+
+
+echo -e "\n\n******* Installation *******\n"
+spack install --fail-fast --show-log-on-error --reuse \
+    "pdi${PDIV}" \
+    "pdiplugin-decl-hdf5${PDIV}" \
+    "pdiplugin-decl-netcdf${PDIV}" \
+    "pdiplugin-mpi${PDIV}" \
+    "pdiplugin-pycall${PDIV}" \
+    "pdiplugin-serialize${PDIV}" \
+    "pdiplugin-set-value${PDIV}" \
+    "pdiplugin-trace${PDIV}" \
+    "pdiplugin-user-code${PDIV}" \
+    zpp
+EOF
+
 set -ex
 
 docker run --rm \
     -v "${PWD}:/opt/spack-pdi:ro" \
+    -v "${SCRIPTDIR}:/opt/scriptdir:ro" \
     --entrypoint spack-env \
     -e "PDIV=${PDIV}" \
     "ghcr.io/pdidev/fullspack/${VERSION}/${COMPILER}/${MPI}/${VARIANT}:v3" \
-    "/opt/spack-pdi/tests/spack_install_pdi"
+    "bash" "/opt/scriptdir/spack_install_pdi.bash"
+
+
+rm -rf "${SCRIPTDIR}"
