@@ -1,9 +1,14 @@
-# Copyright (C) 2020-2022 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# Copyright (C) 2020-2026 Commissariat a l'energie atomique et aux energies alternatives (CEA)
 # and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import spack_version_info
+
+try:
+    from spack_repo.builtin.build_systems.cmake import CMakePackage
+except BaseException:
+    pass
 
 try:
     from spack.package import *
@@ -36,11 +41,8 @@ class PdipluginMpi(CMakePackage):
         depends_on("c", type="build")
         depends_on("cxx", type="build")
 
-    depends_on("cmake@3.16.3:", type=("build"), when="@1.8:")
-    depends_on("cmake@3.10:", type=("build"), when="@1.5:")
-    depends_on("cmake@3.5:", type=("build"), when="@:1.4.3")
+    depends_on("cmake@3.16.3:", type=("build"))
     depends_on("mpi", type=("build", "link", "run"))
-    depends_on("pdi@develop", type=("link", "run"), when="@develop")
     for v in Pdi.versions:
         depends_on("pdi@" + str(v), type=("link", "run"), when="@" + str(v))
     depends_on("pkgconfig", type=("build"))

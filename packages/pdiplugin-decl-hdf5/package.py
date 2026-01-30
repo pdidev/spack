@@ -1,9 +1,14 @@
-# Copyright (C) 2020-2022 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# Copyright (C) 2020-2026 Commissariat a l'energie atomique et aux energies alternatives (CEA)
 # and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import spack_version_info
+
+try:
+    from spack_repo.builtin.build_systems.cmake import CMakePackage
+except BaseException:
+    pass
 
 try:
     from spack.package import *
@@ -43,18 +48,10 @@ class PdipluginDeclHdf5(CMakePackage):
         depends_on("cxx", type="build")
         depends_on("fortran", type="build", when="+fortran")
 
-    depends_on("benchmark@1.5:1", type=("link"), when="@1.5:1.7 +benchs")
-    depends_on("cmake@3.16.3:", type=("build"), when="@1.8:")
-    depends_on("cmake@3.10:", type=("build"), when="@1.5:")
-    depends_on("cmake@3.10:", type=("build"), when="+tests")
-    depends_on("cmake@3.5:", type=("build"), when="@:1.4.3")
-    depends_on("fmt@6.1.2:", type=("link"), when="@1.5")
-    depends_on("googletest@1.8: +gmock", type=("link"), when="@1.3:1.7 +tests")
-    depends_on("hdf5@1.10.4:", type=("build", "link", "run"), when="@1.8:")
-    depends_on("hdf5@1.10:", type=("build", "link", "run"), when="@1.5:")
+    depends_on("cmake@3.16.3:", type=("build"))
+    depends_on("hdf5@1.10.4:1 +shared", type=("build", "link", "run"))
     depends_on("hdf5 +mpi", type=("build", "link", "run"), when="+mpi")
-    depends_on("hdf5@1.8:1 +shared", type=("build", "link", "run"))
-    depends_on("pdi@develop", type=("link", "run"), when="@develop")
+    depends_on("mpi", when="+mpi")
     for v in Pdi.versions:
         depends_on("pdi@" + str(v), type=("link", "run"), when="@" + str(v))
     depends_on("pkgconfig", type=("build"))

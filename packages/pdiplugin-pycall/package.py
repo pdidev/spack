@@ -1,9 +1,14 @@
-# Copyright (C) 2020-2022 Commissariat a l'energie atomique et aux energies alternatives (CEA)
+# Copyright (C) 2020-2026 Commissariat a l'energie atomique et aux energies alternatives (CEA)
 # and others. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import spack_version_info
+
+try:
+    from spack_repo.builtin.build_systems.cmake import CMakePackage
+except BaseException:
+    pass
 
 try:
     from spack.package import *
@@ -36,12 +41,10 @@ class PdipluginPycall(CMakePackage):
         depends_on("c", type="build")
         depends_on("cxx", type="build")
 
-    depends_on("cmake@3.16.3:", type=("build"), when="@1.8:")
-    depends_on("cmake@3.10:", type=("build"), when="@1.5:")
-    depends_on("cmake@3.5:", type=("build"), when="@:1.4.3")
+    depends_on("cmake@3.16.3:", type=("build"))
     for v in Pdi.versions:
         depends_on("pdi+python@" + str(v), type=("link", "run"), when="@" + str(v))
-    depends_on("py-setuptools", type=("build"), when="^python@3.12:")
+    depends_on("py-setuptools", type=("build"), when="@1.8.3: ^python@3.12:")
     depends_on("pkgconfig", type=("build"))
 
     root_cmakelists_dir = "plugins/pycall"
