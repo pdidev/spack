@@ -90,7 +90,7 @@ class Pdi(CMakePackage):
         depends_on("cxx", type="build")
         depends_on("fortran", type="build", when="+fortran")
 
-    depends_on("cmake@3.22.1:", type=("build"), when='@1.10.0:')
+    depends_on("cmake@3.22.1:", type=("build"), when="@1.10.0:")
     depends_on("cmake@3.16.3:", type=("build"))
     depends_on("doxygen@1.9.1:", type=("build"), when="@1.10.0: +docs")
     depends_on("doxygen@1.8.17:", type=("build"), when="+docs")
@@ -104,13 +104,13 @@ class Pdi(CMakePackage):
     )  # Needs distutils.
     depends_on("py-pybind11@2.9.1:2", type=("link"), when="@1.10.0: +python")
     depends_on("py-pybind11@2.4.3:2", type=("link"), when="+python")
-    depends_on("py-numpy@1.21.5", type=("run"), when="@1.10.0: +python")
-    depends_on("py-numpy@1.17.4", type=("run"), when="+python")
+    depends_on("py-numpy@1.21.5:1", type=("run"), when="@1.10.0: +python")
+    depends_on("py-numpy@1.17.4:1", type=("run"), when="+python")
     depends_on(
         "py-setuptools", type=("build", "link"), when="@1.8.3: +python^python@3.12:"
     )  # Needs distutils.
-    depends_on("spdlog@1.9.2:", type=("link"), when="@1.10.0:")
-    depends_on("spdlog@1.5:", type=("link"))
+    depends_on("spdlog@1.9.2:1", type=("link"), when="@1.10.0:")
+    depends_on("spdlog@1.5:1", type=("link"))
 
     root_cmakelists_dir = "pdi"
 
