@@ -3,6 +3,8 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
+from glob import glob
+
 from spack import spack_version_info
 
 try:
@@ -117,13 +119,14 @@ class Pdi(CMakePackage):
     def patch(self):
         # Run before build so that the standard Spack sbang install hook can fix
         # up the path to the python binary the zpp scripts requires. We dont use
-        # filter_shebang("vendor/zpp-1.0.16/bin/zpp.in") because the template is
+        # filter_shebang("vendor/zpp-*/bin/zpp.in") because the template is
         # not yet instantiated and PYTHON_EXECUTABLE is not yet large enough to
         # trigger the replacement via filter_shebang.
+        zpp_in = glob("vendor/zpp-*/bin/zpp.in")[0]
         filter_file(
             r"#!@PYTHON_EXECUTABLE@ -B",
             sbang_shebang_line() + "\n#!@PYTHON_EXECUTABLE@ -B",
-            "vendor/zpp-1.0.16/bin/zpp.in",
+            zpp_in,
         )
 
     @staticmethod
