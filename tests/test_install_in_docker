@@ -47,31 +47,33 @@ fi
 spack repo add /opt/spack-pdi
 
 echo -e "\n\n******* Solve *******\n"
-spack solve -I --reuse \
-    "pdi${PDIV}" \
-    "pdiplugin-decl-hdf5${PDIV}" \
-    "pdiplugin-decl-netcdf${PDIV}" \
-    "pdiplugin-mpi${PDIV}" \
-    "pdiplugin-pycall${PDIV}" \
-    "pdiplugin-serialize${PDIV}" \
-    "pdiplugin-set-value${PDIV}" \
-    "pdiplugin-trace${PDIV}" \
-    "pdiplugin-user-code${PDIV}" \
-    zpp
+spack solve -NI --reuse \
+    "pdi.paraconf${PDIV}" \
+    "pdi.pdi${PDIV}" \
+    "pdi.pdiplugin-decl-hdf5${PDIV}" \
+    "pdi.pdiplugin-decl-netcdf${PDIV}" \
+    "pdi.pdiplugin-mpi${PDIV}" \
+    "pdi.pdiplugin-pycall${PDIV}" \
+    "pdi.pdiplugin-serialize${PDIV}" \
+    "pdi.pdiplugin-set-value${PDIV}" \
+    "pdi.pdiplugin-trace${PDIV}" \
+    "pdi.pdiplugin-user-code${PDIV}" \
+    pdi.zpp
 
 
 echo -e "\n\n******* Installation *******\n"
 spack install --fail-fast --show-log-on-error --reuse \
-    "pdi${PDIV}" \
-    "pdiplugin-decl-hdf5${PDIV}" \
-    "pdiplugin-decl-netcdf${PDIV}" \
-    "pdiplugin-mpi${PDIV}" \
-    "pdiplugin-pycall${PDIV}" \
-    "pdiplugin-serialize${PDIV}" \
-    "pdiplugin-set-value${PDIV}" \
-    "pdiplugin-trace${PDIV}" \
-    "pdiplugin-user-code${PDIV}" \
-    zpp
+    "pdi.paraconf${PDIV}" \
+    "pdi.pdi${PDIV}" \
+    "pdi.pdiplugin-decl-hdf5${PDIV}" \
+    "pdi.pdiplugin-decl-netcdf${PDIV}" \
+    "pdi.pdiplugin-mpi${PDIV}" \
+    "pdi.pdiplugin-pycall${PDIV}" \
+    "pdi.pdiplugin-serialize${PDIV}" \
+    "pdi.pdiplugin-set-value${PDIV}" \
+    "pdi.pdiplugin-trace${PDIV}" \
+    "pdi.pdiplugin-user-code${PDIV}" \
+    pdi.zpp
 EOF
 
 set -ex
@@ -81,7 +83,7 @@ docker run --rm \
     -v "${SCRIPTDIR}:/opt/scriptdir:ro" \
     --entrypoint spack-env \
     -e "PDIV=${PDIV}" \
-    "ghcr.io/pdidev/fullspack/${VERSION}/${COMPILER}/${MPI}/${VARIANT}:v3" \
+    "ghcr.io/pdidev/fullspack/${VERSION}/${COMPILER}/${MPI}/${VARIANT}:v4" \
     "bash" "/opt/scriptdir/spack_install_pdi.bash"
 
 
