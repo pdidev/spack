@@ -32,15 +32,17 @@ class Paraconf(CMakePackage):
         maintainers = ["jbigot"]
 
     version("develop", branch="main", no_cache=True)
+    version("1.0.4", sha256="aa27493f7a256fe13a72d0ce85a2e6118a34dba67d96c0c74bd4fe68a82bdfba")
     version("1.0.3", sha256="462c487b1c9681ad0fd04cde611a9b9d969c3ab2504e2573c5ca88d1b7afa203")
 
-    variant("shared", default=True, description="Build shared libraries rather than static ones")
+    variant("example", default=False, description="Build example")
     variant("fortran", default=True, description="Enable Fortran support")
     variant("tests", default=False, description="Build tests")
+    variant("shared", default=True, description="Build shared libraries rather than static ones")
 
     if spack_version_info[0] >= 1:
         depends_on("c", type="build")
-        depends_on("cxx", type="build")
+        depends_on("cxx", type="build", when="@1.0.3 +example")
         depends_on("fortran", type="build", when="+fortran")
 
     depends_on("cmake@3.22:", type=("build"))
@@ -50,6 +52,7 @@ class Paraconf(CMakePackage):
     def cmake_args(self):
         return [
             self.define_from_variant("BUILD_SHARED_LIBS", "shared"),
-            self.define_from_variant("PARACONF_BUILD_TESTING", "tests"),
+            self.define_from_variant("PARACONF_BUILD_EXAMPLE", "example"),
             self.define_from_variant("PARACONF_BUILD_FORTRAN", "fortran"),
+            self.define_from_variant("PARACONF_BUILD_TESTING", "tests"),
         ]
