@@ -21,6 +21,7 @@ class Paraconf(CMakePackage):
     Yaml tree on top of libyaml."""
 
     homepage = "https://github.com/pdidev/paraconf"
+    git = "https://github.com/pdidev/paraconf.git"
     url = "https://github.com/pdidev/paraconf/archive/1.0.3.tar.gz"
 
     if spack_version_info[0] >= 1:
@@ -30,6 +31,7 @@ class Paraconf(CMakePackage):
     else:
         maintainers = ["jbigot"]
 
+    version("develop", branch="main", no_cache=True)
     version("1.0.3", sha256="462c487b1c9681ad0fd04cde611a9b9d969c3ab2504e2573c5ca88d1b7afa203")
 
     variant("shared", default=True, description="Build shared libraries rather than static ones")
