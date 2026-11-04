@@ -56,6 +56,7 @@ spack solve -NI --reuse \
     "pdi.pdiplugin-pycall${PDIV}" \
     "pdi.pdiplugin-serialize${PDIV}" \
     "pdi.pdiplugin-set-value${PDIV}" \
+    "pdi.pdiplugin-timer${PDIV}" \
     "pdi.pdiplugin-trace${PDIV}" \
     "pdi.pdiplugin-user-code${PDIV}"
 
@@ -70,6 +71,7 @@ spack install --fail-fast --show-log-on-error --reuse \
     "pdi.pdiplugin-pycall${PDIV}" \
     "pdi.pdiplugin-serialize${PDIV}" \
     "pdi.pdiplugin-set-value${PDIV}" \
+    "pdi.pdiplugin-timer${PDIV}" \
     "pdi.pdiplugin-trace${PDIV}" \
     "pdi.pdiplugin-user-code${PDIV}"
 EOF
