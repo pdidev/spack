@@ -173,4 +173,3 @@ class Pdi(CMakePackage):
             self.define_from_variant("BUILD_PYTHON", "python"),
             self.define_from_variant("BUILD_TESTING", "tests"),
         ]
-
