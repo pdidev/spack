@@ -124,6 +124,11 @@ class Pdi(CMakePackage):
     depends_on("paraconf@1: +shared", type=("link", "run"))
     depends_on("paraconf +fortran", type=("link", "run"), when="+fortran")
     depends_on("pkgconfig", type=("build"))
+    # zpp, used for the Fortran API and the documentation, is a Python script
+    depends_on("python@3.10:3", type=("build"), when="@1.10.0: +fortran")
+    depends_on("python@3.10:3", type=("build"), when="@1.10.0: +docs")
+    depends_on("python@3", type=("build"), when="+fortran")
+    depends_on("python@3", type=("build"), when="+docs")
     depends_on("python@3.10.6:3", type=("build", "link", "run"), when="@1.10.0: +python")
     depends_on("python@3.8.2:3", type=("build", "link", "run"), when="+python")
     depends_on(
