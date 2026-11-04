@@ -139,7 +139,7 @@ class Pdi(CMakePackage):
     depends_on("py-numpy@1.21.5:2", type=("run"), when="@1.10.0: +python")
     depends_on("py-numpy@1.17.4:2", type=("run"), when="+python")
     depends_on(
-        "py-setuptools", type=("build", "link"), when="@1.8.3: +python^python@3.12:"
+        "py-setuptools", type=("build"), when="@1.8.3: +python^python@3.12:"
     )  # Needs distutils.
     depends_on("spdlog@1.9.2:1", type=("link"), when="@1.10.0:")
     depends_on("spdlog@1.5:1", type=("link"))
