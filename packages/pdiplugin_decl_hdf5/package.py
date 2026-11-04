@@ -46,7 +46,7 @@ class PdipluginDeclHdf5(CMakePackage):
     if spack_version_info[0] >= 1:
         depends_on("c", type="build")
         depends_on("cxx", type="build")
-        depends_on("fortran", type="build", when="+fortran")
+        depends_on("fortran", type="build", when="+fortran +tests")
 
     depends_on("cmake@3.22.1:", type=("build"), when="@1.10.0:")
     depends_on("cmake@3.16.3:", type=("build"))
@@ -57,6 +57,7 @@ class PdipluginDeclHdf5(CMakePackage):
     for v in Pdi.versions:
         depends_on("pdi@" + str(v), type=("link", "run"), when="@" + str(v))
     depends_on("pkgconfig", type=("build"))
+    depends_on("pdi +fortran", type=("link", "run"), when="+fortran +tests")
 
     root_cmakelists_dir = "plugins/decl_hdf5"
 
@@ -67,6 +68,7 @@ class PdipluginDeclHdf5(CMakePackage):
         return [
             "-DINSTALL_PDIPLUGINDIR:PATH={:s}".format(self.prefix.lib),
             self.define_from_variant("BUILD_BENCHMARKING", "benchs"),
+            self.define_from_variant("BUILD_FORTRAN", "fortran"),
             self.define_from_variant("BUILD_HDF5_PARALLEL", "mpi"),
             self.define_from_variant("BUILD_TESTING", "tests"),
         ]
