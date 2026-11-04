@@ -19,8 +19,8 @@ from .pdi import Pdi
 
 
 class PdipluginDeclNetcdf(CMakePackage):
-    """The trace plugin is intended to generate a trace of  what happens in PDI
-    "data store"."""
+    """The Decl'NetCDF plugin for the PDI library reads from and writes to NetCDF
+    files in a declarative way."""
 
     homepage = "https://pdi.dev"
     git = "https://github.com/pdidev/pdi.git"

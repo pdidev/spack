@@ -19,8 +19,8 @@ from .pdi import Pdi
 
 
 class PdipluginUserCode(CMakePackage):
-    """The user-code plugin for the PDI librarie enables one to call a
-    user-defined function when a specified event occur or certain data becomes
+    """The user-code plugin for the PDI library enables one to call a
+    user-defined function when a specified event occurs or certain data becomes
     available"""
 
     homepage = "https://pdi.dev"

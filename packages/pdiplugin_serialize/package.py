@@ -19,8 +19,8 @@ from .pdi import Pdi
 
 
 class PdipluginSerialize(CMakePackage):
-    """The trace plugin is intended to generate a trace of  what happens in PDI
-    "data store"."""
+    """The Serialize plugin for the PDI library serializes shared data: it
+    converts arrays from sparse to dense and dereferences pointers."""
 
     homepage = "https://pdi.dev"
     git = "https://github.com/pdidev/pdi.git"
