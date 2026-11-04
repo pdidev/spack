@@ -124,6 +124,11 @@ class Pdi(CMakePackage):
     depends_on("paraconf@1: +shared", type=("link", "run"))
     depends_on("paraconf +fortran", type=("link", "run"), when="+fortran")
     depends_on("pkgconfig", type=("build"))
+    # zpp, used for the Fortran API and the documentation, is a Python script
+    depends_on("python@3.10:3", type=("build"), when="@1.10.0: +fortran")
+    depends_on("python@3.10:3", type=("build"), when="@1.10.0: +docs")
+    depends_on("python@3", type=("build"), when="+fortran")
+    depends_on("python@3", type=("build"), when="+docs")
     depends_on("python@3.10.6:3", type=("build", "link", "run"), when="@1.10.0: +python")
     depends_on("python@3.8.2:3", type=("build", "link", "run"), when="+python")
     depends_on(
@@ -134,7 +139,7 @@ class Pdi(CMakePackage):
     depends_on("py-numpy@1.21.5:2", type=("run"), when="@1.10.0: +python")
     depends_on("py-numpy@1.17.4:2", type=("run"), when="+python")
     depends_on(
-        "py-setuptools", type=("build", "link"), when="@1.8.3: +python^python@3.12:"
+        "py-setuptools", type=("build"), when="@1.8.3: +python^python@3.12:"
     )  # Needs distutils.
     depends_on("spdlog@1.9.2:1", type=("link"), when="@1.10.0:")
     depends_on("spdlog@1.5:1", type=("link"))
@@ -153,13 +158,6 @@ class Pdi(CMakePackage):
             f.seek(0)
             f.write(f"{sbang_shebang_line()}\n{content}")
 
-    @staticmethod
-    def version_url(version):
-        return f"https://github.com/pdidev/pdi/archive/refs/tags/{version}.tar.gz"
-
-    def url_for_version(self, version):
-        return Pdi.version_url(version)
-
     def cmake_args(self):
         return [
             self.define_from_variant("BUILD_BENCHMARKING", "benchs"),
@@ -168,4 +166,3 @@ class Pdi(CMakePackage):
             self.define_from_variant("BUILD_PYTHON", "python"),
             self.define_from_variant("BUILD_TESTING", "tests"),
         ]
-
