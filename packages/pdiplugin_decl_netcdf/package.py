@@ -61,7 +61,6 @@ class PdipluginDeclNetcdf(CMakePackage):
     def cmake_args(self):
         return [
             "-DINSTALL_PDIPLUGINDIR:PATH={:s}".format(self.prefix.lib),
-            self.define_from_variant("BUILD_HDF5_PARALLEL", "mpi"),
             self.define_from_variant("BUILD_NETCDF_PARALLEL", "mpi"),
             self.define_from_variant("BUILD_TESTING", "tests"),
         ]
