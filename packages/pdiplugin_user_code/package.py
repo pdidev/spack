@@ -28,7 +28,7 @@ class PdipluginUserCode(CMakePackage):
     url = "https://github.com/pdidev/pdi/archive/refs/tags/1.8.0.tar.gz"
 
     if spack_version_info[0] >= 1:
-        license("MIT")
+        license("BSD-3-Clause")
 
         maintainers("jbigot")
     else:
