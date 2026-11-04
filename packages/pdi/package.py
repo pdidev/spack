@@ -158,13 +158,6 @@ class Pdi(CMakePackage):
             f.seek(0)
             f.write(f"{sbang_shebang_line()}\n{content}")
 
-    @staticmethod
-    def version_url(version):
-        return f"https://github.com/pdidev/pdi/archive/refs/tags/{version}.tar.gz"
-
-    def url_for_version(self, version):
-        return Pdi.version_url(version)
-
     def cmake_args(self):
         return [
             self.define_from_variant("BUILD_BENCHMARKING", "benchs"),

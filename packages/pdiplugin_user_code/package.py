@@ -51,9 +51,6 @@ class PdipluginUserCode(CMakePackage):
 
     root_cmakelists_dir = "plugins/user_code"
 
-    def url_for_version(self, version):
-        return Pdi.version_url(version)
-
     def cmake_args(self):
         return [
             "-DINSTALL_PDIPLUGINDIR:PATH={:s}".format(self.prefix.lib),

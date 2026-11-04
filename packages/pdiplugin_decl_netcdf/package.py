@@ -55,9 +55,6 @@ class PdipluginDeclNetcdf(CMakePackage):
 
     root_cmakelists_dir = "plugins/decl_netcdf"
 
-    def url_for_version(self, version):
-        return Pdi.version_url(version)
-
     def cmake_args(self):
         return [
             "-DINSTALL_PDIPLUGINDIR:PATH={:s}".format(self.prefix.lib),
